@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Rate, Root } from './currency';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { Rate, Root } from './currency';
 export class CurrenciesService {
   API: string = 'http://api.nbp.pl/api/exchangerates'
   currenciesArray!: Rate[]
+  currencyArraySubject: BehaviorSubject<Rate[]> = new BehaviorSubject<Rate[]>([])
+
 
   constructor(private http: HttpClient) { }
 
@@ -19,12 +21,16 @@ export class CurrenciesService {
 
   getAllCurrencies(): void {
     this.getApi().subscribe(
-      (data: Root) => {
-        console.log(data[0].rates)
-        
-        
+      (result: Root) => {
+        const currency = result[0].rates
+        this.currenciesArray = currency
+        this.currencyArraySubject.next(currency)
       }
     )
+  }
+
+  getAllCurrenciesArray(): Observable<Rate[]> {
+    return this.currencyArraySubject.asObservable()
   }
 
 }
