@@ -1,0 +1,18 @@
+<div class="container mt-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Date</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let gold of goldPricesArray; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ gold.data }}</td>
+          <td>{{ gold.cena }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
