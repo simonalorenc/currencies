@@ -5,15 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ButtonsComponent } from './buttons/buttons.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
+import { ButtonComponent } from './button/button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    ButtonsComponent,
-    CurrenciesComponent
+    CurrenciesComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,

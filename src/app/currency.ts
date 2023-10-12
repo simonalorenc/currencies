@@ -1,6 +1,6 @@
-export type Root = Root2[]
+export type Result = Info[]
 
-export interface Root2 {
+export interface Info {
   table: string
   no: string
   effectiveDate: string
