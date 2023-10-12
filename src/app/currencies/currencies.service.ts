@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, concatMap, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  combineLatestWith,
+  concatMap,
+  map,
+  zip,
+} from 'rxjs';
 import { Rate, Result } from '../currency';
 
 @Injectable({
@@ -20,9 +28,12 @@ export class CurrenciesService {
   getCurrenciesRatesObservable(): Observable<Rate[]> {
     const tableA = this.getCurrenciesInfo('A');
     const tableB = this.getCurrenciesInfo('B');
-    return tableA.pipe(
-      concatMap(() => tableB),
-      map(result => result[0].rates)
-    )
+    return combineLatest([tableA, tableB]).pipe(
+      map(([resultA, resultB]) => {
+        const ratesA = resultA[0].rates;
+        const ratesB = resultB[0].rates;
+        return [...ratesA, ...ratesB];
+      })
+    );
   }
 }

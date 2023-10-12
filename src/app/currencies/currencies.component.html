@@ -1,5 +1,7 @@
 <div class="container mt-5">
-  <app-filter-input></app-filter-input>
+  <form [formGroup]="filterForm">
+    <input formControlName="filterInputValue" (input)="filterCurrencies()" class="form-control mb-3" type="text" placeholder="Search currency" aria-label="default input example">
+  </form>
   <table class="table">
     <thead>
       <tr>

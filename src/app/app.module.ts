@@ -8,7 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { ButtonComponent } from './button/button.component';
 import { GoldPricesComponent } from './gold-prices/gold-prices.component';
-import { FilterInputComponent } from './filter-input/filter-input.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +17,13 @@ import { FilterInputComponent } from './filter-input/filter-input.component';
     CurrenciesComponent,
     ButtonComponent,
     GoldPricesComponent,
-    FilterInputComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
