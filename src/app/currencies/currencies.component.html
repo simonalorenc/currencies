@@ -1,6 +1,13 @@
 <div class="container mt-5">
   <form [formGroup]="filterForm">
-    <input formControlName="filterInputValue" (input)="filterCurrencies()" class="form-control mb-3" type="text" placeholder="Search currency" aria-label="default input example">
+    <input
+      formControlName="filterInputValue"
+      (input)="filterCurrencies()"
+      class="form-control mb-3"
+      type="text"
+      placeholder="Search currency"
+      aria-label="default input example"
+    />
   </form>
   <table class="table">
     <thead>
@@ -9,15 +16,19 @@
         <th scope="col">Currency</th>
         <th scope="col">Code</th>
         <th scope="col">Mid</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let currency of currenciesArray; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>{{ currency.currency }}</td>
-        <td>{{ currency.code }}</td>
-        <td>{{ currency.mid }}</td>
-      </tr>
+        <tr *ngFor="let currency of currenciesArray; let i = index" class="align-middle">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ currency.currency }}</td>
+          <td>{{ currency.code }}</td>
+          <td>{{ currency.mid }}</td>
+          <td><a routerLink="/detail/{{currency.code}}">
+            <button type="button" class="btn btn-secondary btn-rounded btn-sm" mdbRipple>More details</button>
+          </a></td>
+        </tr>
     </tbody>
   </table>
 </div>
