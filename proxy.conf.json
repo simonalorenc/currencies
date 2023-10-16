@@ -1,0 +1,7 @@
+{
+    "/api": {
+      "target": "https://flagcdn.com",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }

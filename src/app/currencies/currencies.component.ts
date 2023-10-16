@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CurrenciesService } from './currencies.service';
 import { Rate } from '../currency';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { filter } from 'rxjs';
+import { FlagsService } from '../flags.service';
 
 @Component({
   selector: 'app-currencies',
@@ -10,15 +10,15 @@ import { filter } from 'rxjs';
   styleUrls: ['./currencies.component.scss'],
 })
 export class CurrenciesComponent implements OnInit {
-  //TODO: analogicznie jak w serisie imo nie powinno być force (!)
   currenciesArray: Rate[] = [];
   filteredCurrenciesArray: Rate[] = [];
-  numbers: number = 1;
   filterInputValue: string = '';
   filterForm: FormGroup
-  exampleArray: Rate[] =[]
+  exampleArray: Rate[] = []
+  flagUrl: string | null = null
+  flagUrls: string[] = []
 
-  constructor(private currenciesService: CurrenciesService, private formBuilder: FormBuilder) {
+  constructor(private currenciesService: CurrenciesService, private formBuilder: FormBuilder, private flagsService: FlagsService) {
     this.filterForm = this.formBuilder.group({
       filterInputValue: ['']
     })
@@ -40,9 +40,16 @@ export class CurrenciesComponent implements OnInit {
     })
   }
 
+  //subscribe w subscribe??
   getApi() {
     this.currenciesService.getCurrenciesRatesObservable().subscribe(
       (rates) => {
+        rates.forEach((rate, i) => {
+          const code = rate.code.slice(0, -1).toLowerCase()
+          this.getCountryFlag(code).subscribe(flagUrl => {
+            this.flagUrls[i] = flagUrl
+          })
+        })
         this.currenciesArray = rates;
         this.exampleArray = this.currenciesArray
       },
@@ -50,6 +57,11 @@ export class CurrenciesComponent implements OnInit {
     );
   }
 
+  getCountryFlag(code: string) {
+    return this.flagsService.getFlagUrl(code)
+  }
+
+  //flagi nie zmieniają się przy filtrowaniu
   filterCurrencies(): void {
     const filterText = this.filterForm.get('filterInputValue')?.value
     if(filterText !== 0) {

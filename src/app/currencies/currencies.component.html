@@ -12,7 +12,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">Flag</th>
         <th scope="col">Currency</th>
         <th scope="col">Code</th>
         <th scope="col">Mid</th>
@@ -21,7 +21,7 @@
     </thead>
     <tbody class="table-group-divider">
         <tr *ngFor="let currency of currenciesArray; let i = index" class="align-middle">
-          <th scope="row">{{ i + 1 }}</th>
+          <th scope="row"><img [src]="flagUrls[i]" alt="Country flag"></th>
           <td>{{ currency.currency }}</td>
           <td>{{ currency.code }}</td>
           <td>{{ currency.mid }}</td>

@@ -8,7 +8,7 @@ import {
   of,
   zip,
 } from 'rxjs';
-import { Rate, Result } from '../currency';
+import { Info, Rate, Result, Root } from '../currency';
 
 @Injectable({
   providedIn: 'root',
@@ -43,7 +43,8 @@ export class CurrenciesService {
     return of(currency)
   }
 
-  // getCurrencyFromLastDays(): Observable<Rate> {
-
-  // }
+  getCurrencyFromLastDays(code: string): Observable<Root> {
+    const API_EXCHANGE_RATES = `${this.API}/rates/a/${code}/last/7/`
+    return this.http.get<Root>(API_EXCHANGE_RATES)
+  }
 }

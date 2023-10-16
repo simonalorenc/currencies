@@ -1,24 +1,24 @@
 <div class="container mt-5">
+    <!-- <h1>{{ currency.currency }}</h1> -->
+    <img [src]="flagUrl">
   <h2 class="mt-5">Exchange rates from the last 7 days</h2>
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">Flag</th>
         <th scope="col">Currency</th>
-        <th scope="col">Code</th>
+        <th scope="col">Date</th>
         <th scope="col">Mid</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th></th>
-        <td>{{ currency.currency }}</td>
-        <td>{{ currency.code }}</td>
+      <tr *ngFor="let currency of currencyArray.reverse()">
+        <td>{{ currency.no }}</td>
+        <td>{{ currency.effectiveDate }}</td>
         <td>{{ currency.mid }}</td>
       </tr>
     </tbody>
   </table>
-  <h2 class="mt-5">History of {{ currency.currency }}</h2>
+  <h2 class="mt-5">History of </h2>
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero asperiores, dolores, in optio aliquam illum ex consequuntur ipsum expedita labore sapiente assumenda animi cupiditate possimus explicabo, distinctio perferendis consequatur excepturi. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos distinctio pariatur iusto facilis officiis nobis quod, minus assumenda. Totam adipisci facilis quo. Perferendis non
     reprehenderit enim eos quo beatae quibusdam?
