@@ -3,6 +3,7 @@ import { CurrenciesService } from './currencies.service';
 import { Rate, RateWithFlag } from '../currency';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FlagsService } from '../flags.service';
+import { CurrenciesRepository } from '../currencies-repository';
 
 @Component({
   selector: 'app-currencies',
@@ -10,7 +11,9 @@ import { FlagsService } from '../flags.service';
   styleUrls: ['./currencies.component.scss'],
 })
 export class CurrenciesComponent implements OnInit {
-  currenciesArray: Rate[] = [];
+//TODO: zaktualizować tutaj te piękne tablice do nowego modelu RatesWithFlags i eloo
+
+  currenciesArray: RateWithFlag[] = [];
   filteredCurrenciesArray: RateWithFlag[] = [];
   filterForm: FormGroup;
   flagUrl: string | null = null;
@@ -19,7 +22,8 @@ export class CurrenciesComponent implements OnInit {
   constructor(
     private currenciesService: CurrenciesService,
     private formBuilder: FormBuilder,
-    private flagsService: FlagsService
+    private flagsService: FlagsService,
+    private currenciesRepository: CurrenciesRepository
   ) {
     this.filterForm = this.formBuilder.group({
       filterInputValue: [''],
@@ -35,38 +39,25 @@ export class CurrenciesComponent implements OnInit {
   }
 
   getCurrenciesApi() {
-    this.currenciesService.getCurrenciesRatesObservable().subscribe(
-      (rates) => {
-        rates.forEach((rate) => {
-          const code = rate.code.slice(0, -1).toLowerCase();
-          this.getCountryFlag(code).subscribe((flagUrl) => {
-            const rateWithFlag: RateWithFlag = {
-              currency: rate.currency,
-              code: rate.code,
-              mid: rate.mid,
-              flag: flagUrl
-            }
-            this.currenciesArray.push(rateWithFlag)
-          });
-        });
-        console.log(this.currenciesArray)
+    this.currenciesRepository.getRatesWithFlagsObservable().subscribe(
+      rates => {
+        this.currenciesArray = rates
         this.filteredCurrenciesArray = this.currenciesArray
-        console.log(this.filteredCurrenciesArray)
-      },
-      (error) => console.error('GetCurrencies error' + error)
-    );
+      }
+    )
+    // (error) => console.error('GetCurrencies error' + error)
   }
 
   getCountryFlag(code: string) {
     return this.flagsService.getFlagUrl(code);
   }
 
-  //flagi nie zmieniają się przy filtrowaniu
   filterCurrencies(filterText: string): void {
+    console.log(this.currenciesArray)
       this.filteredCurrenciesArray = this.currenciesArray.filter((currency) => {
         return (
-          currency.code.toLowerCase().includes(filterText) ||
-          currency.currency.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+          currency.rate.code.toLowerCase().includes(filterText) ||
+          currency.rate.currency.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
         );
       });
   }

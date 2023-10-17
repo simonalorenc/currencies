@@ -19,11 +19,11 @@
     </thead>
     <tbody class="table-group-divider">
         <tr *ngFor="let currency of filteredCurrenciesArray" class="align-middle">
-          <th scope="row"><img [src]="currency.flag" alt="Country flag"></th>
-          <td>{{ currency.currency }}</td>
-          <td>{{ currency.code }}</td>
-          <td>{{ currency.mid }}</td>
-          <td><a routerLink="/detail/{{currency.code}}">
+          <th scope="row"><img [src]="currency.flagUrl" alt="Country flag"></th>
+          <td>{{ currency.rate.currency }}</td>
+          <td>{{ currency.rate.code }}</td>
+          <td>{{ currency.rate.mid }}</td>
+          <td><a routerLink="/detail/{{currency.rate.code}}">
             <button type="button" class="btn btn-secondary btn-rounded btn-sm" mdbRipple>More details</button>
           </a></td>
         </tr>

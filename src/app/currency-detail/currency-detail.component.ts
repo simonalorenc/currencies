@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CurrenciesService } from '../currencies/currencies.service';
 import { DetailRate, Rate } from '../currency';
 import { FlagsService } from '../flags.service';
+import { CurrenciesRepository } from '../currencies-repository';
 
 @Component({
   selector: 'app-currency-detail',
@@ -14,7 +15,7 @@ export class CurrencyDetailComponent implements OnInit{
   currencyArray: DetailRate[] = []
   flagUrl!: string
 
-  constructor(private route: ActivatedRoute, private currenciesService: CurrenciesService, private flagsService: FlagsService) {}
+  constructor(private route: ActivatedRoute, private currenciesService: CurrenciesService, private flagsService: FlagsService, private currenciesRepository: CurrenciesRepository) {}
 
   ngOnInit(): void {
     this.getCurrencyName()
@@ -23,11 +24,10 @@ export class CurrencyDetailComponent implements OnInit{
   getCurrencyName(): void {
     const code = this.route.snapshot.paramMap.get('code')!
     this.currency = this.currenciesService.getCurrencyDetails(code)
-    const countryCode = code.slice(0, -1).toLowerCase()
-    this.flagsService.getFlagUrl(countryCode).subscribe(flagUrl => {
-      this.flagUrl = flagUrl
-    })
+    const countryCode = this.currenciesRepository.getCountryCode(code)
+    console.log(this.currency)
     this.getCurrencyDetails(code)
+    this.flagUrl = this.flagsService.getFlagUrl(countryCode)
   }
 
   getCurrencyDetails(code: string): void {

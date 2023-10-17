@@ -28,9 +28,17 @@ export interface DetailRate {
   mid: number
 }
 
-export interface RateWithFlag {
-  currency:  string,
-  code: string,
-  mid: number,
-  flag: string
+export interface DetailRateWithFlag {
+  rate: DetailRate
+  flagUrl: string
+}
+
+export class RateWithFlag {
+  rate: Rate
+  flagUrl: string
+
+  constructor(rate: Rate, flagUrl: string ) {
+    this.rate = rate
+    this.flagUrl = flagUrl
+  }
 }
