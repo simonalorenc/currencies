@@ -17,53 +17,27 @@ export class CurrencyDetailComponent implements OnInit{
   constructor(private route: ActivatedRoute, private currenciesService: CurrenciesService, private flagsService: FlagsService) {}
 
   ngOnInit(): void {
-    this.getCurrencyDetails()
     this.getCurrencyName()
   }
 
   getCurrencyName(): void {
-    const code = this.route.snapshot.paramMap.get('code')
-    if (code !== null) {
-      this.currenciesService.getCurrencyDetails(code).subscribe(
-        (currency) => {
-          this.currency = currency
-          const countryCode = code.slice(0, -1).toLowerCase()
-          this.flagsService.getFlagUrl(countryCode).subscribe(flagUrl => {
-            this.flagUrl = flagUrl
-          })
-        } 
-      )
-    }
+    const code = this.route.snapshot.paramMap.get('code')!
+    this.currency = this.currenciesService.getCurrencyDetails(code)
+    const countryCode = code.slice(0, -1).toLowerCase()
+    this.flagsService.getFlagUrl(countryCode).subscribe(flagUrl => {
+      this.flagUrl = flagUrl
+    })
+    this.getCurrencyDetails(code)
   }
 
-  getCurrencyDetails(): void {
-    const code = this.route.snapshot.paramMap.get('code')
-    if (code !== null) {
-      this.currenciesService.getCurrencyFromLastDays(code).subscribe(
-        (currencies) => this.currencyArray = currencies.rates
-      )
-    }
+  getCurrencyDetails(code: string): void {
+    this.currenciesService.getCurrencyFromLastDays(code).subscribe(
+      (currencies) => this.currencyArray = currencies.rates
+    )
   }
 
   getCountryFlag(code: string) {
     return this.flagsService.getFlagUrl(code)
   }
-
 }
 
-
-// getApi() {
-//   this.currenciesService.getCurrenciesRatesObservable().subscribe(
-//     (rates) => {
-//       rates.forEach((rate, i) => {
-//         const code = rate.code.slice(0, -1).toLowerCase()
-//         this.getCountryFlag(code).subscribe(flagUrl => {
-//           this.flagUrls[i] = flagUrl
-//         })
-//       })
-//       this.currenciesArray = rates;
-//       this.exampleArray = this.currenciesArray
-//     },
-//     (error) => console.error('GetCurrencies error' + error)
-//   );
-// }

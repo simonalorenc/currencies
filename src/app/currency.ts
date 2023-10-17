@@ -1,4 +1,4 @@
-export type Result = Info[]
+export type ResultCurrencies = Info[]
 
 export interface Info {
   table: string
@@ -11,9 +11,11 @@ export interface Rate {
   currency: string
   code: string
   mid: number
+  flag: string
 }
+
 //exchange rates from last 7 days
-export interface Root {
+export interface ResultOneCurrency {
   table: string
   currency: string
   code: string
@@ -24,4 +26,11 @@ export interface DetailRate {
   no: string
   effectiveDate: string
   mid: number
+}
+
+export interface RateWithFlag {
+  currency:  string,
+  code: string,
+  mid: number,
+  flag: string
 }

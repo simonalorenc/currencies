@@ -8,7 +8,7 @@ import {
   of,
   zip,
 } from 'rxjs';
-import { Info, Rate, Result, Root } from '../currency';
+import { Info, Rate, ResultCurrencies, ResultOneCurrency } from '../currency';
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +19,9 @@ export class CurrenciesService {
 
   constructor(private http: HttpClient) {}
 
-  //jak połączyć 2 streamy rx w jeden, concat, zip
-  private getCurrenciesInfo(tableName: string): Observable<Result> {
+  private getCurrenciesInfo(tableName: string): Observable<ResultCurrencies> {
     const API_CURRENCIES = `${this.API}/tables/${tableName}`;
-    return this.http.get<Result>(API_CURRENCIES);
+    return this.http.get<ResultCurrencies>(API_CURRENCIES);
   }
 
   getCurrenciesRatesObservable(): Observable<Rate[]> {
@@ -38,13 +37,13 @@ export class CurrenciesService {
     );
   }
 
-  getCurrencyDetails(code: string): Observable<Rate> {
-    const currency = this.currenciesArray.find((c:any) => c.code === code)!
-    return of(currency)
+  getCurrencyDetails(code: string): Rate {
+    const rate = this.currenciesArray.find((c:any) => c.code === code)!
+    return rate
   }
 
-  getCurrencyFromLastDays(code: string): Observable<Root> {
+  getCurrencyFromLastDays(code: string): Observable<ResultOneCurrency> {
     const API_EXCHANGE_RATES = `${this.API}/rates/a/${code}/last/7/`
-    return this.http.get<Root>(API_EXCHANGE_RATES)
+    return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES)
   }
 }

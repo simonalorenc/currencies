@@ -2,7 +2,6 @@
   <form [formGroup]="filterForm">
     <input
       formControlName="filterInputValue"
-      (input)="filterCurrencies()"
       class="form-control mb-3"
       type="text"
       placeholder="Search currency"
@@ -16,12 +15,11 @@
         <th scope="col">Currency</th>
         <th scope="col">Code</th>
         <th scope="col">Mid</th>
-        <th scope="col"></th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-        <tr *ngFor="let currency of currenciesArray; let i = index" class="align-middle">
-          <th scope="row"><img [src]="flagUrls[i]" alt="Country flag"></th>
+        <tr *ngFor="let currency of filteredCurrenciesArray" class="align-middle">
+          <th scope="row"><img [src]="currency.flag" alt="Country flag"></th>
           <td>{{ currency.currency }}</td>
           <td>{{ currency.code }}</td>
           <td>{{ currency.mid }}</td>

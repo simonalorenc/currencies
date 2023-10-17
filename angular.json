@@ -33,8 +33,7 @@
               "src/styles.scss",
               "./node_modules/font-awesome/css/font-awesome.min.css"
             ],
-            "scripts": [],
-            "proxyConfig": "proxy.conf.json"
+            "scripts": []
           },
           "configurations": {
             "production": {

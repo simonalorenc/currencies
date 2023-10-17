@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrenciesService } from './currencies.service';
-import { Rate } from '../currency';
+import { Rate, RateWithFlag } from '../currency';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FlagsService } from '../flags.service';
 
@@ -11,64 +11,63 @@ import { FlagsService } from '../flags.service';
 })
 export class CurrenciesComponent implements OnInit {
   currenciesArray: Rate[] = [];
-  filteredCurrenciesArray: Rate[] = [];
-  filterInputValue: string = '';
-  filterForm: FormGroup
-  exampleArray: Rate[] = []
-  flagUrl: string | null = null
-  flagUrls: string[] = []
+  filteredCurrenciesArray: RateWithFlag[] = [];
+  filterForm: FormGroup;
+  flagUrl: string | null = null;
+  flagUrls: string[] = [];
 
-  constructor(private currenciesService: CurrenciesService, private formBuilder: FormBuilder, private flagsService: FlagsService) {
+  constructor(
+    private currenciesService: CurrenciesService,
+    private formBuilder: FormBuilder,
+    private flagsService: FlagsService
+  ) {
     this.filterForm = this.formBuilder.group({
-      filterInputValue: ['']
-    })
+      filterInputValue: [''],
+    });
   }
 
   ngOnInit(): void {
-    this.getApi()
-    
+    this.getCurrenciesApi();
+
     this.filterForm.get('filterInputValue')?.valueChanges.subscribe((value) => {
-      console.log(value)
-      if(value === '') {
-        this.getApi()
-      } else {
-        //przed kolejnym fitrowaniem podczas usuwania liter trzeba znowu dodac do currenciesArray wszystkie elementy, edit: dodałam, ale pewnie da się to ładniej zrobić
-        this.currenciesArray = this.exampleArray
-        this.filterCurrencies()
-        this.currenciesArray = this.filteredCurrenciesArray
-      }
-    })
+      this.filterCurrencies(value);
+    });
   }
 
-  //subscribe w subscribe??
-  getApi() {
+  getCurrenciesApi() {
     this.currenciesService.getCurrenciesRatesObservable().subscribe(
       (rates) => {
-        rates.forEach((rate, i) => {
-          const code = rate.code.slice(0, -1).toLowerCase()
-          this.getCountryFlag(code).subscribe(flagUrl => {
-            this.flagUrls[i] = flagUrl
-          })
-        })
-        this.currenciesArray = rates;
-        this.exampleArray = this.currenciesArray
+        rates.forEach((rate) => {
+          const code = rate.code.slice(0, -1).toLowerCase();
+          this.getCountryFlag(code).subscribe((flagUrl) => {
+            const rateWithFlag: RateWithFlag = {
+              currency: rate.currency,
+              code: rate.code,
+              mid: rate.mid,
+              flag: flagUrl
+            }
+            this.currenciesArray.push(rateWithFlag)
+          });
+        });
+        console.log(this.currenciesArray)
+        this.filteredCurrenciesArray = this.currenciesArray
+        console.log(this.filteredCurrenciesArray)
       },
       (error) => console.error('GetCurrencies error' + error)
     );
   }
 
   getCountryFlag(code: string) {
-    return this.flagsService.getFlagUrl(code)
+    return this.flagsService.getFlagUrl(code);
   }
 
   //flagi nie zmieniają się przy filtrowaniu
-  filterCurrencies(): void {
-    const filterText = this.filterForm.get('filterInputValue')?.value
-    if(filterText !== 0) {
+  filterCurrencies(filterText: string): void {
       this.filteredCurrenciesArray = this.currenciesArray.filter((currency) => {
-        return currency.code.toLowerCase().includes(filterText) || currency.currency.toLocaleLowerCase().includes(filterText);
+        return (
+          currency.code.toLowerCase().includes(filterText) ||
+          currency.currency.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+        );
       });
-    }
-      
   }
 }
