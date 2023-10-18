@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   BehaviorSubject,
   Observable,
+  catchError,
   combineLatest,
   map,
   of,
@@ -43,7 +44,48 @@ export class CurrenciesService {
   }
 
   getCurrencyFromLastDays(code: string): Observable<ResultOneCurrency> {
-    const API_EXCHANGE_RATES = `${this.API}/rates/a/${code}/last/7/`
-    return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES)
+    const API_EXCHANGE_RATES_A = `${this.API}/rates/a/${code}/last/7/`
+    const API_EXCHANGE_RATES_B = `${this.API}/rates/b/${code}/last/7/`
+    return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_A).pipe(
+      catchError((error) => {
+        console.error('Error for table A: ' + error)
+        return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_B)
+      })
+    )
+  }
+
+  getCurrencyFromLastMonths(code: string, date: string): Observable<ResultOneCurrency> {
+    const API_EXCHANGE_RATES_A = `${this.API}/rates/a/${code}/${date}/`
+    const API_EXCHANGE_RATES_B = `${this.API}/rates/b/${code}/${date}/`
+    return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_A).pipe(
+      catchError((error) => {
+        console.error('Error for table A: ' + error)
+        return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_B)
+      })
+    )
+  }
+
+  getFirstDate() {
+    const date = new Date
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+
+  getSecondDate() {
+    const date = new Date
+    const year = date.getFullYear()
+    const month = String(date.getMonth()).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+
+  getThirdDate() {
+    const date = new Date
+    const year = date.getFullYear()
+    const month = String(date.getMonth() - 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
   }
 }

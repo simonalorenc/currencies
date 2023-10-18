@@ -4,6 +4,9 @@ import { CurrenciesService } from '../currencies/currencies.service';
 import { DetailRate, Rate } from '../currency';
 import { FlagsService } from '../flags.service';
 import { CurrenciesRepository } from '../currencies-repository';
+import { Chart, registerables } from 'node_modules/chart.js';
+import { ChartService } from '../chart.service';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-currency-detail',
@@ -13,6 +16,7 @@ import { CurrenciesRepository } from '../currencies-repository';
 export class CurrencyDetailComponent implements OnInit{
   currency!: Rate
   currencyArray: DetailRate[] = []
+  currencyArrayReady: boolean = false
   flagUrl!: string
 
   constructor(private route: ActivatedRoute, private currenciesService: CurrenciesService, private flagsService: FlagsService, private currenciesRepository: CurrenciesRepository) {}
@@ -25,14 +29,16 @@ export class CurrencyDetailComponent implements OnInit{
     const code = this.route.snapshot.paramMap.get('code')!
     this.currency = this.currenciesService.getCurrencyDetails(code)
     const countryCode = this.currenciesRepository.getCountryCode(code)
-    console.log(this.currency)
     this.getCurrencyDetails(code)
     this.flagUrl = this.flagsService.getFlagUrl(countryCode)
   }
 
   getCurrencyDetails(code: string): void {
     this.currenciesService.getCurrencyFromLastDays(code).subscribe(
-      (currencies) => this.currencyArray = currencies.rates
+      (currencies) => {
+        this.currencyArray = currencies.rates
+        this.currencyArrayReady = true
+      } 
     )
   }
 

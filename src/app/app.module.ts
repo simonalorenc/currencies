@@ -28,6 +28,8 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './footer/footer.component';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { FooterComponent } from './footer/footer.component';
     CurrencyDetailComponent,
     NavbarComponent,
     FooterComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import { FooterComponent } from './footer/footer.component';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
