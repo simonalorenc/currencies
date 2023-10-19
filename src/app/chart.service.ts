@@ -10,7 +10,7 @@ export class ChartService {
   constructor() { }
 
   renderChart(labelData: string[], dataData: number[], id: string) {
-    const myChart = new Chart(id, {
+    new Chart(id, {
       type: 'line',
       data: {
         labels: labelData,

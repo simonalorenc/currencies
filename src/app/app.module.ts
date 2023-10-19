@@ -69,9 +69,9 @@ import { ChartFromOneMonthComponent } from './chart-from-one-month/chart-from-on
     MdbTooltipModule,
     MdbValidationModule,
     BrowserAnimationsModule,
-    NgChartsModule
+    NgChartsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

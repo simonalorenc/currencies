@@ -1,48 +1,53 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
 import { DetailRate } from '../currency';
 import { CurrenciesService } from '../currencies/currencies.service';
-Chart.register(...registerables);
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit{
-  code: string = ''
-  currencyArray!: DetailRate[]
-  currencyForChart: number[] = [];
-  currencyDatesForChart: string[] = [];
+export class ChartComponent implements OnInit {
+  private code!: string;
 
-  constructor(private chartService: ChartService, private currenciesService: CurrenciesService ,private route: ActivatedRoute) {
-  }
+  constructor(
+    private chartService: ChartService,
+    private currenciesService: CurrenciesService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.parent?.paramMap.subscribe(params => {
-      this.code = params.get('code') || ''
-      this.getCurrencyDetails(this.code)
-    })
+    Chart.register(...registerables);
+    //TODO: zmienic na get jak w innych miejscach
+    let x = this.route.parent?.snapshot.paramMap.get('code');
+
+    this.route.parent?.paramMap.subscribe((params) => {
+      this.code = params.get('code') || '';
+      this.getCurrencyDetails(this.code);
+    });
   }
 
-  getCurrencyDetails(code: string): void {
-    this.currenciesService.getCurrencyFromLastDays(code).subscribe(
-      (currencies) => {
-        this.currencyArray = currencies.rates
-        this.completeCurrencyArraysForChart()
-      } 
-    )
+  private getCurrencyDetails(code: string): void {
+    // TODO: takie samo zapytanie jak w currency-details najlepiej przenieść rezultat do serwisu/cache
+    this.currenciesService
+      .getCurrencyFromLastDays(code)
+      .subscribe((currencies) => {
+        this.completeCurrencyArraysForChart(currencies.rates);
+      });
   }
 
-  completeCurrencyArraysForChart(): void {
-    this.currencyForChart = this.currencyArray.map(
-      (rate) => rate.mid
-    )
-    this.currencyDatesForChart = this.currencyArray.map(
+  private completeCurrencyArraysForChart(currencyDetails: DetailRate[]): void {
+    const currencyForChart = currencyDetails.map((rate) => rate.mid);
+    const currencyDatesForChart = currencyDetails.map(
       (rate) => rate.effectiveDate
-    )
-    this.chartService.renderChart(this.currencyDatesForChart, this.currencyForChart, 'chartFromSevenDays')
+    );
+    this.chartService.renderChart(
+      currencyDatesForChart,
+      currencyForChart,
+      'chartFromSevenDays'
+    );
   }
 }

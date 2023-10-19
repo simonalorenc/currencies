@@ -10,20 +10,35 @@ import { ChartFromOneMonthComponent } from './chart-from-one-month/chart-from-on
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard/currencies', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, children: [
-    { path: 'currencies', component: CurrenciesComponent },
-    { path: 'gold-prices', component: GoldPricesComponent}
-  ] },
-  { path: 'detail/:code', redirectTo: 'detail/:code/chart-from-seven-days', pathMatch: 'full' },
-  { path: 'detail/:code', component: CurrencyDetailComponent, children: [
-    { path: 'chart-from-seven-days', component: ChartComponent },
-    { path: 'chart-from-last-months', component: ChartFromLastMonthsComponent },
-    { path: 'chart-from-one-month', component: ChartFromOneMonthComponent }
-  ] }
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
+      { path: 'currencies', component: CurrenciesComponent },
+      { path: 'gold-prices', component: GoldPricesComponent },
+    ],
+  },
+  {
+    path: 'detail/:code',
+    redirectTo: 'detail/:code/chart-from-seven-days',
+    pathMatch: 'full',
+  },
+  {
+    path: 'detail/:code',
+    component: CurrencyDetailComponent,
+    children: [
+      { path: 'chart-from-seven-days', component: ChartComponent },
+      {
+        path: 'chart-from-last-months',
+        component: ChartFromLastMonthsComponent,
+      },
+      { path: 'chart-from-one-month', component: ChartFromOneMonthComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
