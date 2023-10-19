@@ -29,7 +29,7 @@ export class ChartService {
       options: {
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: false
           }
         }
       }

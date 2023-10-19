@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h1>{{ currency.currency }}</h1>
+    <!-- <h1>{{ currency.currency }}</h1> -->
     <img [src]="flagUrl">
   <h2 class="mt-5">Exchange rates from the last 7 days</h2>
   <table class="table">
@@ -18,10 +18,11 @@
       </tr>
     </tbody>
   </table>
-  <h2 class="mt-5">History of </h2>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero asperiores, dolores, in optio aliquam illum ex consequuntur ipsum expedita labore sapiente assumenda animi cupiditate possimus explicabo, distinctio perferendis consequatur excepturi. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos distinctio pariatur iusto facilis officiis nobis quod, minus assumenda. Totam adipisci facilis quo. Perferendis non
-    reprehenderit enim eos quo beatae quibusdam?
-  </p>
-  <app-chart *ngIf="currencyArrayReady" [currencyArray]="currencyArray"></app-chart>
+  <a [routerLink]="['/detail', code, 'chart-from-seven-days']"><app-button buttonText="last 7 days"></app-button></a>
+  <a [routerLink]="['/detail', code, 'chart-from-one-month']"><app-button buttonText="last month"></app-button></a>
+  <a routerLink="/detail/{{code}}/chart-from-last-months"><app-button buttonText="last months"></app-button></a>
+  <router-outlet></router-outlet>
+  <!-- <app-chart *ngIf="currencyArrayReady" [currencyArray]="currencyArray"></app-chart> -->
+  <!-- <app-chart-from-last-months></app-chart-from-last-months> -->
 </div>
+

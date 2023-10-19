@@ -18,6 +18,7 @@ export class CurrenciesService {
   private API: string = 'http://api.nbp.pl/api/exchangerates';
   currenciesArray: Rate[] = []
   currenciesDatesArray: string[] = []
+  currencyOneMonthDatesArray: string[] = []
 
   constructor(private http: HttpClient) {}
 
@@ -67,6 +68,7 @@ export class CurrenciesService {
   }
 
   getDates() {
+    this.currenciesDatesArray = []
     for(let i = 0; i < 3; i++) {
       const date = new Date
       date.setMonth(date.getMonth() - i)
@@ -77,6 +79,41 @@ export class CurrenciesService {
       this.currenciesDatesArray.push(`${year}-${month}-${day}`)
       console.log(`${year}-${month}-${day}`)
     }
+    console.log('console: ' + this.currenciesDatesArray)
     return this.currenciesDatesArray
   }
+
+  getDatesToMonthExchangeRate() {
+    this.currencyOneMonthDatesArray = []
+    const startDate = new Date
+    startDate.setDate(startDate.getDate() - 30)
+    startDate.setDate(startDate.getDate() - 1)
+    const startYear = startDate.getFullYear()
+    const startMonth = String(startDate.getMonth() + 1).padStart(2, '0')
+    const startDay = String(startDate.getDate()).padStart(2, '0')
+
+    const endDate = new Date
+    endDate.setDate(endDate.getDate() - 1)
+    const endYear = endDate.getFullYear()
+    const endMonth = String(endDate.getMonth() + 1).padStart(2, '0')
+    const endDay = String(endDate.getDate()).padStart(2, '0')
+
+    this.currencyOneMonthDatesArray.push(`${startYear}-${startMonth}-${startDay}`)
+    this.currencyOneMonthDatesArray.push(`${endYear}-${endMonth}-${endDay}`)
+    console.log(this.currencyOneMonthDatesArray)
+    return this.currencyOneMonthDatesArray
+  }
+
+  getCurrencyOneMonth(code: string, startDate: string, endDate: string): Observable<ResultOneCurrency> {
+    const API_EXCHANGE_RATES_A = `${this.API}/rates/a/${code}/${startDate}/${endDate}`
+    const API_EXCHANGE_RATES_B = `${this.API}/rates/b/${code}/${startDate}/${endDate}`
+    return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_A).pipe(
+      catchError((error) => {
+        console.error('Error for table A: ' + error)
+        return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_B)
+      })
+    )
+  }
 }
+
+

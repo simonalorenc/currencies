@@ -14,22 +14,24 @@ Chart.register(...registerables);
   styleUrls: ['./currency-detail.component.scss']
 })
 export class CurrencyDetailComponent implements OnInit{
-  currency!: Rate
+  code!: string
+  rate!: Rate
   currencyArray: DetailRate[] = []
   currencyArrayReady: boolean = false
   flagUrl!: string
 
-  constructor(private route: ActivatedRoute, private currenciesService: CurrenciesService, private flagsService: FlagsService, private currenciesRepository: CurrenciesRepository) {}
+  constructor(private route: ActivatedRoute, private currenciesService: CurrenciesService, private flagsService: FlagsService, private currenciesRepository: CurrenciesRepository) {
+    this.code = this.route.snapshot.paramMap.get('code')?.toLowerCase()!
+  }
 
   ngOnInit(): void {
     this.getCurrencyName()
   }
 
   getCurrencyName(): void {
-    const code = this.route.snapshot.paramMap.get('code')!
-    this.currency = this.currenciesService.getCurrencyDetails(code)
-    const countryCode = this.currenciesRepository.getCountryCode(code)
-    this.getCurrencyDetails(code)
+    this.rate = this.currenciesService.getCurrencyDetails(this.code)
+    const countryCode = this.currenciesRepository.getCountryCode(this.code)
+    this.getCurrencyDetails(this.code)
     this.flagUrl = this.flagsService.getFlagUrl(countryCode)
   }
 

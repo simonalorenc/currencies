@@ -29,7 +29,9 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './footer/footer.component';
 import { NgChartsModule } from 'ng2-charts';
-import { ChartComponent } from './chart/chart.component';
+import { ChartComponent } from './chart-from-seven-days/chart.component';
+import { ChartFromLastMonthsComponent } from './chart-from-last-months/chart-from-last-months.component';
+import { ChartFromOneMonthComponent } from './chart-from-one-month/chart-from-one-month.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { ChartComponent } from './chart/chart.component';
     NavbarComponent,
     FooterComponent,
     ChartComponent,
+    ChartFromLastMonthsComponent,
+    ChartFromOneMonthComponent,
   ],
   imports: [
     BrowserModule,
