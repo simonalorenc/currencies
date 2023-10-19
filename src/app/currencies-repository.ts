@@ -25,7 +25,7 @@ export class CurrenciesRepository {
     )
   }
 
-    getCountryCode(currencyCode: string): string {
+  getCountryCode(currencyCode: string): string {
     return currencyCode.slice(0, -1).toLowerCase()
   }
 }

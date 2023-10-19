@@ -1,12 +1,14 @@
 <div class="container mt-5">
-  <form [formGroup]="filterForm">
+  <form [formGroup]="filterForm" class="d-flex align-items-baseline">
     <input
       formControlName="filterInputValue"
-      class="form-control mb-3"
+      class="form-control mb-3 me-2 h-150"
       type="text"
       placeholder="Search currency"
       aria-label="default input example"
     />
+    <button type="button" class="btn btn-secondary btn-rounded btn-s d-inline me-2 h-150" mdbRipple (click)="getCurrenciesApi()">p</button>
+    <button type="button" class="btn btn-secondary btn-rounded btn-s d-inline h-150" mdbRipple (click)="sortByAlphabetically()">a</button>
   </form>
   <table class="table">
     <thead>

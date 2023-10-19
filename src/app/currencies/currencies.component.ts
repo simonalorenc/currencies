@@ -11,7 +11,7 @@ import { CurrenciesRepository } from '../currencies-repository';
   styleUrls: ['./currencies.component.scss'],
 })
 export class CurrenciesComponent implements OnInit {
-//TODO: zaktualizować tutaj te piękne tablice do nowego modelu RatesWithFlags i eloo
+  //TODO: zaktualizować tutaj te piękne tablice do nowego modelu RatesWithFlags i eloo
 
   currenciesArray: RateWithFlag[] = [];
   filteredCurrenciesArray: RateWithFlag[] = [];
@@ -39,12 +39,12 @@ export class CurrenciesComponent implements OnInit {
   }
 
   getCurrenciesApi() {
-    this.currenciesRepository.getRatesWithFlagsObservable().subscribe(
-      rates => {
-        this.currenciesArray = rates
-        this.filteredCurrenciesArray = this.currenciesArray
-      }
-    )
+    this.currenciesRepository
+      .getRatesWithFlagsObservable()
+      .subscribe((rates) => {
+        this.currenciesArray = rates;
+        this.filteredCurrenciesArray = this.currenciesArray;
+      });
     // (error) => console.error('GetCurrencies error' + error)
   }
 
@@ -53,12 +53,32 @@ export class CurrenciesComponent implements OnInit {
   }
 
   filterCurrencies(filterText: string): void {
-    console.log(this.currenciesArray)
-      this.filteredCurrenciesArray = this.currenciesArray.filter((currency) => {
-        return (
-          currency.rate.code.toLowerCase().includes(filterText) ||
-          currency.rate.currency.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
-        );
-      });
+    console.log(this.currenciesArray);
+    this.filteredCurrenciesArray = this.currenciesArray.filter((currency) => {
+      return (
+        currency.rate.code.toLowerCase().includes(filterText) ||
+        currency.rate.currency
+          .toLocaleLowerCase()
+          .includes(filterText.toLocaleLowerCase())
+      );
+    });
+  }
+
+  sortByAlphabetically() {
+    this.filteredCurrenciesArray = this.currenciesArray.sort((a, b) => {
+      const nameA = a.rate.currency.toUpperCase();
+      const nameB = b.rate.currency.toUpperCase();
+
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log(this.currenciesArray);
+    // const nameA = this.currenciesArray.
+    // this.filteredCurrenciesArray = this.currenciesArray.
   }
 }
