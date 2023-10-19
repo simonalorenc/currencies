@@ -13,7 +13,6 @@ Chart.register(...registerables);
   styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements OnInit{
-  currency!: Rate
   @Input() currencyArray!: DetailRate[]
   currencyMonthArray: number[] = []
   currencyForChart: number[] = [];
@@ -26,10 +25,10 @@ export class ChartComponent implements OnInit{
   ngOnInit(): void {
     this.completeCurrencyArraysForChart()
     this.completeCurrencyArraysForMonthsChart()
-    this.example().subscribe(result => {
+    this.completeCurrencyArrayForMonthsChart().subscribe(result => {
       this.currencyForMonthsChart = result
-      console.log(this.currencyMonthArray)
-      this.chartService.renderChart(this.currencyDatesForMonthsChart, this.currencyForMonthsChart, 'chart')
+      console.log(this.currencyForMonthsChart)
+      this.chartService.renderChart(this.currencyDatesForMonthsChart, this.currencyForMonthsChart, 'chartFormLastMonths')
     })
   }
 
@@ -44,30 +43,24 @@ export class ChartComponent implements OnInit{
     this.currencyDatesForChart = this.currencyArray.map(
       (rate) => rate.effectiveDate
     )
-    this.chartService.renderChart(this.currencyDatesForChart, this.currencyForChart, 'piechart')
+    this.chartService.renderChart(this.currencyDatesForChart, this.currencyForChart, 'chartFromSevenDays')
   }
 
   completeCurrencyArraysForMonthsChart() {
-    const firstDate = this.currenciesService.getFirstDate()
-    const secondDate = this.currenciesService.getSecondDate()
-    const thirdDate = this.currenciesService.getThirdDate()
-    
-    this.currencyDatesForMonthsChart.push(firstDate)
-    this.currencyDatesForMonthsChart.push(secondDate)
-    this.currencyDatesForMonthsChart.push(thirdDate)
+    this.currencyDatesForMonthsChart = this.currenciesService.getDates()
   }
 
-  example() {
-    const countryCode = this.route.snapshot.paramMap.get('code')!
+  completeCurrencyArrayForMonthsChart() {
+    const countryCode = this.route.snapshot.paramMap.get('code')?.toLowerCase()!
     const firstMonth = this.currenciesService.getCurrencyFromLastMonths(countryCode, this.currencyDatesForMonthsChart[0])
     const secondMonth = this.currenciesService.getCurrencyFromLastMonths(countryCode, this.currencyDatesForMonthsChart[1])
     const thirdMonth = this.currenciesService.getCurrencyFromLastMonths(countryCode, this.currencyDatesForMonthsChart[2])
     return combineLatest([firstMonth, secondMonth, thirdMonth]).pipe(
-      map(([a, b, c]) => {
-        const currencyA = a.rates.map(rate => rate.mid)
-        const currencyB = b.rates.map(rate => rate.mid)
-        const currencyC = c.rates.map(rate => rate.mid)
-        return [...currencyA, ...currencyB, ...currencyC]
+      map(([currencyResult1, currencyResult2, currencyResult3]) => {
+        const currencyRate1 = currencyResult1.rates.map(rate => rate.mid)
+        const currencyRate2 = currencyResult2.rates.map(rate => rate.mid)
+        const currencyRate3 = currencyResult3.rates.map(rate => rate.mid)
+        return [...currencyRate1, ...currencyRate2, ...currencyRate3]
       }),
       catchError(error => {
         console.error('Błąd w combineLatest ' + error)
@@ -75,37 +68,4 @@ export class ChartComponent implements OnInit{
       })
     )
   }
-
-  // getCurrencyDetails(code: string): void {
-  //   this.currenciesService.getCurrencyFromLastDays(code).subscribe(
-  //     (currencies) => {
-  //       this.currencyArray = currencies.rates
-  //       this.currencyArrayReady = true
-  //     } 
-  //   )
-  // }
-
-
-  // getCurrenciesRatesObservable(): Observable<Rate[]> {
-  //   const tableA = this.getCurrenciesInfo('A');
-  //   const tableB = this.getCurrenciesInfo('B');
-  //   return combineLatest([tableA, tableB]).pipe(
-  //     map(([resultA, resultB]) => {
-  //       const ratesA = resultA[0].rates;
-  //       const ratesB = resultB[0].rates;
-  //       this.currenciesArray = [...ratesA, ...ratesB]
-  //       return this.currenciesArray;
-  //     })
-  //   );
-  // }
-
 }
-
-// getCurrencyDetails(code: string): void {
-//   this.currenciesService.getCurrencyFromLastDays(code).subscribe(
-//     (currencies) => {
-//       this.currencyArray = currencies.rates
-//       this.currencyArrayReady = true
-//     } 
-//   )
-// }

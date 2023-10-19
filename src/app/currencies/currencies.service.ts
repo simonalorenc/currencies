@@ -17,6 +17,7 @@ import { Info, Rate, ResultCurrencies, ResultOneCurrency } from '../currency';
 export class CurrenciesService {
   private API: string = 'http://api.nbp.pl/api/exchangerates';
   currenciesArray: Rate[] = []
+  currenciesDatesArray: string[] = []
 
   constructor(private http: HttpClient) {}
 
@@ -65,27 +66,17 @@ export class CurrenciesService {
     )
   }
 
-  getFirstDate() {
-    const date = new Date
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
-  }
-
-  getSecondDate() {
-    const date = new Date
-    const year = date.getFullYear()
-    const month = String(date.getMonth()).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
-  }
-
-  getThirdDate() {
-    const date = new Date
-    const year = date.getFullYear()
-    const month = String(date.getMonth() - 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
+  getDates() {
+    for(let i = 0; i < 3; i++) {
+      const date = new Date
+      date.setMonth(date.getMonth() - i)
+      date.setDate(date.getDate() - 1)
+      const year = date.getFullYear()
+      const month = String(date.getMonth() + 1).padStart(2, '0')
+      const day = String(date.getDate()).padStart(2, '0')
+      this.currenciesDatesArray.push(`${year}-${month}-${day}`)
+      console.log(`${year}-${month}-${day}`)
+    }
+    return this.currenciesDatesArray
   }
 }
