@@ -15,7 +15,7 @@ Chart.register(...registerables);
 export class CurrencyDetailComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 7
 
-  currency!: CurrencyExchangeTableDto
+  name!: string
   code!: string;
   detailCurrencyRates: CurrencyRate[] = [];
   flagUrl!: string;
@@ -43,7 +43,7 @@ export class CurrencyDetailComponent implements OnInit {
     this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((currency) => {
-        this.currency = currency
+        this.name = currency.currency
         const currencyRatesDto = currency.rates.reverse();
         this.detailCurrencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
       });
