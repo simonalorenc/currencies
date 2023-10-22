@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
-import { DetailRate } from '../currency';
+import { CurrencyRateDto } from '../currency-exchange-table-dto';
 import { CurrenciesService } from '../currencies/currencies.service';
 Chart.register(...registerables);
 
@@ -39,7 +39,7 @@ export class ChartComponent implements OnInit {
       });
   }
 
-  private completeCurrencyArraysForChart(currencyDetails: DetailRate[]): void {
+  private completeCurrencyArraysForChart(currencyDetails: CurrencyRateDto[]): void {
     const currencyForChart = currencyDetails.map((rate) => rate.mid);
     const currencyDatesForChart = currencyDetails.map(
       (rate) => rate.effectiveDate

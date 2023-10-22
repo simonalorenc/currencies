@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartService } from '../chart.service';
 import { CurrenciesService } from '../currencies/currencies.service';
 import { ActivatedRoute } from '@angular/router';
-import { DetailRate, ResultOneCurrency } from '../currency';
+import { CurrencyRateDto } from '../currency-exchange-table-dto';
 
 @Component({
   selector: 'app-chart-from-one-month',
@@ -12,7 +12,7 @@ import { DetailRate, ResultOneCurrency } from '../currency';
 export class ChartFromOneMonthComponent implements OnInit{
   code!: string
   datesToApi: string[] =[]
-  currencyArray!: DetailRate[]
+  currencyArray!: CurrencyRateDto[]
   currencyForOneMonthChart: number[] = [];
   currencyDatesForOneMonthChart: string[] = [];
 

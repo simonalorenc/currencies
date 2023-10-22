@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrenciesService } from './currencies.service';
-import { Rate, RateWithFlag } from '../currency';
+import { RateWithFlag } from '../rate-with-flag'
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FlagsService } from '../flags.service';
 import { CurrenciesRepository } from '../currencies-repository';
 
 @Component({

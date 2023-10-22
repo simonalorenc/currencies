@@ -4,12 +4,10 @@ import {
   Observable,
   catchError,
   combineLatest,
-  map,
-  merge,
-  onErrorResumeNext,
+  map 
 } from 'rxjs';
-import { Rate, ResultCurrencies, ResultOneCurrency } from '../currency';
-import { DatePipe, formatDate, getLocaleId } from '@angular/common';
+import { RateDto, ExchangeTableDto } from '../exchange-table-dto';
+import { CurrencyExchangeTableDto } from '../currency-exchange-table-dto'
 
 @Injectable({
   providedIn: 'root',
@@ -17,20 +15,20 @@ import { DatePipe, formatDate, getLocaleId } from '@angular/common';
 export class CurrenciesService {
   private API: string = 'http://api.nbp.pl/api/exchangerates';
 
-  private currenciesArray: Rate[] = [];
+  private currenciesArray: RateDto[] = [];
 
   constructor(private http: HttpClient) {
     this.getStartAndEndDate()
   }
 
-  private getCurrencies(tableName: string): Observable<ResultCurrencies> {
-    const currenciesUrl = `${this.API}/tables/${tableName}`;
-    return this.http.get<ResultCurrencies>(currenciesUrl);
+  private getExchangeTableDtoObservable(tableName: string): Observable<ExchangeTableDto[]> {
+    const exchangeTableUrl = `${this.API}/tables/${tableName}`;
+    return this.http.get<ExchangeTableDto[]>(exchangeTableUrl);
   }
 
-  getCurrenciesRatesObservable(): Observable<Rate[]> {
-    const tableA = this.getCurrencies('A');
-    const tableB = this.getCurrencies('B');
+  getCurrenciesRatesObservable(): Observable<RateDto[]> {
+    const tableA = this.getExchangeTableDtoObservable('A');
+    const tableB = this.getExchangeTableDtoObservable('B');
     return combineLatest([tableA, tableB]).pipe(
       map(([resultA, resultB]) => {
         const ratesA = resultA[0].rates;
@@ -41,17 +39,17 @@ export class CurrenciesService {
     );
   }
 
-  getCurrencyDetails(code: string): Rate {
+  getCurrencyDetails(code: string): RateDto {
     return this.currenciesArray.find((currency: any) => currency.code === code)!;
   }
 
-  getCurrencyFromLastDays(code: string): Observable<ResultOneCurrency> {
+  getCurrencyFromLastDays(code: string): Observable<CurrencyExchangeTableDto> {
     const tableAUrl = `${this.API}/rates/a/${code}/last/7/`;
     const tableBUrl = `${this.API}/rates/b/${code}/last/7/`;
-    return this.http.get<ResultOneCurrency>(tableAUrl).pipe(
+    return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
       catchError((error) => {
         console.error('Error for table A: ' + error);
-        return this.http.get<ResultOneCurrency>(tableBUrl);
+        return this.http.get<CurrencyExchangeTableDto>(tableBUrl);
       })
     );
   }
@@ -59,13 +57,13 @@ export class CurrenciesService {
   getCurrencyFromLastMonths(
     code: string,
     date: string
-  ): Observable<ResultOneCurrency> {
+  ): Observable<CurrencyExchangeTableDto> {
     const tableAUrl = `${this.API}/rates/a/${code}/${date}/`;
     const tableBUrl = `${this.API}/rates/b/${code}/${date}/`;
-    return this.http.get<ResultOneCurrency>(tableAUrl).pipe(
+    return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
       catchError((error) => {
         console.error('Error for table A: ' + error);
-        return this.http.get<ResultOneCurrency>(tableBUrl);
+        return this.http.get<CurrencyExchangeTableDto>(tableBUrl);
       })
     );
   }
@@ -110,13 +108,13 @@ export class CurrenciesService {
     code: string,
     startDate: string,
     endDate: string
-  ): Observable<ResultOneCurrency> {
+  ): Observable<CurrencyExchangeTableDto> {
     const tableAUrl = `${this.API}/rates/a/${code}/${startDate}/${endDate}`;
     const tableBUrl = `${this.API}/rates/b/${code}/${startDate}/${endDate}`;
-    return this.http.get<ResultOneCurrency>(tableAUrl).pipe(
+    return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
       catchError((error) => {
         console.error('Error for table A: ' + error);
-        return this.http.get<ResultOneCurrency>(tableBUrl);
+        return this.http.get<CurrencyExchangeTableDto>(tableBUrl);
       })
     );
   }

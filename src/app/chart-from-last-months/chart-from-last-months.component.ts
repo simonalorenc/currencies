@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CurrenciesService } from '../currencies/currencies.service';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
-import { DetailRate } from '../currency';
+import { CurrencyRateDto } from '../currency-exchange-table-dto';
 
 @Component({
   selector: 'app-chart-from-last-months',
@@ -27,9 +27,9 @@ export class ChartFromLastMonthsComponent {
 
   createChartFromLastMonths() {
     const datesArray = this.currenciesService.getStartAndEndDate()
-    const firstMonthCurrencyArray: DetailRate[] = []
-    const secondMonthCurrencyArray: DetailRate[] = []
-    const thirdMonthCurrencyArray: DetailRate[] = []
+    const firstMonthCurrencyArray: CurrencyRateDto[] = []
+    const secondMonthCurrencyArray: CurrencyRateDto[] = []
+    const thirdMonthCurrencyArray: CurrencyRateDto[] = []
     const data = new Date((datesArray[0].slice(0, -3)) + "-01")
     data.setMonth(data.getMonth() + 1)
     const middleMonth = data.toISOString().slice(0, 7)

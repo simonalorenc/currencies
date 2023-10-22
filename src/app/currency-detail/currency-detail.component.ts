@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CurrenciesService } from '../currencies/currencies.service';
-import { DetailRate, Rate } from '../currency';
+import { CurrencyRateDto } from '../currency-exchange-table-dto';
 import { FlagsService } from '../flags.service';
 import { CurrenciesRepository } from '../currencies-repository';
 import { Chart, registerables } from 'node_modules/chart.js';
@@ -14,7 +14,7 @@ Chart.register(...registerables);
 })
 export class CurrencyDetailComponent implements OnInit {
   code!: string;
-  currencyArray: DetailRate[] = [];
+  currencyArray: CurrencyRateDto[] = [];
   flagUrl!: string;
 
   constructor(
