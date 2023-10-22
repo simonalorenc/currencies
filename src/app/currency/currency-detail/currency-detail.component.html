@@ -12,10 +12,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let detailCurrencyRates of detailCurrencyRates; let i = index">
+      <tr *ngFor="let detailCurrency of detailCurrencyRates; let i = index">
         <td>{{ i + 1 }}</td>
-        <td>{{ detailCurrencyRates.date }}</td>
-        <td>{{ detailCurrencyRates.mid }}</td>
+        <td>{{ detailCurrency.date }}</td>
+        <td>{{ detailCurrency.mid }}</td>
       </tr>
     </tbody>
   </table>
