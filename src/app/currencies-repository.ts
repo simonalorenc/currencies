@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ExchangeRateService } from './currencies/exchange-rate.service';
 import { FlagsService } from './flags.service';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { RateDto } from './exchange-table-dto';
 import { RateWithFlag } from './rate-with-flag';
 
@@ -14,7 +14,7 @@ export class CurrenciesRepository {
     private flagsService: FlagsService
   ) {}
 
-  getRatesWithFlagsObservable(): Observable<RateWithFlag[]> {
+  getRatesWithFlags(): Observable<RateWithFlag[]> {
     return this.currenciesService.getAllRateDtos().pipe(
       map((rates: RateDto[]) => {
         return rates.map((rate: RateDto) => {

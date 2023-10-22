@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChartFromOneMonthComponent } from './chart-from-one-month.component';
+import { ChartFromLast30DaysComponent } from './chart-from-last-30-days.component';
 
 describe('ChartFromOneMonthComponent', () => {
-  let component: ChartFromOneMonthComponent;
-  let fixture: ComponentFixture<ChartFromOneMonthComponent>;
+  let component: ChartFromLast30DaysComponent;
+  let fixture: ComponentFixture<ChartFromLast30DaysComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ChartFromOneMonthComponent]
+      declarations: [ChartFromLast30DaysComponent]
     });
-    fixture = TestBed.createComponent(ChartFromOneMonthComponent);
+    fixture = TestBed.createComponent(ChartFromLast30DaysComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

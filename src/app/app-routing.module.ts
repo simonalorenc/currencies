@@ -4,9 +4,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { GoldPricesComponent } from './gold-prices/gold-prices.component';
 import { CurrencyDetailComponent } from './currency-detail/currency-detail.component';
-import { ChartComponent } from './chart-from-seven-days/chart.component';
+import { ChartFromLastSevenDaysComponent } from './chart-from-last-seven-days/chart-from-last-seven-days.component';
 import { ChartFromLastMonthsComponent } from './chart-from-last-months/chart-from-last-months.component';
-import { ChartFromOneMonthComponent } from './chart-from-one-month/chart-from-one-month.component';
+import { ChartFromLast30DaysComponent } from './chart-from-last-30-days/chart-from-last-30-days.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard/currencies', pathMatch: 'full' },
@@ -27,12 +27,12 @@ const routes: Routes = [
     path: 'detail/:code',
     component: CurrencyDetailComponent,
     children: [
-      { path: 'chart-from-seven-days', component: ChartComponent },
+      { path: 'chart-from-seven-days', component: ChartFromLastSevenDaysComponent },
       {
         path: 'chart-from-last-months',
         component: ChartFromLastMonthsComponent,
       },
-      { path: 'chart-from-one-month', component: ChartFromOneMonthComponent },
+      { path: 'chart-from-one-month', component: ChartFromLast30DaysComponent },
     ],
   },
 ];

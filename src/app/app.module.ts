@@ -14,9 +14,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './footer/footer.component';
 import { NgChartsModule } from 'ng2-charts';
-import { ChartComponent } from './chart-from-seven-days/chart.component';
+import { ChartFromLastSevenDaysComponent } from './chart-from-last-seven-days/chart-from-last-seven-days.component';
 import { ChartFromLastMonthsComponent } from './chart-from-last-months/chart-from-last-months.component';
-import { ChartFromOneMonthComponent } from './chart-from-one-month/chart-from-one-month.component';
+import { ChartFromLast30DaysComponent } from './chart-from-last-30-days/chart-from-last-30-days.component';
 import { MdbModule } from './mdb/mdb.module';
 
 @NgModule({
@@ -29,9 +29,9 @@ import { MdbModule } from './mdb/mdb.module';
     CurrencyDetailComponent,
     NavbarComponent,
     FooterComponent,
-    ChartComponent,
+    ChartFromLastSevenDaysComponent,
     ChartFromLastMonthsComponent,
-    ChartFromOneMonthComponent,
+    ChartFromLast30DaysComponent
   ],
   imports: [
     BrowserModule,

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from '../chart.service';
-import { ExchangeRateService } from '../currencies/exchange-rate.service';
 import { ActivatedRoute } from '@angular/router';
+import { ExchangeRateService } from '../currencies/exchange-rate.service';
 
 @Component({
-  selector: 'app-chart-from-one-month',
-  templateUrl: './chart-from-one-month.component.html',
-  styleUrls: ['./chart-from-one-month.component.scss'],
+  selector: 'app-chart',
+  templateUrl: './chart-from-last-seven-days.component.html',
+  styleUrls: ['./chart-from-last-seven-days.component.scss'],
 })
-export class ChartFromOneMonthComponent implements OnInit {
-  private NUMBER_OF_LAST_DAYS: number = 30;
-  private CHART_ID = 'chartFormOneMonth';
+export class ChartFromLastSevenDaysComponent implements OnInit {
+  private NUMBER_OF_LAST_DAYS: number = 7;
+  private CHART_ID = 'chartFromSevenDays';
 
   constructor(
     private chartService: ChartService,
@@ -21,11 +21,11 @@ export class ChartFromOneMonthComponent implements OnInit {
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe((params) => {
       const code = params.get('code') || '';
-      this.createChartFromLast30Days(code);
+      this.createChartFromLastSevenDays(code);
     });
   }
 
-  createChartFromLast30Days(code: string): void {
+  private createChartFromLastSevenDays(code: string): void {
     this.currenciesService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((result) => {

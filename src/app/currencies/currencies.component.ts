@@ -32,7 +32,7 @@ export class CurrenciesComponent implements OnInit {
 
   getRatesWithFlags() {
     this.currenciesRepository
-      .getRatesWithFlagsObservable()
+      .getRatesWithFlags()
       .subscribe((rates) => {
         this.currenciesArray = rates;
         this.filteredCurrenciesArray = this.currenciesArray;
