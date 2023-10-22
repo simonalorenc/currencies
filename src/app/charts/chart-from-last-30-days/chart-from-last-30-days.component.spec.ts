@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChartFromLast30DaysComponent } from './chart-from-last-30-days.component';
 
-describe('ChartFromOneMonthComponent', () => {
+describe('ChartFromLast30DaysComponent', () => {
   let component: ChartFromLast30DaysComponent;
   let fixture: ComponentFixture<ChartFromLast30DaysComponent>;
 

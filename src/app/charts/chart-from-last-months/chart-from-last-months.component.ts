@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ExchangeRateService } from '../currencies/exchange-rate.service';
+import { ExchangeRateService } from '../../currencies/exchange-rate.service';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
-import { CurrencyRateDto } from '../currency-exchange-table-dto';
+import { CurrencyRateDto } from '../../currency-exchange-table-dto';
 
 @Component({
   selector: 'app-chart-from-last-months',

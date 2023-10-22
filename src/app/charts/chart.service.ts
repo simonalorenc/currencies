@@ -9,14 +9,14 @@ export class ChartService {
 
   constructor() { }
 
-  createChart(labelData: string[], dataData: number[], id: string) {
+  createChart(labels: string[], data: number[], id: string) {
     const myChart = new Chart(id, {
       type: 'line',
       data: {
-        labels: labelData,
+        labels: labels,
         datasets: [{
           label: 'Exchange Rates',
-          data: dataData,
+          data: data,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
           ],

@@ -4,9 +4,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { GoldPricesComponent } from './gold-prices/gold-prices.component';
 import { CurrencyDetailComponent } from './currency-detail/currency-detail.component';
-import { ChartFromLastSevenDaysComponent } from './chart-from-last-seven-days/chart-from-last-seven-days.component';
-import { ChartFromLastMonthsComponent } from './chart-from-last-months/chart-from-last-months.component';
-import { ChartFromLast30DaysComponent } from './chart-from-last-30-days/chart-from-last-30-days.component';
+import { ChartFromLastSevenDaysComponent } from './charts/chart-from-last-seven-days/chart-from-last-seven-days.component';
+import { ChartFromLastMonthsComponent } from './charts/chart-from-last-months/chart-from-last-months.component';
+import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/chart-from-last-30-days.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard/currencies', pathMatch: 'full' },

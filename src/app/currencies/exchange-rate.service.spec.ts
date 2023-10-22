@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ExchangeRateService } from './exchange-rate.service';
 
-describe('CurrenciesService', () => {
+describe('ExchangeRateService', () => {
   let service: ExchangeRateService;
 
   beforeEach(() => {
