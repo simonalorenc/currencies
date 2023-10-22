@@ -10,7 +10,7 @@ import { GoldPrice } from './data/gold-price';
 export class GoldPricesComponent implements OnInit {
   goldPrices: GoldPrice[] = [];
 
-  constructor(private goldPricesService: GoldPriceService) {
+  constructor(private goldPriceService: GoldPriceService) {
   }
 
   ngOnInit(): void {
@@ -18,7 +18,7 @@ export class GoldPricesComponent implements OnInit {
   }
 
   private getGoldPricesFromLastDays() {
-    this.goldPricesService.getGoldPricesDtoFromLastDays().subscribe(
+    this.goldPriceService.getGoldPricesDtoFromLastDays().subscribe(
       result => {
         const goldPricesFromNewest = result.reverse()
         this.goldPrices = goldPricesFromNewest.map(dto => new GoldPrice(dto))

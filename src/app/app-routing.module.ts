@@ -9,30 +9,19 @@ import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/c
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard/currencies', pathMatch: 'full' },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
+  { path: '', redirectTo: '/dashboard/app-currency-list', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent,
     children: [
-      { path: 'currencies', component: CurrencyListComponent },
+      { path: 'app-currency-list', component: CurrencyListComponent },
       { path: 'gold-prices', component: GoldPricesComponent },
     ],
   },
-  {
-    path: 'detail/:code',
-    redirectTo: 'detail/:code/chart-from-seven-days',
-    pathMatch: 'full',
-  },
-  {
-    path: 'detail/:code',
-    component: CurrencyDetailComponent,
+  { path: 'detail/:code', redirectTo: 'detail/:code/chart-from-last-seven-days', pathMatch: 'full' },
+  { path: 'detail/:code', component: CurrencyDetailComponent,
     children: [
-      { path: 'chart-from-seven-days', component: ChartFromLastSevenDaysComponent },
-      {
-        path: 'chart-from-last-months',
-        component: ChartFromLastMonthsComponent,
-      },
-      { path: 'chart-from-one-month', component: ChartFromLast30DaysComponent },
+      { path: 'chart-from-last-seven-days', component: ChartFromLastSevenDaysComponent },
+      { path: 'chart-from-last-months', component: ChartFromLastMonthsComponent },
+      { path: 'chart-from-last-30-days', component: ChartFromLast30DaysComponent },
     ],
   },
 ];

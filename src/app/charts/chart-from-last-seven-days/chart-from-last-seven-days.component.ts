@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ExchangeRateService } from 'src/app/currency/data/exchange-rate.service';
 
 @Component({
-  selector: 'app-chart',
+  selector: 'app-chart-from-last-seven-days',
   templateUrl: './chart-from-last-seven-days.component.html',
   styleUrls: ['./chart-from-last-seven-days.component.scss'],
 })
@@ -14,7 +14,7 @@ export class ChartFromLastSevenDaysComponent implements OnInit {
 
   constructor(
     private chartService: ChartService,
-    private currenciesService: ExchangeRateService,
+    private exchangeRateService: ExchangeRateService,
     private route: ActivatedRoute
   ) {}
 
@@ -26,7 +26,7 @@ export class ChartFromLastSevenDaysComponent implements OnInit {
   }
 
   private createChartFromLastSevenDays(code: string): void {
-    this.currenciesService
+    this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((result) => {
         const chartData = result.rates.map((rate) => rate.mid);

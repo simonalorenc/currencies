@@ -9,20 +9,16 @@
         labore.
       </p>
       <div>
-        <a routerLink="/dashboard/currencies">
+        <a routerLink="/dashboard/app-currency-list">
           <app-button
             buttonText="Currencies"
             [size]="'btn-lg me-5'"
-            [class.active]="1 === activeButtonIndex"
-            (click)="setActiveButton(1)"
           ></app-button
         ></a>
         <a routerLink="/dashboard/gold-prices">
           <app-button
             buttonText="Gold"
             [size]="'btn-lg'"
-            [class.active]="2 === activeButtonIndex"
-            (click)="setActiveButton(2)"
           ></app-button
         ></a>
       </div>

@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let currency of filteredCurrenciesArray" class="align-middle">
+      <tr *ngFor="let currency of filteredRatesWithFlag" class="align-middle">
         <th scope="row"><img [src]="currency.flagUrl" alt="Country flag" /></th>
         <td>{{ currency.rate.currency }}</td>
         <td>{{ currency.rate.code }}</td>

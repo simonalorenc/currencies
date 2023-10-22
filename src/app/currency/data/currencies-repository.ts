@@ -10,12 +10,12 @@ import { FlagsService } from './flags.service';
 })
 export class CurrenciesRepository {
   constructor(
-    private currenciesService: ExchangeRateService,
+    private exchangeRateService: ExchangeRateService,
     private flagsService: FlagsService
   ) {}
 
   getRatesWithFlags(): Observable<RateWithFlag[]> {
-    return this.currenciesService.getAllRateDtos().pipe(
+    return this.exchangeRateService.getAllRateDtos().pipe(
       map((rates: RateDto[]) => {
         return rates.map((rate: RateDto) => {
           const countryCode = this.getCountryCode(rate.code);

@@ -16,12 +16,12 @@ export class CurrencyDetailComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 7
 
   code!: string;
-  currencyArray: CurrencyRateDto[] = [];
+  currencyArray: CurrencyRateDto[] = []; //TODO: zmapowac do nowej klasy (nie korystac z dto w html)
   flagUrl!: string;
 
   constructor(
     private route: ActivatedRoute,
-    private currenciesService: ExchangeRateService,
+    private exchangeRateService: ExchangeRateService,
     private flagsService: FlagsService,
     private currenciesRepository: CurrenciesRepository
   ) {
@@ -39,10 +39,10 @@ export class CurrencyDetailComponent implements OnInit {
   }
 
   private getCurrencyDetails(code: string): void {
-    this.currenciesService
+    this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
-      .subscribe((currencies) => {
-        this.currencyArray = currencies.rates.reverse();
+      .subscribe((currency) => {
+        this.currencyArray = currency.rates.reverse();
       });
   }
 }

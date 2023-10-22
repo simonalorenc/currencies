@@ -4,13 +4,13 @@ import { CurrenciesRepository } from '../data/currencies-repository';
 import { RateWithFlag } from '../data/rate-with-flag';
 
 @Component({
-  selector: 'app-currencies',
+  selector: 'app-currency-list',
   templateUrl: './currency-list.component.html',
   styleUrls: ['./currency-list.component.scss'],
 })
 export class CurrencyListComponent implements OnInit {
-  private currenciesArray: RateWithFlag[] = [];
-  filteredCurrenciesArray: RateWithFlag[] = [];
+  private ratesWithFlag: RateWithFlag[] = [];
+  filteredRatesWithFlag: RateWithFlag[] = [];
   filterForm: FormGroup;
 
   constructor(
@@ -34,22 +34,23 @@ export class CurrencyListComponent implements OnInit {
     this.currenciesRepository
       .getRatesWithFlags()
       .subscribe((rates) => {
-        this.currenciesArray = rates;
-        this.filteredCurrenciesArray = this.currenciesArray;
+        this.ratesWithFlag = rates;
+        this.filteredRatesWithFlag = this.ratesWithFlag;
       });
   }
 
   private filterCurrencies(filterText: string): void {
-    this.filteredCurrenciesArray = this.currenciesArray.filter((currency) => {
+    console.log(this.ratesWithFlag)
+    this.filteredRatesWithFlag = this.ratesWithFlag.filter((rateWithFlag) => {
       return (
-        currency.rate.code.toLowerCase().includes(filterText) ||
-        currency.rate.currency.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+        rateWithFlag.rate.code.toLowerCase().includes(filterText) ||
+        rateWithFlag.rate.currency.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
       );
     });
   }
 
   sortByAlphabetically() {
-    this.filteredCurrenciesArray = this.currenciesArray.sort((a, b) => {
+    this.filteredRatesWithFlag = this.ratesWithFlag.sort((a, b) => {
       return a.rate.currency.localeCompare(b.rate.currency)
     })
   }

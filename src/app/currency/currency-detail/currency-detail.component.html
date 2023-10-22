@@ -19,10 +19,10 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-center mt-5">
-    <a [routerLink]="['/detail', code, 'chart-from-seven-days']"
+    <a [routerLink]="['/detail', code, 'chart-from-last-seven-days']"
     ><app-button buttonText="last 7 days" [size]="'btn-lg me-5'"></app-button
     ></a>
-    <a [routerLink]="['/detail', code, 'chart-from-one-month']"
+    <a [routerLink]="['/detail', code, 'chart-from-last-30-days']"
       ><app-button buttonText="last 30 days" [size]="'btn-lg me-5'"></app-button
     ></a>
     <a routerLink="/detail/{{ code }}/chart-from-last-months"
