@@ -6,8 +6,8 @@ import {
   combineLatest,
   map 
 } from 'rxjs';
-import { RateDto, ExchangeTableDto } from '../exchange-table-dto';
-import { CurrencyExchangeTableDto } from '../currency-exchange-table-dto'
+import { ExchangeTableDto, RateDto } from './exchange-table-dto';
+import { CurrencyExchangeTableDto } from './currency-exchange-table-dto';
 
 @Injectable({
   providedIn: 'root',

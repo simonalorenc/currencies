@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { RateWithFlag } from '../rate-with-flag'
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CurrenciesRepository } from '../currencies-repository';
+import { CurrenciesRepository } from '../data/currencies-repository';
+import { RateWithFlag } from '../data/rate-with-flag';
 
 @Component({
   selector: 'app-currencies',
-  templateUrl: './currencies.component.html',
-  styleUrls: ['./currencies.component.scss'],
+  templateUrl: './currency-list.component.html',
+  styleUrls: ['./currency-list.component.scss'],
 })
-export class CurrenciesComponent implements OnInit {
+export class CurrencyListComponent implements OnInit {
   private currenciesArray: RateWithFlag[] = [];
   filteredCurrenciesArray: RateWithFlag[] = [];
   filterForm: FormGroup;

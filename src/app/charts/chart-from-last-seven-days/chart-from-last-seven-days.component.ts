@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
-import { ExchangeRateService } from '../../currencies/exchange-rate.service';
+import { ExchangeRateService } from 'src/app/currency/data/exchange-rate.service';
 
 @Component({
   selector: 'app-chart',

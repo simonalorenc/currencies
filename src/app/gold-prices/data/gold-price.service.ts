@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GoldPriceDto } from './gold-prices-dto';
+import { GoldPriceDto } from './gold-price-dto';
 
 @Injectable({
   providedIn: 'root'

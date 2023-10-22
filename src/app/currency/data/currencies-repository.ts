@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ExchangeRateService } from './currencies/exchange-rate.service';
-import { FlagsService } from './flags.service';
 import { Observable, map } from 'rxjs';
-import { RateDto } from './exchange-table-dto';
+import { ExchangeRateService } from './exchange-rate.service';
 import { RateWithFlag } from './rate-with-flag';
+import { RateDto } from './exchange-table-dto';
+import { FlagsService } from './flags.service';
 
 @Injectable({
   providedIn: 'root',

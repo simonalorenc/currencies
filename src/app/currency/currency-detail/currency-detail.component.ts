@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExchangeRateService } from '../currencies/exchange-rate.service';
-import { CurrencyRateDto } from '../currency-exchange-table-dto';
-import { FlagsService } from '../flags.service';
-import { CurrenciesRepository } from '../currencies-repository';
 import { Chart, registerables } from 'node_modules/chart.js';
+import { CurrencyRateDto } from '../data/currency-exchange-table-dto';
+import { ExchangeRateService } from '../data/exchange-rate.service';
+import { FlagsService } from '../data/flags.service';
+import { CurrenciesRepository } from '../data/currencies-repository';
 Chart.register(...registerables);
 
 @Component({

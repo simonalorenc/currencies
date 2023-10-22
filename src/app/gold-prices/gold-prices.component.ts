@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GoldPrice } from './gold-prices-dto';
-import { GoldPriceService } from './gold-price.service';
+import { GoldPriceService } from './data/gold-price.service';
+import { GoldPrice } from './data/gold-price';
 
 @Component({
   selector: 'app-gold-prices',

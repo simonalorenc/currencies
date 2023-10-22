@@ -1,7 +1,4 @@
-export interface GoldPriceDto {
-  data: string
-  cena: number
-}
+import { GoldPriceDto } from "./gold-price-dto"
 
 export class GoldPrice {
   date: string
