@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from '../chart.service';
-import { CurrenciesService } from '../currencies/currencies.service';
+import { ExchangeRateService } from '../currencies/exchange-rate.service';
 import { ActivatedRoute } from '@angular/router';
 import { CurrencyRateDto } from '../currency-exchange-table-dto';
 
@@ -16,7 +16,7 @@ export class ChartFromOneMonthComponent implements OnInit{
   currencyForOneMonthChart: number[] = [];
   currencyDatesForOneMonthChart: string[] = [];
 
-  constructor(private chartService: ChartService, private currenciesService: CurrenciesService ,private route: ActivatedRoute) {}
+  constructor(private chartService: ChartService, private currenciesService: ExchangeRateService ,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(params => {

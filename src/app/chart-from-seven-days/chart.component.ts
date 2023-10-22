@@ -3,7 +3,7 @@ import { Chart, registerables } from 'node_modules/chart.js';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
 import { CurrencyRateDto } from '../currency-exchange-table-dto';
-import { CurrenciesService } from '../currencies/currencies.service';
+import { ExchangeRateService } from '../currencies/exchange-rate.service';
 Chart.register(...registerables);
 
 @Component({
@@ -16,7 +16,7 @@ export class ChartComponent implements OnInit {
 
   constructor(
     private chartService: ChartService,
-    private currenciesService: CurrenciesService,
+    private currenciesService: ExchangeRateService,
     private route: ActivatedRoute
   ) {}
 
@@ -33,7 +33,7 @@ export class ChartComponent implements OnInit {
   private getCurrencyDetails(code: string): void {
     // TODO: takie samo zapytanie jak w currency-details najlepiej przenieść rezultat do serwisu/cache
     this.currenciesService
-      .getCurrencyFromLastDays(code)
+      .getCurrencyExchangeTableDtoFromLastDays(code)
       .subscribe((currencies) => {
         this.completeCurrencyArraysForChart(currencies.rates);
       });

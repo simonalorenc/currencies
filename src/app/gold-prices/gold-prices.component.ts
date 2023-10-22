@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GoldPrice } from '../gold-prices-dto';
-import { GoldPricesService } from './gold-prices.service';
+import { GoldPriceService } from './gold-price.service';
 
 @Component({
   selector: 'app-gold-prices',
@@ -10,7 +10,7 @@ import { GoldPricesService } from './gold-prices.service';
 export class GoldPricesComponent implements OnInit {
   goldPrices: GoldPrice[] = [];
 
-  constructor(private goldPricesService: GoldPricesService) {
+  constructor(private goldPricesService: GoldPriceService) {
   }
 
   ngOnInit(): void {

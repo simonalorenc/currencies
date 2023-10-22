@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CurrenciesService } from '../currencies/currencies.service';
+import { ExchangeRateService } from '../currencies/exchange-rate.service';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
 import { CurrencyRateDto } from '../currency-exchange-table-dto';
@@ -16,7 +16,7 @@ export class ChartFromLastMonthsComponent {
   averageRateArray: number[] = []
   monthArray: string[] = []
 
-  constructor(private chartService: ChartService, private currenciesService: CurrenciesService ,private route: ActivatedRoute) {}
+  constructor(private chartService: ChartService, private currenciesService: ExchangeRateService ,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(params => {

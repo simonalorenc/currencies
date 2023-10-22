@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CurrenciesService } from '../currencies/currencies.service';
+import { ExchangeRateService } from '../currencies/exchange-rate.service';
 import { CurrencyRateDto } from '../currency-exchange-table-dto';
 import { FlagsService } from '../flags.service';
 import { CurrenciesRepository } from '../currencies-repository';
@@ -19,7 +19,7 @@ export class CurrencyDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private currenciesService: CurrenciesService,
+    private currenciesService: ExchangeRateService,
     private flagsService: FlagsService,
     private currenciesRepository: CurrenciesRepository
   ) {
@@ -38,7 +38,7 @@ export class CurrencyDetailComponent implements OnInit {
 
   private getCurrencyDetails(code: string): void {
     this.currenciesService
-      .getCurrencyFromLastDays(code)
+      .getCurrencyExchangeTableDtoFromLastDays(code)
       .subscribe((currencies) => {
         this.currencyArray = currencies.rates.reverse();
       });

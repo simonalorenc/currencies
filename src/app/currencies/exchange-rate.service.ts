@@ -12,78 +12,39 @@ import { CurrencyExchangeTableDto } from '../currency-exchange-table-dto'
 @Injectable({
   providedIn: 'root',
 })
-export class CurrenciesService {
-  private API: string = 'http://api.nbp.pl/api/exchangerates';
-
-  private currenciesArray: RateDto[] = [];
+export class ExchangeRateService {
+  private BASE_URL: string = 'http://api.nbp.pl/api/exchangerates';
+  private NUMBER_OF_LAST_DAYS: number = 7
 
   constructor(private http: HttpClient) {
-    this.getStartAndEndDate()
   }
 
-  private getExchangeTableDtoObservable(tableName: string): Observable<ExchangeTableDto[]> {
-    const exchangeTableUrl = `${this.API}/tables/${tableName}`;
+  private getExchangeTableDtos(tableName: string): Observable<ExchangeTableDto[]> {
+    const exchangeTableUrl = `${this.BASE_URL}/tables/${tableName}`;
     return this.http.get<ExchangeTableDto[]>(exchangeTableUrl);
   }
 
-  getCurrenciesRatesObservable(): Observable<RateDto[]> {
-    const tableA = this.getExchangeTableDtoObservable('A');
-    const tableB = this.getExchangeTableDtoObservable('B');
+  getAllRateDtos(): Observable<RateDto[]> {
+    const tableA = this.getExchangeTableDtos('A');
+    const tableB = this.getExchangeTableDtos('B');
     return combineLatest([tableA, tableB]).pipe(
       map(([resultA, resultB]) => {
         const ratesA = resultA[0].rates;
         const ratesB = resultB[0].rates;
-        this.currenciesArray = [...ratesA, ...ratesB];
-        return this.currenciesArray;
+        return [...ratesA, ...ratesB];
       })
     );
   }
 
-  getCurrencyDetails(code: string): RateDto {
-    return this.currenciesArray.find((currency: any) => currency.code === code)!;
-  }
-
-  getCurrencyFromLastDays(code: string): Observable<CurrencyExchangeTableDto> {
-    const tableAUrl = `${this.API}/rates/a/${code}/last/7/`;
-    const tableBUrl = `${this.API}/rates/b/${code}/last/7/`;
+  getCurrencyExchangeTableDtoFromLastDays(code: string): Observable<CurrencyExchangeTableDto> {
+    const tableAUrl = `${this.BASE_URL}/rates/a/${code}/last/${this.NUMBER_OF_LAST_DAYS}/`;
+    const tableBUrl = `${this.BASE_URL}/rates/b/${code}/last/${this.NUMBER_OF_LAST_DAYS}/`;
     return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
-      catchError((error) => {
-        console.error('Error for table A: ' + error);
-        return this.http.get<CurrencyExchangeTableDto>(tableBUrl);
-      })
+      catchError(() => this.http.get<CurrencyExchangeTableDto>(tableBUrl))
     );
   }
 
-  getCurrencyFromLastMonths(
-    code: string,
-    date: string
-  ): Observable<CurrencyExchangeTableDto> {
-    const tableAUrl = `${this.API}/rates/a/${code}/${date}/`;
-    const tableBUrl = `${this.API}/rates/b/${code}/${date}/`;
-    return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
-      catchError((error) => {
-        console.error('Error for table A: ' + error);
-        return this.http.get<CurrencyExchangeTableDto>(tableBUrl);
-      })
-    );
-  }
-
-  getDates() {
-    const currenciesDatesArray = [];
-    for (let i = 0; i < 3; i++) {
-      const date = new Date();
-      date.setMonth(date.getMonth() - i);
-      date.setDate(date.getDate() - 1);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      currenciesDatesArray.push(`${year}-${month}-${day}`);
-    }
-    return currenciesDatesArray;
-  }
-
-  // Stworzyc nowa klase dla przechowywania start i end data, w tabicy jest nieczytelnie co jest czym
-  getDatesToMonthExchangeRate() {
+  getDatesToMonthExchangeRate(): string[] {
     const currencyOneMonthDatesArray = [];
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
@@ -109,8 +70,8 @@ export class CurrenciesService {
     startDate: string,
     endDate: string
   ): Observable<CurrencyExchangeTableDto> {
-    const tableAUrl = `${this.API}/rates/a/${code}/${startDate}/${endDate}`;
-    const tableBUrl = `${this.API}/rates/b/${code}/${startDate}/${endDate}`;
+    const tableAUrl = `${this.BASE_URL}/rates/a/${code}/${startDate}/${endDate}`;
+    const tableBUrl = `${this.BASE_URL}/rates/b/${code}/${startDate}/${endDate}`;
     return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
       catchError((error) => {
         console.error('Error for table A: ' + error);

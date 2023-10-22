@@ -6,14 +6,14 @@ import { GoldPriceDto } from '../gold-prices-dto';
 @Injectable({
   providedIn: 'root'
 })
-export class GoldPricesService {
-  private API: string = 'http://api.nbp.pl/api/cenyzlota'
+export class GoldPriceService {
+  private BASE_URL: string = 'http://api.nbp.pl/api/cenyzlota'
   private NUMBER_OF_LAST_DAYS: number = 14
 
   constructor(private http: HttpClient) { }
 
   getGoldPricesDtoFromLastDays(): Observable<GoldPriceDto[]> {
-    const url = `${this.API}/last/${this.NUMBER_OF_LAST_DAYS}`
+    const url = `${this.BASE_URL}/last/${this.NUMBER_OF_LAST_DAYS}`
     return this.http.get<GoldPriceDto[]>(url)
   }
 }
