@@ -2,46 +2,36 @@ import { Component, OnInit } from '@angular/core';
 import { ChartService } from '../chart.service';
 import { ExchangeRateService } from '../currencies/exchange-rate.service';
 import { ActivatedRoute } from '@angular/router';
-import { CurrencyRateDto } from '../currency-exchange-table-dto';
 
 @Component({
   selector: 'app-chart-from-one-month',
   templateUrl: './chart-from-one-month.component.html',
-  styleUrls: ['./chart-from-one-month.component.scss']
+  styleUrls: ['./chart-from-one-month.component.scss'],
 })
-export class ChartFromOneMonthComponent implements OnInit{
-  code!: string
-  datesToApi: string[] =[]
-  currencyArray!: CurrencyRateDto[]
-  currencyForOneMonthChart: number[] = [];
-  currencyDatesForOneMonthChart: string[] = [];
+export class ChartFromOneMonthComponent implements OnInit {
+  private NUMBER_OF_LAST_DAYS: number = 30;
+  private CHART_ID = 'chartFormOneMonth';
 
-  constructor(private chartService: ChartService, private currenciesService: ExchangeRateService ,private route: ActivatedRoute) {}
+  constructor(
+    private chartService: ChartService,
+    private currenciesService: ExchangeRateService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.parent?.paramMap.subscribe(params => {
-      this.code = params.get('code') || ''
-    })
-    this.completeDatesArrayToApi()
-    this.completeArrays()
+    this.route.parent?.paramMap.subscribe((params) => {
+      const code = params.get('code') || '';
+      this.createChartFromLast30Days(code);
+    });
   }
 
-  completeDatesArrayToApi() {
-    this.datesToApi = this.currenciesService.getDatesToMonthExchangeRate()
-  }
-
-  completeArrays() {
-    this.currenciesService.getCurrencyFromDateRange(this.code, this.datesToApi[0], this.datesToApi[1]).subscribe(
-      (currency) => {
-        this.currencyArray = currency.rates
-        this.currencyForOneMonthChart = this.currencyArray.map(
-          rate => rate.mid
-        )
-        this.currencyDatesForOneMonthChart = this.currencyArray.map(
-          rate => rate.effectiveDate
-        )
-        this.chartService.createChart(this.currencyDatesForOneMonthChart, this.currencyForOneMonthChart, 'chartFormOneMonth')
-      }
-    )
+  createChartFromLast30Days(code: string): void {
+    this.currenciesService
+      .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
+      .subscribe((result) => {
+        const chartData = result.rates.map((rate) => rate.mid);
+        const chartLabels = result.rates.map((rate) => rate.effectiveDate);
+        this.chartService.createChart(chartLabels, chartData, this.CHART_ID);
+      });
   }
 }

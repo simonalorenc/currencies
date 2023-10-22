@@ -13,6 +13,8 @@ Chart.register(...registerables);
   styleUrls: ['./currency-detail.component.scss'],
 })
 export class CurrencyDetailComponent implements OnInit {
+  private NUMBER_OF_LAST_DAYS: number = 7
+
   code!: string;
   currencyArray: CurrencyRateDto[] = [];
   flagUrl!: string;
@@ -38,7 +40,7 @@ export class CurrencyDetailComponent implements OnInit {
 
   private getCurrencyDetails(code: string): void {
     this.currenciesService
-      .getCurrencyExchangeTableDtoFromLastDays(code)
+      .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((currencies) => {
         this.currencyArray = currencies.rates.reverse();
       });

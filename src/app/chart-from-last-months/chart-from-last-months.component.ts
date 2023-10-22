@@ -26,14 +26,14 @@ export class ChartFromLastMonthsComponent {
   }
 
   createChartFromLastMonths() {
-    const datesArray = this.currenciesService.getStartAndEndDate()
+    const datesArray = this.getStartAndEndDate()
     const firstMonthCurrencyArray: CurrencyRateDto[] = []
     const secondMonthCurrencyArray: CurrencyRateDto[] = []
     const thirdMonthCurrencyArray: CurrencyRateDto[] = []
     const data = new Date((datesArray[0].slice(0, -3)) + "-01")
     data.setMonth(data.getMonth() + 1)
     const middleMonth = data.toISOString().slice(0, 7)
-    this.currenciesService.getCurrencyFromDateRange(this.code, datesArray[0], datesArray[1]).subscribe(
+    this.currenciesService.getCurrencyExchangeTableDtoForDateRange(this.code, datesArray[0], datesArray[1]).subscribe(
       currency => {
         const allArray = currency.rates
         allArray.forEach((element) => {
@@ -58,4 +58,21 @@ export class ChartFromLastMonthsComponent {
     )
   }
 
+  private getStartAndEndDate(): string[] {
+    const todayDate = new Date()
+    const endDateString = this.getFormattedDate(todayDate)
+    const startDate = todayDate
+    startDate.setMonth(todayDate.getMonth() - 2)
+    startDate.setDate(1)
+    const startDateString = this.getFormattedDate(startDate)
+    // return new DateRange(startDateString, endDateString)
+    return [startDateString, endDateString]
+  }
+
+  private getFormattedDate(date: Date): string {
+    const yearString = date.getFullYear().toString()
+    const monthString = (date.getMonth() + 1).toString().padStart(2, '0')
+    const dayString = date.getDate().toString().padStart(2, '0')
+    return yearString + "-" + monthString + "-" + dayString
+  }
 }

@@ -14,7 +14,6 @@ import { CurrencyExchangeTableDto } from '../currency-exchange-table-dto'
 })
 export class ExchangeRateService {
   private BASE_URL: string = 'http://api.nbp.pl/api/exchangerates';
-  private NUMBER_OF_LAST_DAYS: number = 7
 
   constructor(private http: HttpClient) {
   }
@@ -36,36 +35,15 @@ export class ExchangeRateService {
     );
   }
 
-  getCurrencyExchangeTableDtoFromLastDays(code: string): Observable<CurrencyExchangeTableDto> {
-    const tableAUrl = `${this.BASE_URL}/rates/a/${code}/last/${this.NUMBER_OF_LAST_DAYS}/`;
-    const tableBUrl = `${this.BASE_URL}/rates/b/${code}/last/${this.NUMBER_OF_LAST_DAYS}/`;
+  getCurrencyExchangeTableDtoFromLastDays(code: string, days: number): Observable<CurrencyExchangeTableDto> {
+    const tableAUrl = `${this.BASE_URL}/rates/a/${code}/last/${days}/`;
+    const tableBUrl = `${this.BASE_URL}/rates/b/${code}/last/${days}/`;
     return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
       catchError(() => this.http.get<CurrencyExchangeTableDto>(tableBUrl))
     );
   }
 
-  getDatesToMonthExchangeRate(): string[] {
-    const currencyOneMonthDatesArray = [];
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 30);
-    const startYear = startDate.getFullYear();
-    const startMonth = String(startDate.getMonth() + 1).padStart(2, '0');
-    const startDay = String(startDate.getDate()).padStart(2, '0');
-
-    const endDate = new Date();
-    endDate.setDate(endDate.getDate() - 1);
-    const endYear = endDate.getFullYear();
-    const endMonth = String(endDate.getMonth() + 1).padStart(2, '0');
-    const endDay = String(endDate.getDate()).padStart(2, '0');
-
-    currencyOneMonthDatesArray.push(
-      `${startYear}-${startMonth}-${startDay}`
-    );
-    currencyOneMonthDatesArray.push(`${endYear}-${endMonth}-${endDay}`);
-    return currencyOneMonthDatesArray;
-  }
-
-  getCurrencyFromDateRange(
+  getCurrencyExchangeTableDtoForDateRange(
     code: string,
     startDate: string,
     endDate: string
@@ -73,39 +51,7 @@ export class ExchangeRateService {
     const tableAUrl = `${this.BASE_URL}/rates/a/${code}/${startDate}/${endDate}`;
     const tableBUrl = `${this.BASE_URL}/rates/b/${code}/${startDate}/${endDate}`;
     return this.http.get<CurrencyExchangeTableDto>(tableAUrl).pipe(
-      catchError((error) => {
-        console.error('Error for table A: ' + error);
-        return this.http.get<CurrencyExchangeTableDto>(tableBUrl);
-      })
+      catchError(() => this.http.get<CurrencyExchangeTableDto>(tableBUrl))
     );
-  }
-
-  getStartAndEndDate(): string[] {
-    const todayDate = new Date()
-    const endDateString = this.getFormattedDate(todayDate)
-    const startDate = todayDate
-    startDate.setMonth(todayDate.getMonth() - 2)
-    startDate.setDate(1)
-    const startDateString = this.getFormattedDate(startDate)
-    // return new DateRange(startDateString, endDateString)
-    return [startDateString, endDateString]
-  }
-
-  private getFormattedDate(date: Date): string {
-    const yearString = date.getFullYear().toString()
-    const monthString = (date.getMonth() + 1).toString().padStart(2, '0')
-    const dayString = date.getDate().toString().padStart(2, '0')
-    return yearString + "-" + monthString + "-" + dayString
-  }
-}
-
-
-class DateRange {
-  startDate: string
-  endDate: string
-
-  constructor(startDate: string, endDate: string) {
-    this.startDate = startDate
-    this.endDate = endDate
   }
 }

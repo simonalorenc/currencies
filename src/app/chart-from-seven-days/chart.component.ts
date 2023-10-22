@@ -12,6 +12,8 @@ Chart.register(...registerables);
   styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements OnInit {
+  private NUMBER_OF_LAST_DAYS: number = 7;
+
   private code!: string;
 
   constructor(
@@ -33,7 +35,7 @@ export class ChartComponent implements OnInit {
   private getCurrencyDetails(code: string): void {
     // TODO: takie samo zapytanie jak w currency-details najlepiej przenieść rezultat do serwisu/cache
     this.currenciesService
-      .getCurrencyExchangeTableDtoFromLastDays(code)
+      .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((currencies) => {
         this.completeCurrencyArraysForChart(currencies.rates);
       });
