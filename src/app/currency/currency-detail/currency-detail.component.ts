@@ -15,9 +15,9 @@ Chart.register(...registerables);
 export class CurrencyDetailComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 7
 
-  detailCurrency!: CurrencyExchangeTableDto
+  currency!: CurrencyExchangeTableDto
   code!: string;
-  currencyRates: CurrencyRate[] = [];
+  detailCurrencyRates: CurrencyRate[] = [];
   flagUrl!: string;
 
   constructor(
@@ -43,9 +43,9 @@ export class CurrencyDetailComponent implements OnInit {
     this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((currency) => {
-        this.detailCurrency = currency
+        this.currency = currency
         const currencyRatesDto = currency.rates.reverse();
-        this.currencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
+        this.detailCurrencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
       });
   }
 }
