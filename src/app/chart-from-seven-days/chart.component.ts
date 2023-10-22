@@ -4,6 +4,7 @@ import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
 import { DetailRate } from '../currency';
 import { CurrenciesService } from '../currencies/currencies.service';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-chart',
@@ -20,7 +21,6 @@ export class ChartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    Chart.register(...registerables);
     //TODO: zmienic na get jak w innych miejscach
     let x = this.route.parent?.snapshot.paramMap.get('code');
 
@@ -44,7 +44,7 @@ export class ChartComponent implements OnInit {
     const currencyDatesForChart = currencyDetails.map(
       (rate) => rate.effectiveDate
     );
-    this.chartService.renderChart(
+    this.chartService.createChart(
       currencyDatesForChart,
       currencyForChart,
       'chartFromSevenDays'

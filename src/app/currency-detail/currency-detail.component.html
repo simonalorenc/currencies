@@ -11,21 +11,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let currency of currencyArray.reverse()">
+      <tr *ngFor="let currency of currencyArray">
         <td>{{ currency.no }}</td>
         <td>{{ currency.effectiveDate }}</td>
         <td>{{ currency.mid }}</td>
       </tr>
     </tbody>
   </table>
-  <a [routerLink]="['/detail', code, 'chart-from-seven-days']"
-    ><app-button buttonText="last 7 days"></app-button
-  ></a>
-  <a [routerLink]="['/detail', code, 'chart-from-one-month']"
-    ><app-button buttonText="last month"></app-button
-  ></a>
-  <a routerLink="/detail/{{ code }}/chart-from-last-months"
-    ><app-button buttonText="last months"></app-button
-  ></a>
+  <div class="d-flex justify-content-center mt-5">
+    <a [routerLink]="['/detail', code, 'chart-from-seven-days']"
+    ><app-button buttonText="last 7 days" [size]="'btn-lg me-5'"></app-button
+    ></a>
+    <a [routerLink]="['/detail', code, 'chart-from-one-month']"
+      ><app-button buttonText="last 30 days" [size]="'btn-lg me-5'"></app-button
+    ></a>
+    <a routerLink="/detail/{{ code }}/chart-from-last-months"
+      ><app-button buttonText="last months" [size]="'btn-lg'"></app-button
+    ></a>
+  </div>
   <router-outlet></router-outlet>
 </div>

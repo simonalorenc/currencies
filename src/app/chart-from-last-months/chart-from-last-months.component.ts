@@ -1,8 +1,8 @@
-import { Component, getDebugNode } from '@angular/core';
+import { Component } from '@angular/core';
 import { CurrenciesService } from '../currencies/currencies.service';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, catchError, combineLatest, map } from 'rxjs';
+import { DetailRate } from '../currency';
 
 @Component({
   selector: 'app-chart-from-last-months',
@@ -13,6 +13,8 @@ export class ChartFromLastMonthsComponent {
   code!: string
   currencyForMonthsChart: number[] = [];
   currencyDatesForMonthsChart: string[] = [];
+  averageRateArray: number[] = []
+  monthArray: string[] = []
 
   constructor(private chartService: ChartService, private currenciesService: CurrenciesService ,private route: ActivatedRoute) {}
 
@@ -20,33 +22,40 @@ export class ChartFromLastMonthsComponent {
     this.route.parent?.paramMap.subscribe(params => {
       this.code = params.get('code') || ''
     })
-    this.completeCurrencyDatesArraysForMonthsChart()
-    this.completeCurrencyArrayForMonthsChart().subscribe(result => {
-      this.currencyForMonthsChart = result
-      this.chartService.renderChart(this.currencyDatesForMonthsChart, this.currencyForMonthsChart, 'chartFormLastMonths')
-    })
+    this.createChartFromLastMonths()
   }
 
-  completeCurrencyDatesArraysForMonthsChart() {
-      this.currencyDatesForMonthsChart = this.currenciesService.getDates();
-  }
-
-  //Exchange rates
-  completeCurrencyArrayForMonthsChart() {
-    const firstMonth = this.currenciesService.getCurrencyFromLastMonths(this.code, this.currencyDatesForMonthsChart[0])
-    const secondMonth = this.currenciesService.getCurrencyFromLastMonths(this.code, this.currencyDatesForMonthsChart[1])
-    const thirdMonth = this.currenciesService.getCurrencyFromLastMonths(this.code, this.currencyDatesForMonthsChart[2])
-    return combineLatest([firstMonth, secondMonth, thirdMonth]).pipe(
-      map(([currencyResult1, currencyResult2, currencyResult3]) => {
-        const currencyRate1 = currencyResult1.rates.map(rate => rate.mid)
-        const currencyRate2 = currencyResult2.rates.map(rate => rate.mid)
-        const currencyRate3 = currencyResult3.rates.map(rate => rate.mid)
-        return [...currencyRate1, ...currencyRate2, ...currencyRate3]
-      }),
-      catchError(error => {
-        console.error('Błąd w combineLatest ' + error)
-        return EMPTY
-      })
+  createChartFromLastMonths() {
+    const datesArray = this.currenciesService.getStartAndEndDate()
+    const firstMonthCurrencyArray: DetailRate[] = []
+    const secondMonthCurrencyArray: DetailRate[] = []
+    const thirdMonthCurrencyArray: DetailRate[] = []
+    const data = new Date((datesArray[0].slice(0, -3)) + "-01")
+    data.setMonth(data.getMonth() + 1)
+    const middleMonth = data.toISOString().slice(0, 7)
+    this.currenciesService.getCurrencyFromDateRange(this.code, datesArray[0], datesArray[1]).subscribe(
+      currency => {
+        const allArray = currency.rates
+        allArray.forEach((element) => {
+          if(element.effectiveDate.includes(datesArray[0].slice(0,-3))) {
+            firstMonthCurrencyArray.push(element)
+          } else if(element.effectiveDate.includes(middleMonth)) {
+            secondMonthCurrencyArray.push(element)
+          } else if(element.effectiveDate.includes(datesArray[1].slice(0,-3))) {
+            thirdMonthCurrencyArray.push(element)
+          }
+        })
+        const firstSum = firstMonthCurrencyArray.reduce((accumulator, currentValue) => accumulator + currentValue.mid, 0)
+        const secondSum = secondMonthCurrencyArray.reduce((accumulator, currentValue) => accumulator + currentValue.mid, 0)
+        const thirdSum = thirdMonthCurrencyArray.reduce((accumulator, currentValue) => accumulator + currentValue.mid, 0)
+        this.averageRateArray = [firstSum / firstMonthCurrencyArray.length, secondSum / secondMonthCurrencyArray.length, thirdSum / thirdMonthCurrencyArray.length]
+        const firstMonth = firstMonthCurrencyArray[0].effectiveDate.split('-')
+        const secondMonth = secondMonthCurrencyArray[0].effectiveDate.split('-')
+        const thirdMonth = thirdMonthCurrencyArray[0].effectiveDate.split('-')
+        this.monthArray = [firstMonth[1], secondMonth[1], thirdMonth[1]]
+        this.chartService.createChart(this.monthArray, this.averageRateArray, 'chartFormLastMonths')
+      } 
     )
   }
+
 }

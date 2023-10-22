@@ -6,8 +6,10 @@ import {
   combineLatest,
   map,
   merge,
+  onErrorResumeNext,
 } from 'rxjs';
 import { Rate, ResultCurrencies, ResultOneCurrency } from '../currency';
+import { DatePipe, formatDate, getLocaleId } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +19,13 @@ export class CurrenciesService {
 
   private currenciesArray: Rate[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getStartAndEndDate()
+  }
 
   private getCurrencies(tableName: string): Observable<ResultCurrencies> {
-    const API_CURRENCIES = `${this.API}/tables/${tableName}`;
-    return this.http.get<ResultCurrencies>(API_CURRENCIES);
+    const currenciesUrl = `${this.API}/tables/${tableName}`;
+    return this.http.get<ResultCurrencies>(currenciesUrl);
   }
 
   getCurrenciesRatesObservable(): Observable<Rate[]> {
@@ -42,24 +46,26 @@ export class CurrenciesService {
   }
 
   getCurrencyFromLastDays(code: string): Observable<ResultOneCurrency> {
-    const API_EXCHANGE_RATES_A = `${this.API}/rates/a/${code}/last/7/`;
-    const API_EXCHANGE_RATES_B = `${this.API}/rates/b/${code}/last/7/`;
-    return merge(
-      this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_A),
-      this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_B)
-    )
+    const tableAUrl = `${this.API}/rates/a/${code}/last/7/`;
+    const tableBUrl = `${this.API}/rates/b/${code}/last/7/`;
+    return this.http.get<ResultOneCurrency>(tableAUrl).pipe(
+      catchError((error) => {
+        console.error('Error for table A: ' + error);
+        return this.http.get<ResultOneCurrency>(tableBUrl);
+      })
+    );
   }
 
   getCurrencyFromLastMonths(
     code: string,
     date: string
   ): Observable<ResultOneCurrency> {
-    const API_EXCHANGE_RATES_A = `${this.API}/rates/a/${code}/${date}/`;
-    const API_EXCHANGE_RATES_B = `${this.API}/rates/b/${code}/${date}/`;
-    return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_A).pipe(
+    const tableAUrl = `${this.API}/rates/a/${code}/${date}/`;
+    const tableBUrl = `${this.API}/rates/b/${code}/${date}/`;
+    return this.http.get<ResultOneCurrency>(tableAUrl).pipe(
       catchError((error) => {
         console.error('Error for table A: ' + error);
-        return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_B);
+        return this.http.get<ResultOneCurrency>(tableBUrl);
       })
     );
   }
@@ -74,7 +80,6 @@ export class CurrenciesService {
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
       currenciesDatesArray.push(`${year}-${month}-${day}`);
-      console.log(`${year}-${month}-${day}`);
     }
     return currenciesDatesArray;
   }
@@ -101,18 +106,47 @@ export class CurrenciesService {
     return currencyOneMonthDatesArray;
   }
 
-  getCurrencyOneMonth(
+  getCurrencyFromDateRange(
     code: string,
     startDate: string,
     endDate: string
   ): Observable<ResultOneCurrency> {
-    const API_EXCHANGE_RATES_A = `${this.API}/rates/a/${code}/${startDate}/${endDate}`;
-    const API_EXCHANGE_RATES_B = `${this.API}/rates/b/${code}/${startDate}/${endDate}`;
-    return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_A).pipe(
+    const tableAUrl = `${this.API}/rates/a/${code}/${startDate}/${endDate}`;
+    const tableBUrl = `${this.API}/rates/b/${code}/${startDate}/${endDate}`;
+    return this.http.get<ResultOneCurrency>(tableAUrl).pipe(
       catchError((error) => {
         console.error('Error for table A: ' + error);
-        return this.http.get<ResultOneCurrency>(API_EXCHANGE_RATES_B);
+        return this.http.get<ResultOneCurrency>(tableBUrl);
       })
     );
+  }
+
+  getStartAndEndDate(): string[] {
+    const todayDate = new Date()
+    const endDateString = this.getFormattedDate(todayDate)
+    const startDate = todayDate
+    startDate.setMonth(todayDate.getMonth() - 2)
+    startDate.setDate(1)
+    const startDateString = this.getFormattedDate(startDate)
+    // return new DateRange(startDateString, endDateString)
+    return [startDateString, endDateString]
+  }
+
+  private getFormattedDate(date: Date): string {
+    const yearString = date.getFullYear().toString()
+    const monthString = (date.getMonth() + 1).toString().padStart(2, '0')
+    const dayString = date.getDate().toString().padStart(2, '0')
+    return yearString + "-" + monthString + "-" + dayString
+  }
+}
+
+
+class DateRange {
+  startDate: string
+  endDate: string
+
+  constructor(startDate: string, endDate: string) {
+    this.startDate = startDate
+    this.endDate = endDate
   }
 }

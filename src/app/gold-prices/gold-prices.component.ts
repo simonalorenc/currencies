@@ -13,7 +13,7 @@ export class GoldPricesComponent implements OnInit {
   constructor(private goldPricesService: GoldPricesService) {}
 
   ngOnInit(): void {
-    this.goldPricesService.getGoldPricesObservable().subscribe(
+    this.goldPricesService.getGoldPricesFromLastDays().subscribe(
       (result) => {
         this.goldPricesArray = result.reverse();
       }

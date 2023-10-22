@@ -11,12 +11,8 @@ export class GoldPricesService {
 
   constructor(private http: HttpClient) { }
 
-  private getGoldPricesFromLastDays(): Observable<GoldPrice[]> {
+  getGoldPricesFromLastDays(): Observable<GoldPrice[]> {
     const API_GOLD_PRICES = `${this.API}/last/14`
     return this.http.get<GoldPrice[]>(API_GOLD_PRICES)
-  }
-
-  getGoldPricesObservable(): Observable<GoldPrice[]> {
-    return this.getGoldPricesFromLastDays()
   }
 }

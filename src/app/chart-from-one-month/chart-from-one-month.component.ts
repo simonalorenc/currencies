@@ -28,13 +28,10 @@ export class ChartFromOneMonthComponent implements OnInit{
 
   completeDatesArrayToApi() {
     this.datesToApi = this.currenciesService.getDatesToMonthExchangeRate()
-    console.log(this.datesToApi)
   }
 
   completeArrays() {
-    console.log(this.datesToApi[0])
-    console.log(this.datesToApi[1])
-    this.currenciesService.getCurrencyOneMonth(this.code, this.datesToApi[0], this.datesToApi[1]).subscribe(
+    this.currenciesService.getCurrencyFromDateRange(this.code, this.datesToApi[0], this.datesToApi[1]).subscribe(
       (currency) => {
         this.currencyArray = currency.rates
         this.currencyForOneMonthChart = this.currencyArray.map(
@@ -43,7 +40,7 @@ export class ChartFromOneMonthComponent implements OnInit{
         this.currencyDatesForOneMonthChart = this.currencyArray.map(
           rate => rate.effectiveDate
         )
-        this.chartService.renderChart(this.currencyDatesForOneMonthChart, this.currencyForOneMonthChart, 'chartFormOneMonth')
+        this.chartService.createChart(this.currencyDatesForOneMonthChart, this.currencyForOneMonthChart, 'chartFormOneMonth')
       }
     )
   }

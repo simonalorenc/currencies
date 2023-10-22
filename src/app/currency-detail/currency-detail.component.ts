@@ -40,7 +40,7 @@ export class CurrencyDetailComponent implements OnInit {
     this.currenciesService
       .getCurrencyFromLastDays(code)
       .subscribe((currencies) => {
-        this.currencyArray = currencies.rates;
+        this.currencyArray = currencies.rates.reverse();
       });
   }
 }
