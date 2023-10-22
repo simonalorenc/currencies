@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { CurrencyRateDto } from '../data/currency-exchange-table-dto';
+import { CurrencyExchangeTableDto, CurrencyRate } from '../data/currency-exchange-table-dto';
 import { ExchangeRateService } from '../data/exchange-rate.service';
 import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
@@ -15,8 +15,9 @@ Chart.register(...registerables);
 export class CurrencyDetailComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 7
 
+  detailCurrency!: CurrencyExchangeTableDto
   code!: string;
-  currencyArray: CurrencyRateDto[] = []; //TODO: zmapowac do nowej klasy (nie korystac z dto w html)
+  currencyRates: CurrencyRate[] = [];
   flagUrl!: string;
 
   constructor(
@@ -42,7 +43,9 @@ export class CurrencyDetailComponent implements OnInit {
     this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((currency) => {
-        this.currencyArray = currency.rates.reverse();
+        this.detailCurrency = currency
+        const currencyRatesDto = currency.rates.reverse();
+        this.currencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
       });
   }
 }

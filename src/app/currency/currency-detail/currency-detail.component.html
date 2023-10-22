@@ -1,5 +1,6 @@
 <div class="container mt-5">
-  <!-- <h1>{{ currency.currency }}</h1> -->
+  <h1>{{ detailCurrency.currency }}</h1>
+  <h1>{{ detailCurrency.code }}</h1>
   <img [src]="flagUrl" />
   <h2 class="mt-5">Exchange rates from the last 7 days</h2>
   <table class="table">
@@ -11,9 +12,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let currency of currencyArray">
-        <td>{{ currency.no }}</td>
-        <td>{{ currency.effectiveDate }}</td>
+      <tr *ngFor="let currency of currencyRates; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ currency.date }}</td>
         <td>{{ currency.mid }}</td>
       </tr>
     </tbody>
