@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GoldPrice } from '../gold-prices';
+import { GoldPrice } from '../gold-prices-dto';
 import { GoldPricesService } from './gold-prices.service';
 
 @Component({
@@ -8,15 +8,22 @@ import { GoldPricesService } from './gold-prices.service';
   styleUrls: ['./gold-prices.component.scss'],
 })
 export class GoldPricesComponent implements OnInit {
-  goldPricesArray: GoldPrice[] = [];
+  goldPrices: GoldPrice[] = [];
 
-  constructor(private goldPricesService: GoldPricesService) {}
+  constructor(private goldPricesService: GoldPricesService) {
+  }
 
   ngOnInit(): void {
-    this.goldPricesService.getGoldPricesFromLastDays().subscribe(
-      (result) => {
-        this.goldPricesArray = result.reverse();
+    this.getGoldPricesFromLastDays()
+  }
+
+  private getGoldPricesFromLastDays() {
+    this.goldPricesService.getGoldPricesDtoFromLastDays().subscribe(
+      result => {
+        const goldPricesFromNewest = result.reverse()
+        this.goldPrices = goldPricesFromNewest.map(dto => new GoldPrice(dto))
       }
     );
   }
+
 }

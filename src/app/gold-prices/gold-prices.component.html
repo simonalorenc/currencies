@@ -8,10 +8,10 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let gold of goldPricesArray; let i = index">
+      <tr *ngFor="let gold of goldPrices; let i = index">
         <th scope="row">{{ i + 1 }}</th>
-        <td>{{ gold.data }}</td>
-        <td>{{ gold.cena }}</td>
+        <td>{{ gold.date }}</td>
+        <td>{{ gold.price }}</td>
       </tr>
     </tbody>
   </table>
