@@ -1,4 +1,3 @@
-import { CurrencyRateDto } from './currency-exchange-table-dto';
 import { RateDto } from './exchange-table-dto';
 
 export class RateWithFlag {
@@ -10,8 +9,3 @@ export class RateWithFlag {
     this.flagUrl = flagUrl;
   }
 }
-
-// export interface CurrencyRateWithFlag {
-//   rate: CurrencyRateDto;
-//   flagUrl: string;
-// }
