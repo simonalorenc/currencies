@@ -8,8 +8,22 @@
         culpa placeat cum distinctio. Aperiam dolores pariatur hic consectetur
         labore.
       </p>
-      <app-buttons></app-buttons>
+      <div>
+        <a routerLink="/dashboard/app-currency-list">
+          <app-button
+            buttonText="Currencies"
+            [size]="'btn-lg me-5'"
+          ></app-button
+        ></a>
+        <a routerLink="/dashboard/gold-prices">
+          <app-button
+            buttonText="Gold"
+            [size]="'btn-lg'"
+          ></app-button
+        ></a>
+      </div>
     </div>
-    <div class="col bg-success"></div>
+    <div class="col bg-secondary"></div>
   </div>
+  <router-outlet></router-outlet>
 </div>
