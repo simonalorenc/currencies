@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
-import { CurrencyRateDto } from 'src/app/currency/data/currency-exchange-table-dto';
 import { ExchangeRateService } from 'src/app/currency/data/exchange-rate.service';
+import { groupBy, mergeMap, of, toArray, zip } from 'rxjs';
 
 @Component({
   selector: 'app-chart-from-last-months',
@@ -10,55 +10,43 @@ import { ExchangeRateService } from 'src/app/currency/data/exchange-rate.service
   styleUrls: ['./chart-from-last-months.component.scss']
 })
 export class ChartFromLastMonthsComponent {
+  private CHART_ID: string = 'chartFormLastMonths'
 
-  constructor(private chartService: ChartService, private exchangeRateService: ExchangeRateService ,private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private chartService: ChartService, 
+    private exchangeRateService: ExchangeRateService, 
+  ) {}
 
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(params => {
       const code = params.get('code') || ''
-      this.createChartFromLastMonths(code)
+      this.createChartFromLastMonths2(code)
     })
   }
 
-  createChartFromLastMonths(code: string) {
-    const datesArray = this.getStartAndEndDate()
+  createChartFromLastMonths2(code: string) {
+    const dates = this.getStartAndEndDate()
 
-    const firstMonthExchangeRates: CurrencyRateDto[] = []
-    const secondMonthExchangeRates: CurrencyRateDto[] = []
-    const thirdMonthExchangeRates: CurrencyRateDto[] = []
-
-    const data = new Date((datesArray[0].slice(0, -3)) + "-01")
-    data.setMonth(data.getMonth() + 1)
-    const middleMonth = data.toISOString().slice(0, 7)
-    
-    this.exchangeRateService.getCurrencyExchangeTableDtoForDateRange(code, datesArray[0], datesArray[1]).subscribe(
-      currency => {
-        const allMonthsExchangeRates = currency.rates
-        allMonthsExchangeRates.forEach((element) => {
-          if(element.effectiveDate.includes(datesArray[0].slice(0,-3))) {
-            firstMonthExchangeRates.push(element)
-          } else if(element.effectiveDate.includes(middleMonth)) {
-            secondMonthExchangeRates.push(element)
-          } else if(element.effectiveDate.includes(datesArray[1].slice(0,-3))) {
-            thirdMonthExchangeRates.push(element)
-          }
-        })
-
-        const firstSum = firstMonthExchangeRates.reduce((accumulator, currentValue) => accumulator + currentValue.mid, 0)
-        const secondSum = secondMonthExchangeRates.reduce((accumulator, currentValue) => accumulator + currentValue.mid, 0)
-        const thirdSum = thirdMonthExchangeRates.reduce((accumulator, currentValue) => accumulator + currentValue.mid, 0)
-
-        const averageRateArray = [firstSum / firstMonthExchangeRates.length, secondSum / secondMonthExchangeRates.length, thirdSum / thirdMonthExchangeRates.length]
-        
-        const firstMonth = firstMonthExchangeRates[0].effectiveDate.split('-')
-        const secondMonth = secondMonthExchangeRates[0].effectiveDate.split('-')
-        const thirdMonth = thirdMonthExchangeRates[0].effectiveDate.split('-')
-
-        const monthArray = [firstMonth[1], secondMonth[1], thirdMonth[1]]
-
-        this.chartService.createChart(monthArray, averageRateArray, 'chartFormLastMonths')
-      } 
-    )
+    this.exchangeRateService.getCurrencyExchangeTableDtoForDateRange(code, dates[0], dates[1]).pipe(
+      mergeMap(result => result.rates),
+      groupBy(rate => {
+        const date = new Date(rate.effectiveDate)
+        return date.getMonth()
+      }),
+      mergeMap(group => zip(of(group.key), group.pipe(toArray()))),
+      toArray()
+    ).subscribe(grouped => {
+      const labels: string[] = []
+      const values: number[] = []
+      grouped.forEach(group => {
+        const groupMonth = group[0] + 1
+        labels.push(groupMonth.toString())
+        const groupAverage = group[1].reduce((acc, current) => acc + current.mid, 0) / group[1].length
+        values.push(groupAverage)
+      })
+      this.chartService.createChart(labels, values, this.CHART_ID)
+    })
   }
 
   private getStartAndEndDate(): string[] {
