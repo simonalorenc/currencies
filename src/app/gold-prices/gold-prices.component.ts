@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GoldPrice } from '../gold-prices-dto';
+import { GoldPrice } from './gold-prices-dto';
 import { GoldPriceService } from './gold-price.service';
 
 @Component({
