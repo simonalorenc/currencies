@@ -8,21 +8,18 @@
         culpa placeat cum distinctio. Aperiam dolores pariatur hic consectetur
         labore.
       </p>
-      <div>
-        <a routerLink="/dashboard/app-currency-list">
-          <app-button
-            text="Currencies"
-            [isActive]="isCurrenciesActive"
-            (click)="onClickCurrencies()"
-          ></app-button
-        ></a>
-        <a routerLink="/dashboard/gold-prices">
-          <app-button
-            text="Gold"
-            [isActive]="!isCurrenciesActive"
-            (click)="onClickGold()"
-          ></app-button
-        ></a>
+      <div class="d-flex">
+        <app-button
+          text="Currencies"
+          [isActive]="isCurrenciesActive"
+          (click)="onClickCurrencies()"
+        />
+        <div class="me-4"></div>
+        <app-button
+          text="Gold"
+          [isActive]="!isCurrenciesActive"
+          (click)="onClickGold()"
+        />
       </div>
     </div>
     <div class="col bg-secondary"></div>
