@@ -14,7 +14,6 @@ export class DashboardComponent {
   onClickCurrencies() {
     this.isCurrenciesActive = true
     this.router.navigate(['/dashboard/app-currency-list'])
-    
   }
 
   onClickGold() {

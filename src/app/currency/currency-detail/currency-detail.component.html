@@ -21,13 +21,13 @@
   </table>
   <div class="d-flex justify-content-center mt-5">
     <a [routerLink]="['/detail', code, 'chart-from-last-seven-days']"
-    ><app-button text="last 7 days"></app-button
+      ><app-button [isActive]="activeChart == ActiveChart.LastSevenDays" text="last 7 days" (click)="isChartFromLastSevenDaysActive()"></app-button
     ></a>
     <a [routerLink]="['/detail', code, 'chart-from-last-30-days']"
-      ><app-button text="last 30 days"></app-button
+      ><app-button [isActive]="activeChart == ActiveChart.Last30Days" text="last 30 days" (click)="isChartFromLast30DaysActive()"></app-button
     ></a>
     <a routerLink="/detail/{{ code }}/chart-from-last-months"
-      ><app-button text="last months"></app-button
+      ><app-button [isActive]="activeChart == ActiveChart.LastMonths" text="last months" (click)="isChartFromLastMonthsActive()"></app-button
     ></a>
   </div>
   <router-outlet></router-outlet>

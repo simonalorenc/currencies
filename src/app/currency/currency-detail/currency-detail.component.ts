@@ -5,6 +5,7 @@ import { CurrencyExchangeTableDto, CurrencyRate } from '../data/currency-exchang
 import { ExchangeRateService } from '../data/exchange-rate.service';
 import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
+import { ActiveChart } from '../../enums'
 Chart.register(...registerables);
 
 @Component({
@@ -15,11 +16,14 @@ Chart.register(...registerables);
 export class CurrencyDetailComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 7
 
+  ActiveChart = ActiveChart
+
   name!: string
   code!: string;
   detailCurrencyRates: CurrencyRate[] = [];
   flagUrl!: string;
   isChartActive: boolean = true
+  activeChart: ActiveChart = ActiveChart.LastSevenDays
 
   constructor(
     private route: ActivatedRoute,
@@ -48,5 +52,17 @@ export class CurrencyDetailComponent implements OnInit {
         const currencyRatesDto = currency.rates.reverse();
         this.detailCurrencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
       });
+  }
+
+  isChartFromLastSevenDaysActive() {
+    this.activeChart = ActiveChart.LastSevenDays
+  }
+
+  isChartFromLast30DaysActive() {
+    this.activeChart = ActiveChart.Last30Days
+  }
+
+  isChartFromLastMonthsActive() {
+    this.activeChart = ActiveChart.LastMonths
   }
 }
