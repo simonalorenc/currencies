@@ -12,13 +12,17 @@
         <a routerLink="/dashboard/app-currency-list">
           <app-button
             buttonText="Currencies"
-            [size]="'btn-lg me-5'"
+            size="btn-lg me-5"
+            [isActive]="isCurrenciesActive"
+            (onClickBtn)="onClickCurrencies()"
           ></app-button
         ></a>
         <a routerLink="/dashboard/gold-prices">
           <app-button
             buttonText="Gold"
-            [size]="'btn-lg'"
+            size="btn-lg"
+            [isActive]="isGoldActive"
+            (onClickBtn)="onClickGold()"
           ></app-button
         ></a>
       </div>
