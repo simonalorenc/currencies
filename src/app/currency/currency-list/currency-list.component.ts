@@ -12,6 +12,7 @@ export class CurrencyListComponent implements OnInit {
   private ratesWithFlag: RateWithFlag[] = [];
   filteredRatesWithFlag: RateWithFlag[] = [];
   filterForm: FormGroup;
+  isSortAlphabeticallyActive: boolean = false
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
@@ -50,12 +51,14 @@ export class CurrencyListComponent implements OnInit {
   }
 
   sortAlphabetically() {
+    this.isSortAlphabeticallyActive = true
     this.filteredRatesWithFlag = this.ratesWithFlag.concat().sort((a, b) => {
       return a.rate.currency.localeCompare(b.rate.currency)
     })
   }
 
   sortPopularity() {
+    this.isSortAlphabeticallyActive = false
     this.filteredRatesWithFlag = this.ratesWithFlag
   }
 }

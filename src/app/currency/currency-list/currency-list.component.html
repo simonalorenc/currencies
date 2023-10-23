@@ -7,8 +7,19 @@
       placeholder="Search currency"
       aria-label="Search currency"
     />
-    <app-button text="p" (click)="sortPopularity()"></app-button>
-    <app-button text="a" (click)="sortAlphabetically()"></app-button>
+    <div class="d-flex">
+      <app-button
+        text="p"
+        [isActive]="!isSortAlphabeticallyActive"
+        (click)="sortPopularity()"
+      ></app-button>
+      <div class="me-3"></div>
+      <app-button
+        text="a"
+        [isActive]="isSortAlphabeticallyActive"
+        (click)="sortAlphabetically()"
+      ></app-button>
+    </div>
   </form>
   <table class="table">
     <thead>
@@ -27,7 +38,7 @@
         <td>{{ currency.rate.mid }}</td>
         <td>
           <a [routerLink]="['/detail', currency.rate.code]">
-            <app-button text="More details"></app-button>
+            <app-button text="More details" size="btn-sm"></app-button>
           </a>
         </td>
       </tr>

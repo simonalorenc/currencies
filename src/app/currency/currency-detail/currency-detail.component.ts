@@ -19,6 +19,7 @@ export class CurrencyDetailComponent implements OnInit {
   code!: string;
   detailCurrencyRates: CurrencyRate[] = [];
   flagUrl!: string;
+  isChartActive: boolean = true
 
   constructor(
     private route: ActivatedRoute,
