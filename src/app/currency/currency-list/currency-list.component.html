@@ -7,8 +7,8 @@
       placeholder="Search currency"
       aria-label="Search currency"
     />
-    <app-button buttonText="p" (click)="getRatesWithFlags()"></app-button>
-    <app-button buttonText="a" (click)="sortByAlphabetically()"></app-button>
+    <app-button text="p" (click)="getRatesWithFlags()"></app-button>
+    <app-button text="a" (click)="sortByAlphabetically()"></app-button>
   </form>
   <table class="table">
     <thead>
@@ -27,7 +27,7 @@
         <td>{{ currency.rate.mid }}</td>
         <td>
           <a [routerLink]="['/detail', currency.rate.code]">
-            <app-button buttonText="More details" (click)="sortByAlphabetically()"></app-button>
+            <app-button text="More details" (click)="sortByAlphabetically()"></app-button>
           </a>
         </td>
       </tr>

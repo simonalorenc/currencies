@@ -1,11 +1,8 @@
 <button
   type="button"
-  class="btn btn-color-1"
-  [ngClass]="{'active': isActive}"
-  (click)="onClick()"
+  class="btn btn-color-main"
+  [class.active]="isActive"
+  [ngClass]="size"
 >
-  {{ buttonText }}
+  {{ text }}
 </button>
-
-<!-- [ngClass]='size' -->
-
