@@ -49,9 +49,13 @@ export class CurrencyListComponent implements OnInit {
     });
   }
 
-  sortByAlphabetically() {
-    this.filteredRatesWithFlag = this.ratesWithFlag.sort((a, b) => {
+  sortAlphabetically() {
+    this.filteredRatesWithFlag = this.ratesWithFlag.concat().sort((a, b) => {
       return a.rate.currency.localeCompare(b.rate.currency)
     })
+  }
+
+  sortPopularity() {
+    this.filteredRatesWithFlag = this.ratesWithFlag
   }
 }
