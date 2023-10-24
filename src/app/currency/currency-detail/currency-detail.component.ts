@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { CurrencyExchangeTableDto, CurrencyRate } from '../data/currency-exchange-table-dto';
 import { ExchangeRateService } from '../data/exchange-rate.service';
@@ -29,7 +29,8 @@ export class CurrencyDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private exchangeRateService: ExchangeRateService,
     private flagsService: FlagsService,
-    private currenciesRepository: CurrenciesRepository
+    private currenciesRepository: CurrenciesRepository,
+    private router: Router
   ) {
     this.code = this.route.snapshot.paramMap.get('code')!.toLowerCase();
   }
@@ -56,13 +57,17 @@ export class CurrencyDetailComponent implements OnInit {
 
   isChartFromLastSevenDaysActive() {
     this.activeChart = ActiveChart.LastSevenDays
+    this.router.navigate([`detail/${this.code}/chart-from-last-seven-days`])
   }
 
   isChartFromLast30DaysActive() {
     this.activeChart = ActiveChart.Last30Days
+    this.router.navigate([`detail/${this.code}/chart-from-last-30-days`])
   }
 
   isChartFromLastMonthsActive() {
     this.activeChart = ActiveChart.LastMonths
+    this.router.navigate([`detail/${this.code}/chart-from-last-months`])
   }
 }
+

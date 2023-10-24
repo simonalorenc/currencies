@@ -18,15 +18,16 @@ export class ChartService {
           label: 'Exchange Rates',
           data: data,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
+            'rgb(226, 235, 247, 0.4)',
           ],
           borderColor: [
-            'rgba(255, 99, 132, 0.2)',
+            'rgb(40, 81, 146, 0.4)',
           ],
-          borderWidth: 3,
+          borderWidth: 2,
           pointRadius: 4,
           borderJoinStyle: 'miter',
           fill: true,
+          pointBackgroundColor: 'rgb(40, 81, 146, 0.4)'
         }]
       },
       options: {
