@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <div class="container">
+  <div class="container text-secondary">
     <div class="row">
       <div class="col p-0">
         <h1>{{ name }}</h1>
@@ -10,20 +10,20 @@
       </div>
     </div>
   </div>
-  <h2 class="mt-5">Exchange rates from the last 7 days</h2>
+  <h2 class="mt-5 text-secondary">Exchange rates from the last 7 days</h2>
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">Currency</th>
-        <th scope="col">Date</th>
-        <th scope="col">Mid</th>
+        <th scope="col" class="text-secondary">#</th>
+        <th scope="col" class="text-secondary">Date</th>
+        <th scope="col" class="text-secondary">Mid</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let detailCurrency of detailCurrencyRates; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ detailCurrency.date }}</td>
-        <td>{{ detailCurrency.mid }}</td>
+        <td class="text-secondary">{{ i + 1 }}</td>
+        <td class="text-secondary">{{ detailCurrency.date }}</td>
+        <td class="text-secondary">{{ detailCurrency.mid }}</td>
       </tr>
     </tbody>
   </table>
