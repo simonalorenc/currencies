@@ -32,9 +32,12 @@ export class CurrencyListComponent implements OnInit {
   }
 
   getRatesWithFlags() {
+    console.log("getRatesWithFlags subscribe current " + this.filteredRatesWithFlag.length)
+
     this.currenciesRepository
       .getRatesWithFlags()
       .subscribe((rates) => {
+        console.log("getRatesWithFlags result " + rates)
         this.ratesWithFlag = rates;
         this.filteredRatesWithFlag = this.ratesWithFlag;
       });
