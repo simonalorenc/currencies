@@ -17,6 +17,7 @@ import { ChartFromLastSevenDaysComponent } from './charts/chart-from-last-seven-
 import { ChartFromLastMonthsComponent } from './charts/chart-from-last-months/chart-from-last-months.component';
 import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/chart-from-last-30-days.component';
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CurrencyListComponent } from './currency/currency-list/currency-list.co
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    NgChartsModule
+    NgChartsModule,
+    CollapseModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

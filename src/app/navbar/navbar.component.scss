@@ -1,58 +1,56 @@
-.custom-navbar {
-    height: 80px;
-}
+// .custom-navbar {
+//     height: 80px;
+// }
 
-.position-relative {
-    z-index: 1;
-}
+// .position-relative {
+//     z-index: 1;
+// }
 
-.navbar {
-    padding: 0;
-    background-color: white;
-    z-index: 1
-}
+// .navbar {
+//     padding: 0;
+//     background-color: white;
+//     z-index: 1
+// }
 
 .navbar-brand {
     margin-left: 20px;
-    font-size: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.navbar-toggler {
-    padding: 0 4px;
-    margin-right: 20px;
-    transition: all 0.2s;
-}
+// .navbar-toggler {
+//     padding: 0 4px;
+//     margin-right: 20px;
+//     transition: all 0.2s;
+// }
 
-.navbar-toggler:focus {
-    box-shadow: none;
-}
+// .navbar-toggler:focus {
+//     box-shadow: none;
+// }
 
-.navbar-toggler:hover {
-    scale: 1.1;
-}
+// .navbar-toggler:hover {
+//     scale: 1.1;
+// }
 
-.navbar-toggler-icon {
-    width: 25px;
-    height: 25px;
-}
+// .navbar-toggler-icon {
+//     width: 25px;
+//     height: 25px;
+// }
 
-.container-fluid {
-    --bs-gutter-x: 0;
-}
+// .container-fluid {
+//     --bs-gutter-x: 0;
+// }
 
 .navbar-collapse {
-
-    @media only screen and (max-width: 1000px) {
+    @media only screen and (max-width: 992px) {
         background-color: rgb(245, 245, 245);
     }
 }
 
-.modal-backdrop {
-    opacity: 0.5; 
-    background-color: #000;
-    z-index: 0;
-}
+// .modal-backdrop {
+//     opacity: 0.5; 
+//     background-color: #000;
+//     z-index: 0;
+// }
 
 
 
