@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { RateWithFlag } from '../data/rate-with-flag';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-currency-list',
@@ -16,7 +17,8 @@ export class CurrencyListComponent implements OnInit {
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.filterForm = this.formBuilder.group({
       filterInputValue: [''],
@@ -59,5 +61,9 @@ export class CurrencyListComponent implements OnInit {
   sortPopularity() {
     this.isSortAlphabeticallyActive = false
     this.filteredRatesWithFlag = this.ratesWithFlag
+  }
+
+  navigateToDetail(code: string) {
+    this.router.navigate([`/detail/${code}`])
   }
 }
