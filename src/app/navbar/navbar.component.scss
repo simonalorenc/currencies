@@ -21,6 +21,15 @@
 .navbar-toggler {
     padding: 0 4px;
     margin-right: 20px;
+    transition: all 0.2s;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler:hover {
+    scale: 1.1;
 }
 
 .navbar-toggler-icon {
@@ -44,3 +53,6 @@
     background-color: #000;
     z-index: 0;
 }
+
+
+
