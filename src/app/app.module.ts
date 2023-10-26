@@ -39,7 +39,7 @@ import { CurrencyListComponent } from './currency/currency-list/currency-list.co
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    NgChartsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

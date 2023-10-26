@@ -32,19 +32,15 @@ export class CurrencyListComponent implements OnInit {
   }
 
   getRatesWithFlags() {
-    console.log("getRatesWithFlags subscribe current " + this.filteredRatesWithFlag.length)
-
     this.currenciesRepository
       .getRatesWithFlags()
       .subscribe((rates) => {
-        console.log("getRatesWithFlags result " + rates)
         this.ratesWithFlag = rates;
         this.filteredRatesWithFlag = this.ratesWithFlag;
       });
   }
 
   private filterCurrencies(filterText: string): void {
-    console.log(this.ratesWithFlag)
     this.filteredRatesWithFlag = this.ratesWithFlag.filter((rateWithFlag) => {
       return (
         rateWithFlag.rate.code.toLowerCase().includes(filterText) ||
