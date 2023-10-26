@@ -11,13 +11,18 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 export class NavbarComponent {
   isCollapsed = true;
   toggleIcon = faBars;
+  isBackgroundWhite: boolean = false
 
   toggleCollapse() {
+    const modalDiv = document.getElementById('myModal')
     this.isCollapsed = !this.isCollapsed;
+    this.isBackgroundWhite = !this.isBackgroundWhite
     if(this.isCollapsed) {
       this.toggleIcon = faBars
+      modalDiv!.style.display = 'none'
     } else {
       this.toggleIcon = faXmark
+      modalDiv!.style.display = 'block'
     }
   }
 }

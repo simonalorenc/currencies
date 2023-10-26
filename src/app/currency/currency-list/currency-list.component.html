@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-4">
   <form [formGroup]="filterForm" class="d-flex">
     <input
       formControlName="filterInputValue"
@@ -24,18 +24,19 @@
   <table class="table text-secondary">
     <thead>
       <tr>
-        <th scope="col" class="text-secondary">Flag</th>
-        <th scope="col" class="text-secondary">Currency</th>
-        <th scope="col" class="text-secondary">Code</th>
-        <th scope="col" class="text-secondary">Mid</th>
+        <th scope="col">Flag</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Code</th>
+        <th scope="col">Mid</th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
+      <!-- tutaj dodac link -->
       <tr *ngFor="let currency of filteredRatesWithFlag" class="align-middle">
         <th scope="row"><img [src]="currency.flagUrl" alt="Country flag" /></th>
-        <td class="text-secondary">{{ currency.rate.currency }}</td>
-        <td class="text-secondary">{{ currency.rate.code }}</td>
-        <td class="text-secondary">{{ currency.rate.mid }}</td>
+        <td>{{ currency.rate.currency }}</td>
+        <td>{{ currency.rate.code }}</td>
+        <td>{{ currency.rate.mid }}</td>
         <td>
           <a [routerLink]="['/detail', currency.rate.code]">
             <app-button text="More details" size="btn-sm"></app-button>

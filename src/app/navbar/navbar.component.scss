@@ -1,30 +1,41 @@
+.background-white {
+    background-color: white;
+}
+
+.background-transparent {
+    background-color: transparent;
+}
+
+.navbar {
+//   -webkit-box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
+//   -moz-box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
+//   box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
+}
+
 .navbar-brand {
-    margin: 0px 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0px 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .navbar-toggler {
-    margin-right: 20px;
-    border: none;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
+  margin-right: 20px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .navbar-toggler:hover {
-    scale: 1.1;
+  scale: 1.1;
 }
 
-.navbar-collapse {
-    @media only screen and (max-width: 992px) {
-        background-color: rgb(245, 245, 245);
-    }
-}
-
-// .modal-backdrop {
-//     opacity: 0.5; 
-//     background-color: #000;
-//     z-index: 0;
+// .navbar-collapse {
+//   @media only screen and (max-width: 992px) {
+//     background-color: rgb(245, 245, 245);
+//   }
 // }
 
-
-
+.modal-backdrop {
+  opacity: 0.5;
+  background-color: #2d2d2d;
+  z-index: 0;
+}
