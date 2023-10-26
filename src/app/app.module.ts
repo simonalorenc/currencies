@@ -18,6 +18,7 @@ import { ChartFromLastMonthsComponent } from './charts/chart-from-last-months/ch
 import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/chart-from-last-30-days.component';
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgChartsModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

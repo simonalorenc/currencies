@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,8 +10,14 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   isCollapsed = true;
+  toggleIcon = faBars;
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
+    if(this.isCollapsed) {
+      this.toggleIcon = faBars
+    } else {
+      this.toggleIcon = faXmark
+    }
   }
 }

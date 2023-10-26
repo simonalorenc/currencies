@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white pb-0">
-  <div class="container-fluid p-0">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white py-0">
+  <div class="container-fluid d-flex align-items-center p-0">
     <a class="navbar-brand" href="#"
       ><h5 class="text-secondary">Exchange•Rates</h5></a
     >
-    <button class="navbar-toggler" type="button" (click)="toggleCollapse()">
-      <i id="faButton" class="fas fa-bars"></i>
-    </button>
+    <div class="navbar-toggler" (click)="toggleCollapse()">
+      <fa-icon class="fa-lg" [icon]="toggleIcon"></fa-icon>
+    </div>
     <div
       class="collapse navbar-collapse"
       [collapse]="isCollapsed"

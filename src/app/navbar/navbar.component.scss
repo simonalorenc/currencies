@@ -1,44 +1,18 @@
-// .custom-navbar {
-//     height: 80px;
-// }
-
-// .position-relative {
-//     z-index: 1;
-// }
-
-// .navbar {
-//     padding: 0;
-//     background-color: white;
-//     z-index: 1
-// }
-
 .navbar-brand {
-    margin-left: 20px;
+    margin: 0px 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-// .navbar-toggler {
-//     padding: 0 4px;
-//     margin-right: 20px;
-//     transition: all 0.2s;
-// }
+.navbar-toggler {
+    margin-right: 20px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
 
-// .navbar-toggler:focus {
-//     box-shadow: none;
-// }
-
-// .navbar-toggler:hover {
-//     scale: 1.1;
-// }
-
-// .navbar-toggler-icon {
-//     width: 25px;
-//     height: 25px;
-// }
-
-// .container-fluid {
-//     --bs-gutter-x: 0;
-// }
+.navbar-toggler:hover {
+    scale: 1.1;
+}
 
 .navbar-collapse {
     @media only screen and (max-width: 992px) {
