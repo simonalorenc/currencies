@@ -9,3 +9,11 @@ a {
 .cursor {
     cursor: pointer;
 }
+
+.cursor:hover {
+    background-color: rgba(153, 189, 217, 0.1);
+}
+
+.fa-icon {
+    font-size: 1rem;  
+}

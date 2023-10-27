@@ -9,4 +9,5 @@ export class ButtonComponent {
   @Input() text!: string;
   @Input() isActive: boolean = false;
   @Input() size: string = "btn-lg";
+  @Input() icon!: any
 }

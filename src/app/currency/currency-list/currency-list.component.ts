@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { RateWithFlag } from '../data/rate-with-flag';
 import { Router } from '@angular/router';
+import { faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-currency-list',
@@ -14,12 +15,15 @@ export class CurrencyListComponent implements OnInit {
   filteredRatesWithFlag: RateWithFlag[] = [];
   filterForm: FormGroup;
   isSortAlphabeticallyActive: boolean = false
+  sortAlphabeticallyIcon = faArrowUpAZ
+  buttonContent!: string
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
+    this.buttonContent = `<fa-icon class="fa-icon" [icon]="sortAlphabeticallyIcon"></fa-icon>`
     this.filterForm = this.formBuilder.group({
       filterInputValue: [''],
     });

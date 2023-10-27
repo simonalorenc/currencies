@@ -7,6 +7,8 @@ export class FlagsService {
   constructor() {}
 
   getFlagUrl(countryCode: string): string {
-    return `https://flagcdn.com/64x48/${countryCode}.webp`;
+    return `https://flagsapi.com/${countryCode.toUpperCase()}/flat/64.png`;
+    //MIT license
+    // return `https://flagcdn.com/w160/${countryCode}.webp`;
   }
 }
