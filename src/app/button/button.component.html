@@ -4,6 +4,6 @@
   [class.active]="isActive"
   [ngClass]="size"
 >
-  <fa-icon [icon]="icon" class="fa-icon-2xl"></fa-icon>
+  <fa-icon *ngIf="icon" [icon]="icon" class="fa-icon-2xl"></fa-icon>
   {{ text }}
 </button>

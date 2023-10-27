@@ -1,8 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top py-0" [ngClass]="{'bg-white': isBackgroundWhite, 'transparent-background': !isBackgroundWhite }">
+<nav
+  class="navbar navbar-expand-lg navbar-light fixed-top py-0"
+  [ngClass]="{
+    'bg-white': isBackgroundWhite,
+    'transparent-background': !isBackgroundWhite,
+    'scrolled-navbar': isNavbarScrolled
+  }"
+  (scroll)="addBackgroundToNavbar($event)"
+>
   <div class="container-fluid d-flex align-items-center p-0">
-    <a class="navbar-brand" href="#"
-      ><h5>Exchange•Rates</h5></a
-    >
+    <a class="navbar-brand" href="#"><h5>Exchange•Rates</h5></a>
     <div class="navbar-toggler" (click)="toggleCollapse()">
       <fa-icon class="fa-lg" [icon]="toggleIcon"></fa-icon>
     </div>
@@ -20,7 +26,12 @@
   </div>
 </nav>
 
-
 <!-- pokaz jak isCollapsed-->
-<div class="modal fade modal-backdrop" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-</div>
+<div
+  class="modal fade modal-backdrop"
+  id="myModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+></div>

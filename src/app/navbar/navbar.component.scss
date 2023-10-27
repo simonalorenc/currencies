@@ -1,15 +1,16 @@
 .background-white {
-    background-color: white;
+  background-color: white;
 }
 
 .background-transparent {
-    background-color: transparent;
+  background-color: transparent;
 }
 
-.navbar {
-//   -webkit-box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
-//   -moz-box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
-//   box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
+.scrolled-navbar {
+  background-color: white;
+  -webkit-box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
+  -moz-box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
+  box-shadow: 2px 7px 30px -7px rgba(176, 184, 205, 1);
 }
 
 .navbar-brand {
@@ -28,14 +29,19 @@
   scale: 1.1;
 }
 
-// .navbar-collapse {
-//   @media only screen and (max-width: 992px) {
-//     background-color: rgb(245, 245, 245);
-//   }
-// }
-
 .modal-backdrop {
   opacity: 0.5;
   background-color: #2d2d2d;
   z-index: 0;
+}
+
+h5 {
+  margin-bottom: 0;
+}
+
+.nav-link:hover, 
+.nav-link:focus,
+.nav-link.active {
+  color: rgb(110, 193, 228);
+  text-decoration: underline;
 }

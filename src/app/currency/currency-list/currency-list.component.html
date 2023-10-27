@@ -9,7 +9,7 @@
     />
     <div class="d-flex">
       <app-button
-        text="p"
+        [icon]="sortPopulrityIcon"
         [isActive]="!isSortAlphabeticallyActive"
         (click)="sortPopularity()"
       ></app-button>
@@ -21,16 +21,16 @@
       ></app-button>
     </div>
   </form>
-  <table class="table text-secondary">
+  <table class="table">
     <thead>
       <tr>
-        <th scope="col">Flag</th>
-        <th scope="col">Currency</th>
-        <th scope="col">Code</th>
-        <th scope="col">Mid</th>
+        <th scope="col" class="fw-medium">Flag</th>
+        <th scope="col" class="fw-medium">Currency</th>
+        <th scope="col" class="fw-medium">Code</th>
+        <th scope="col" class="fw-medium">Mid</th>
       </tr>
     </thead>
-    <tbody class="table-group-divider">
+    <tbody>
       <ng-container *ngFor="let currency of filteredRatesWithFlag">
         <tr
           class="align-middle cursor"
