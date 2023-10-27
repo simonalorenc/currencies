@@ -2,16 +2,16 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col" class="text-secondary">#</th>
-        <th scope="col" class="text-secondary">Date</th>
-        <th scope="col" class="text-secondary">Price</th>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Price</th>
       </tr>
     </thead>
-    <tbody class="table-group-divider">
+    <tbody>
       <tr *ngFor="let gold of goldPrices; let i = index">
-        <th scope="row" class="text-secondary">{{ i + 1 }}</th>
-        <td class="text-secondary">{{ gold.date }}</td>
-        <td class="text-secondary">{{ gold.price }}</td>
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ gold.date }}</td>
+        <td>{{ gold.price }}</td>
       </tr>
     </tbody>
   </table>

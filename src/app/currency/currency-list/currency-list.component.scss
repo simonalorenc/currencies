@@ -1,19 +1,25 @@
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .table {
-    --bs-body-bg: #0000000
+  --bs-body-bg: #0000000;
 }
 
 .cursor {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .cursor:hover {
-    background-color: rgba(153, 189, 217, 0.1);
+  background-color: rgba(153, 189, 217, 0.1);
 }
 
 .fa-icon {
-    font-size: 1rem;  
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  -webkit-box-shadow: 0px 11px 42px -16px rgba(176, 184, 205, 1);
+  -moz-box-shadow: 0px 11px 42px -16px rgba(176, 184, 205, 1);
+  box-shadow: 0px 11px 42px -16px rgba(176, 184, 205, 1);
 }
