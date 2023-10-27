@@ -1,27 +1,20 @@
 .btn-color-main {
   box-sizing: border-box;
-  background-color: rgb(103, 34, 145, 0.8	
-  );
-  color: white;
+  background-color: #FFDE03; // TODO: wyodrębnić do jakiegoś głownego
+  color: black;
   border-radius: 30px;
   border: none;
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 500;
-  transition: color text-decoration 0.8s;
-  -webkit-box-shadow: 9px 11px 34px -29px rgba(222, 40, 15, 1);
-  -moz-box-shadow: 9px 11px 34px -29px rgba(222, 40, 15, 1);
-  box-shadow: 9px 11px 34px -29px rgba(222, 40, 15, 1);
+  -webkit-box-shadow: 9px 11px 34px -29px rgba(164, 195, 178, 1); //TODO: kolor
+  -moz-box-shadow: 9px 11px 34px -29px rgba(164, 195, 178, 1);
+  box-shadow: 9px 11px 34px -29px rgba(164, 195, 178, 1);
 }
 
-.btn-color-main:hover {
-  background: rgb(103, 34, 145	
-  );
-  text-decoration: underline;
-}
+.btn-color-main:hover,
 .btn-color-main:active,
 .btn-color-main:focus,
 .btn-color-main.active {
-  background: rgb(103, 34, 145	
-  );
+  background: #FFC400;
 }
