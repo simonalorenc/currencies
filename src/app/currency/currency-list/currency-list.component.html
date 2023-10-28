@@ -22,24 +22,25 @@
         ></app-button>
       </div>
     </form>
+    <div class="row">
       <div
-        class="card mb-2"
+        class="col-12 col-md-6 card mb-2"
         *ngFor="let currency of filteredRatesWithFlag"
       >
         <div
-          class="card-body d-flex align-items-center py-0 px-md-5 cursor"
+          class="card-body d-flex align-items-center px-3 cursor"
           (click)="navigateToDetail(currency.rate.code)"
         >
           <div>
             <img [src]="currency.flagUrl" alt="Country flag" />
           </div>
-          
-          <div class="flex-fill">{{ currency.rate.code }}</div>
-       
-          <div class="flex-fill">{{ currency.rate.currency }}</div>
-          <div class="flex-fill"></div>
-          <div>{{ currency.rate.mid }}</div>
+          <div class="flex-row mx-3 flex-fill">
+            <div class="fs-5">{{ currency.rate.currency }}</div>
+            <div class="fs-6 fw-bold">{{ currency.rate.code }}</div>
+          </div>
+          <div class="fs-6 fw-medium">{{ currency.rate.mid }}</div>
         </div>
       </div>
+    </div>
   </div>
 </section>

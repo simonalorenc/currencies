@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ export class DashboardComponent {
 
   onClickCurrencies() {
     this.isCurrenciesActive = true
-    this.router.navigate(['/dashboard/app-currency-list'])
+    this.router.navigate(['/dashboard/currency-list'])
   }
 
   onClickGold() {

@@ -9,10 +9,10 @@ import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/c
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard/app-currency-list', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard/currency-list', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent,
     children: [
-      { path: 'app-currency-list', component: CurrencyListComponent },
+      { path: 'currency-list', component: CurrencyListComponent },
       { path: 'gold-prices', component: GoldPricesComponent },
     ],
   },

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { CurrencyExchangeTableDto, CurrencyRate } from '../data/currency-exchange-table-dto';
+import { CurrencyRate } from '../data/currency-exchange-table-dto';
 import { ExchangeRateService } from '../data/exchange-rate.service';
 import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
-import { ActiveChart } from '../../enums'
+import { ActiveChart } from '../data/active-chart.enum';
+
 Chart.register(...registerables);
 
 @Component({
