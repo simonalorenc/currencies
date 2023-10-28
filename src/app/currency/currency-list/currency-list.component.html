@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container-fluid mt-4">
   <form [formGroup]="filterForm" class="d-flex">
     <input
       formControlName="filterInputValue"
@@ -22,28 +22,21 @@
     </div>
   </form>
   <table class="table">
-    <thead>
-      <tr>
-        <th scope="col" class="fw-medium">Flag</th>
-        <th scope="col" class="fw-medium">Currency</th>
-        <th scope="col" class="fw-medium">Code</th>
-        <th scope="col" class="fw-medium">Mid</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let currency of filteredRatesWithFlag">
-        <tr
-          class="align-middle cursor"
+    <div class="card mb-2" style="height: 90px" *ngFor="let currency of filteredRatesWithFlag">
+        <div
+          class="card-body d-flex align-items-center py-0 px-md-5 cursor"
           (click)="navigateToDetail(currency.rate.code)"
         >
-          <th scope="row">
-            <img [src]="currency.flagUrl" alt="Country flag" />
-          </th>
-          <td>{{ currency.rate.currency }}</td>
-          <td>{{ currency.rate.code }}</td>
-          <td>{{ currency.rate.mid }}</td>
-        </tr>
-      </ng-container>
-    </tbody>
+          <div>
+            <img [src]="currency.flagUrl" alt="Country flag"/>
+          </div>
+          <div class="d-none d-lg-block" style="width: 100px"></div>
+          <div>{{ currency.rate.code }}</div>
+          <div class="d-none d-lg-block" style="width: 200px"></div>
+          <div>{{ currency.rate.currency }}</div>
+          <div class="flex-fill"></div>
+          <div>{{ currency.rate.mid }}</div>
+        </div>
+    </div>
   </table>
 </div>
