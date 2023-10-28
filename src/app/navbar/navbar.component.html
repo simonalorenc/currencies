@@ -13,8 +13,19 @@
       [isAnimated]="true"
     >
       <div class="navbar-nav text-center">
-        <a class="nav-link active" aria-current="page" href="#">Currencies</a>
-        <a class="nav-link" href="#">Gold</a>
+        <a
+          [class.active]="isCurrenciesActive"
+          class="nav-link"
+          aria-current="page"
+          (click)="onClickCurrencies()"
+          >Currencies</a
+        >
+        <a
+          [class.active]="!isCurrenciesActive"
+          class="nav-link"
+          (click)="onClickGold()"
+          >Gold</a
+        >
       </div>
     </div>
   </div>

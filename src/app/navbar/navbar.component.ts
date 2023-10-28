@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,8 +19,11 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 export class NavbarComponent {
   private TRANSPARENT_SCROLL_OFFSET: number = 40
   isTransparent: boolean = true
+  isCurrenciesActive: boolean = true
   isCollapsed = true;
   toggleIcon = faBars;
+
+  constructor(private router: Router) {}
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed
@@ -39,5 +43,15 @@ export class NavbarComponent {
 
   private isTransparentScrollOffset() {
     return window.scrollY < this.TRANSPARENT_SCROLL_OFFSET
+  }
+
+  onClickCurrencies() {
+    this.isCurrenciesActive = true
+    this.router.navigate(['/dashboard/currency-list'])
+  }
+
+  onClickGold() {
+    this.isCurrenciesActive = false
+    this.router.navigate(['/dashboard/gold-prices'])
   }
 }
