@@ -2,8 +2,8 @@ a {
   text-decoration: none;
 }
 
-.table {
-  --bs-body-bg: #0000000;
+section {
+  background-color: #e9eaed;
 }
 
 .cursor {
@@ -12,6 +12,10 @@ a {
 
 .cursor:hover {
   background-color: rgba(153, 189, 217, 0.1);
+}
+
+.card-body {
+  height: 90px;
 }
 
 .fa-icon {

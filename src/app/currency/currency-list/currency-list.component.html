@@ -1,42 +1,45 @@
-<div class="container-fluid mt-4">
-  <form [formGroup]="filterForm" class="d-flex">
-    <input
-      formControlName="filterInputValue"
-      class="form-control mb-3 me-2 h-150 rounded-5"
-      type="text"
-      placeholder="Search currency"
-      aria-label="Search currency"
-    />
-    <div class="d-flex">
-      <app-button
-        [icon]="sortPopulrityIcon"
-        [isActive]="!isSortAlphabeticallyActive"
-        (click)="sortPopularity()"
-      ></app-button>
-      <div class="me-3"></div>
-      <app-button
-        [icon]="sortAlphabeticallyIcon"
-        [isActive]="isSortAlphabeticallyActive"
-        (click)="sortAlphabetically()"
-      ></app-button>
-    </div>
-  </form>
-  <table class="table">
-    <div class="card mb-2" style="height: 90px" *ngFor="let currency of filteredRatesWithFlag">
+<section class="py-4">
+  <div class="container">
+    <form [formGroup]="filterForm" class="d-flex">
+      <input
+        formControlName="filterInputValue"
+        class="form-control mb-3 me-2 h-150 rounded-5"
+        type="text"
+        placeholder="Search currency"
+        aria-label="Search currency"
+      />
+      <div class="d-flex">
+        <app-button
+          [icon]="sortPopulrityIcon"
+          [isActive]="!isSortAlphabeticallyActive"
+          (click)="sortPopularity()"
+        ></app-button>
+        <div class="me-3"></div>
+        <app-button
+          [icon]="sortAlphabeticallyIcon"
+          [isActive]="isSortAlphabeticallyActive"
+          (click)="sortAlphabetically()"
+        ></app-button>
+      </div>
+    </form>
+      <div
+        class="card mb-2"
+        *ngFor="let currency of filteredRatesWithFlag"
+      >
         <div
           class="card-body d-flex align-items-center py-0 px-md-5 cursor"
           (click)="navigateToDetail(currency.rate.code)"
         >
           <div>
-            <img [src]="currency.flagUrl" alt="Country flag"/>
+            <img [src]="currency.flagUrl" alt="Country flag" />
           </div>
-          <div class="d-none d-lg-block" style="width: 100px"></div>
-          <div>{{ currency.rate.code }}</div>
-          <div class="d-none d-lg-block" style="width: 200px"></div>
-          <div>{{ currency.rate.currency }}</div>
+          
+          <div class="flex-fill">{{ currency.rate.code }}</div>
+       
+          <div class="flex-fill">{{ currency.rate.currency }}</div>
           <div class="flex-fill"></div>
           <div>{{ currency.rate.mid }}</div>
         </div>
-    </div>
-  </table>
-</div>
+      </div>
+  </div>
+</section>

@@ -1,11 +1,9 @@
-/* Importing Bootstrap SCSS file. */
-@import "./node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
 
-/* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
 body {
-    background-color: #FAFAFA;
+    background-color: white;
 }
 
 .dim-background {
@@ -16,4 +14,17 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+}
+
+.card {
+    border: none;
+    transition: all 0.3s ease-in-out;
+    -webkit-box-shadow: 0px 6px 30px -26px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0px 6px 30px -26px rgba(0, 0, 0, 1);
+    box-shadow: 0px 6px 30px -26px rgba(0, 0, 0, 1);
+}
+
+.card:hover {
+    scale: 1.05;
+    font-weight: 600;
 }

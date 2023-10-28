@@ -1,25 +1,27 @@
-<div class="container-fluid pt-5">
-  <div class="row p-5">
-    <div class="col-7">
-      <h1>Exchange Rates</h1>
-      <p class="mt-2">
-        See fluctuations in your currency using the tabel and charts below. Use
-        fiter input to find Your currency!
-      </p>
-      <div class="d-flex mt-2">
-        <app-button
-          text="Currencies"
-          [isActive]="isCurrenciesActive"
-          (click)="onClickCurrencies()"
-        />
-        <div class="me-4"></div>
-        <app-button
-          text="Gold"
-          [isActive]="!isCurrenciesActive"
-          (click)="onClickGold()"
-        />
+<div class="pt-5">
+  <section class="pb-4" >
+    <div class="container pt-5">
+      <div class="col-7">
+        <h1>Exchange Rates</h1>
+        <p class="mt-2">
+          See fluctuations in your currency using the tabel and charts below. Use
+          fiter input to find Your currency!
+        </p>
+        <div class="d-flex mt-2">
+          <app-button
+            text="Currencies"
+            [isActive]="isCurrenciesActive"
+            (click)="onClickCurrencies()"
+          />
+          <div class="me-4"></div>
+          <app-button
+            text="Gold"
+            [isActive]="!isCurrenciesActive"
+            (click)="onClickGold()"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </section>
   <router-outlet></router-outlet>
 </div>
