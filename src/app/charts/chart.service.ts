@@ -6,6 +6,10 @@ Chart.register(...registerables);
   providedIn: 'root',
 })
 export class ChartService {
+  private BACKGROUND_COLOR = '#FFC4001A';
+  private BORDER_COLOR = '#FFC400';
+  private POINT_COLOR = '#FFC400';
+
   constructor() {}
 
   createChart(labels: string[], data: number[], id: string) {
@@ -17,13 +21,13 @@ export class ChartService {
           {
             label: 'Exchange Rates',
             data: data,
-            backgroundColor: 'rgb(255, 196, 0, 0.1)',
-            borderColor: '#FFC400',
+            backgroundColor: this.BACKGROUND_COLOR,
+            borderColor: this.BORDER_COLOR,
             borderWidth: 2,
             pointRadius: 4,
             borderJoinStyle: 'miter',
             fill: true,
-            pointBackgroundColor: '#FFC400',
+            pointBackgroundColor: this.POINT_COLOR,
             tension: 0.4
           },
         ],
