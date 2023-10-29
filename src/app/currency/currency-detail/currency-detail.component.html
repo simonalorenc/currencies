@@ -6,7 +6,11 @@
         <h1>{{ code.toUpperCase() }}</h1>
       </div>
       <div class="col d-flex justify-content-end p-3">
-        <img [src]="flagUrl" />
+        <img
+          [src]="flagUrl"
+          onerror="this.onerror=null;this.src='assets/flag_placeholder.webp';"
+          alt="Country flag"
+        />
       </div>
     </div>
   </div>
