@@ -1,13 +1,9 @@
+@import "./variables.scss";
 @import "node_modules/bootstrap/scss/bootstrap";
-
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
-* {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
 body {
-  background-color: white;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .dim-background {
