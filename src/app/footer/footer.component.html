@@ -1,75 +1,23 @@
-<footer class="bg-light text-center text-white mt-5">
-  <!-- Grid container -->
-  <div class="container p-4 pb-0">
-    <!-- Section: Social media -->
-    <section class="mb-4">
-      <!-- Facebook -->
-      <a
-        mdbRipple
-        class="btn btn-primary btn-floating m-1"
-        style="background-color: #3b5998"
-        href="#!"
-        role="button"
-        ><i class="fab fa-facebook-f"></i
-      ></a>
-
-      <!-- Twitter -->
-      <a
-        mdbRipple
-        class="btn btn-primary btn-floating m-1"
-        style="background-color: #55acee"
-        href="#!"
-        role="button"
-        ><i class="fab fa-twitter"></i
-      ></a>
-
-      <!-- Google -->
-      <a
-        mdbRipple
-        class="btn btn-primary btn-floating m-1"
-        style="background-color: #dd4b39"
-        href="#!"
-        role="button"
-        ><i class="fab fa-google"></i
-      ></a>
-
-      <!-- Instagram -->
-      <a
-        mdbRipple
-        class="btn btn-primary btn-floating m-1"
-        style="background-color: #ac2bac"
-        href="#!"
-        role="button"
-        ><i class="fab fa-instagram"></i
-      ></a>
-
-      <!-- Linkedin -->
-      <a
-        mdbRipple
-        class="btn btn-primary btn-floating m-1"
-        style="background-color: #0082ca"
-        href="#!"
-        role="button"
-        ><i class="fab fa-linkedin-in"></i
-      ></a>
-      <!-- Github -->
-      <a
-        mdbRipple
-        class="btn btn-primary btn-floating m-1"
-        style="background-color: #333333"
-        href="#!"
-        role="button"
-        ><i class="fab fa-github"></i
-      ></a>
-    </section>
-    <!-- Section: Social media -->
-  </div>
-  <!-- Grid container -->
-
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-    © 2020 Copyright:
-    <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-  </div>
-  <!-- Copyright -->
-</footer>
+<section>
+  <footer class="text-white">
+    <div class="container-fluid p-0">
+      <div class="row m-0">
+        <div class="col-md-8 background-image d-none d-md-block"></div>
+        <div
+          class="col-12 col-md-4 background-text text-center d-flex align-items-center justify-content-center"
+        >
+          <div class="d-flex flex-column align-items-center">
+            <h2 class="fw-bold">Check your currency!</h2>
+            <app-button
+              text="Currencies"
+              (click)="onClickCurrencies()"
+            ></app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-dark p-3 bg-primary">
+      <p class="text-dark">Simona Lorenc ©2023</p>
+    </div>
+  </footer>
+</section>

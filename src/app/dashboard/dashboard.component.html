@@ -1,29 +1,27 @@
-<div class="container mt-5">
-  <div class="row">
-    <div class="col">
-      <h1>TITLE</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, nisi
-        temporibus deleniti corrupti cumque dolorum aut inventore magni nam et
-        culpa placeat cum distinctio. Aperiam dolores pariatur hic consectetur
-        labore.
-      </p>
-      <div>
-        <a routerLink="/dashboard/app-currency-list">
+<div class="pt-5">
+  <section class="pb-4" >
+    <div class="container pt-5">
+      <div class="col-7">
+        <h1>Exchange Rates</h1>
+        <p class="mt-2">
+          See fluctuations in your currency using the tabel and charts below. Use
+          fiter input to find Your currency!
+        </p>
+        <div class="d-flex mt-2">
           <app-button
-            buttonText="Currencies"
-            [size]="'btn-lg me-5'"
-          ></app-button
-        ></a>
-        <a routerLink="/dashboard/gold-prices">
+            text="Currencies"
+            [isActive]="isCurrenciesActive"
+            (click)="onClickCurrencies()"
+          />
+          <div class="me-4"></div>
           <app-button
-            buttonText="Gold"
-            [size]="'btn-lg'"
-          ></app-button
-        ></a>
+            text="Gold"
+            [isActive]="!isCurrenciesActive"
+            (click)="onClickGold()"
+          />
+        </div>
       </div>
     </div>
-    <div class="col bg-secondary"></div>
-  </div>
+  </section>
   <router-outlet></router-outlet>
 </div>

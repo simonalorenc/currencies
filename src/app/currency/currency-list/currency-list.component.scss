@@ -1,3 +1,30 @@
-a {
-    text-decoration: none;
+@import "../../../variables.scss";
+
+.card-body {
+  height: 90px;
 }
+
+.flag {
+  width: 87px;
+  height: 58px;
+  object-fit: cover;
+  border: solid 1px $background-variant;
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  border: solid 1px $primary-variant;
+  box-shadow: none;
+}
+
+.text-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-ellipsis-max-lines {
+  max-height: 3em;
+}
+

@@ -1,0 +1,19 @@
+@import "../../variables.scss";
+
+footer {
+    background-color: $background-variant;
+}
+
+.row {
+    min-height: 212px;
+}
+
+.background-image {
+    background-image: url('../../assets/footer-img.png');
+    background-size: cover;
+    background-position: center unset;
+}
+
+.background-text {
+    background-color: $primary-variant;
+}

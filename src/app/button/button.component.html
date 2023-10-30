@@ -1,9 +1,9 @@
 <button
   type="button"
-  class="btn btn-secondary btn-rounded"
+  class="btn border-0"
+  [class.active]="isActive"
   [ngClass]="size"
-  mdbRipple
 >
-  {{ buttonText }}
+  <fa-icon *ngIf="icon" [icon]="icon" class="fa-icon-2xl"></fa-icon>
+  {{ text }}
 </button>
-

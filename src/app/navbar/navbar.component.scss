@@ -1,3 +1,35 @@
-.custom-navbar {
-    height: 80px;
+@import "../../variables.scss";
+
+.navbar-brand {
+  margin-left: 20px;
+}
+
+.navbar-toggler {
+  margin-right: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-toggler:hover {
+  scale: 1.1;
+}
+
+h5 {
+  margin-bottom: 0;
+}
+
+fa-icon {
+  color: $text-primary;
+}
+
+.nav-link {
+  min-width: 110px;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover, 
+.nav-link:focus,
+.nav-link.active {
+  cursor: pointer;
+  font-weight: 600;
+  color: $text-primary; 
 }

@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { GoldPricesComponent } from './gold-prices/gold-prices.component';
-import { CurrencyDetailComponent } from './currency/currency-detail/currency-detail.component';
-import { ChartFromLastSevenDaysComponent } from './charts/chart-from-last-seven-days/chart-from-last-seven-days.component';
-import { ChartFromLastMonthsComponent } from './charts/chart-from-last-months/chart-from-last-months.component';
-import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/chart-from-last-30-days.component';
-import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { GoldPricesComponent } from '../gold-prices/gold-prices.component';
+import { CurrencyDetailComponent } from '../currency/currency-detail/currency-detail.component';
+import { ChartFromLastSevenDaysComponent } from '../charts/chart-from-last-seven-days/chart-from-last-seven-days.component';
+import { ChartFromLastMonthsComponent } from '../charts/chart-from-last-months/chart-from-last-months.component';
+import { ChartFromLast30DaysComponent } from '../charts/chart-from-last-30-days/chart-from-last-30-days.component';
+import { CurrencyListComponent } from '../currency/currency-list/currency-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard/app-currency-list', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard/currency-list', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent,
     children: [
-      { path: 'app-currency-list', component: CurrencyListComponent },
+      { path: 'currency-list', component: CurrencyListComponent },
       { path: 'gold-prices', component: GoldPricesComponent },
     ],
   },

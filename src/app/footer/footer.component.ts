@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarRoutingService } from '../routing/navbar-routing.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
 
+  constructor(private navbarRoutingService: NavbarRoutingService) {}
+
+  onClickCurrencies() {
+    
+    this.navbarRoutingService.onClickCurrencies()
+  }
 }

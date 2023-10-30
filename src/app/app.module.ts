@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -16,8 +16,9 @@ import { NgChartsModule } from 'ng2-charts';
 import { ChartFromLastSevenDaysComponent } from './charts/chart-from-last-seven-days/chart-from-last-seven-days.component';
 import { ChartFromLastMonthsComponent } from './charts/chart-from-last-months/chart-from-last-months.component';
 import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/chart-from-last-30-days.component';
-import { MdbModule } from './mdb/mdb.module';
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { CurrencyListComponent } from './currency/currency-list/currency-list.co
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgChartsModule,
-    MdbModule
+    CollapseModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

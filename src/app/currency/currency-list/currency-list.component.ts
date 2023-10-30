@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { RateWithFlag } from '../data/rate-with-flag';
+import { Router } from '@angular/router';
+import { IconDefinition, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-currency-list',
@@ -12,10 +15,14 @@ export class CurrencyListComponent implements OnInit {
   private ratesWithFlag: RateWithFlag[] = [];
   filteredRatesWithFlag: RateWithFlag[] = [];
   filterForm: FormGroup;
+  isSortAlphabeticallyActive: boolean = false
+  sortAlphabeticallyIcon: IconDefinition = faArrowUpAZ
+  sortPopulrityIcon: IconDefinition = faSort
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.filterForm = this.formBuilder.group({
       filterInputValue: [''],
@@ -40,7 +47,6 @@ export class CurrencyListComponent implements OnInit {
   }
 
   private filterCurrencies(filterText: string): void {
-    console.log(this.ratesWithFlag)
     this.filteredRatesWithFlag = this.ratesWithFlag.filter((rateWithFlag) => {
       return (
         rateWithFlag.rate.code.toLowerCase().includes(filterText) ||
@@ -49,9 +55,19 @@ export class CurrencyListComponent implements OnInit {
     });
   }
 
-  sortByAlphabetically() {
-    this.filteredRatesWithFlag = this.ratesWithFlag.sort((a, b) => {
+  sortAlphabetically() {
+    this.isSortAlphabeticallyActive = true
+    this.filteredRatesWithFlag = this.ratesWithFlag.concat().sort((a, b) => {
       return a.rate.currency.localeCompare(b.rate.currency)
     })
+  }
+
+  sortPopularity() {
+    this.isSortAlphabeticallyActive = false
+    this.filteredRatesWithFlag = this.ratesWithFlag
+  }
+
+  navigateToDetail(code: string) {
+    this.router.navigate([`/detail/${code}`])
   }
 }

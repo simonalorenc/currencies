@@ -1,36 +1,59 @@
-<div class="container mt-5">
-  <form [formGroup]="filterForm" class="d-flex">
-    <input
-      formControlName="filterInputValue"
-      class="form-control mb-3 me-2 h-150"
-      type="text"
-      placeholder="Search currency"
-      aria-label="Search currency"
-    />
-    <app-button buttonText="p" [size]="'btn-s me-2 d-inline h-150'" (click)="getRatesWithFlags()"></app-button>
-    <app-button buttonText="a" [size]="'btn-s me-2 d-inline h-150'" (click)="sortByAlphabetically()"></app-button>
-  </form>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Flag</th>
-        <th scope="col">Currency</th>
-        <th scope="col">Code</th>
-        <th scope="col">Mid</th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <tr *ngFor="let currency of filteredRatesWithFlag" class="align-middle">
-        <th scope="row"><img [src]="currency.flagUrl" alt="Country flag" /></th>
-        <td>{{ currency.rate.currency }}</td>
-        <td>{{ currency.rate.code }}</td>
-        <td>{{ currency.rate.mid }}</td>
-        <td>
-          <a [routerLink]="['/detail', currency.rate.code]">
-            <app-button buttonText="More details" [size]="'btn-sm'" (click)="sortByAlphabetically()"></app-button>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<section class="section-variant py-4">
+  <div class="container">
+    <form [formGroup]="filterForm" class="d-flex">
+      <input
+        formControlName="filterInputValue"
+        class="form-control mb-3 me-2 h-150 rounded-5"
+        type="text"
+        placeholder="Search currency"
+        aria-label="Search currency"
+      />
+      <div class="d-flex">
+        <app-button
+          [icon]="sortPopulrityIcon"
+          [isActive]="!isSortAlphabeticallyActive"
+          (click)="sortPopularity()"
+        ></app-button>
+        <div class="me-3"></div>
+        <app-button
+          [icon]="sortAlphabeticallyIcon"
+          [isActive]="isSortAlphabeticallyActive"
+          (click)="sortAlphabetically()"
+        ></app-button>
+      </div>
+    </form>
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div
+          class="col-12 col-md-6 pb-1 p-1"
+          *ngFor="let currency of filteredRatesWithFlag"
+        >
+          <div class="card">
+            <div
+              class="card-body d-flex align-items-center cursor"
+              (click)="navigateToDetail(currency.rate.code)"
+            >
+              <div>
+                <img
+                  class="flag"
+                  [src]="currency.flagUrl"
+                  onerror="this.onerror=null;this.src='assets/flag_placeholder.webp';"
+                  alt="Country flag"
+                />
+              </div>
+              <div class="flex-row mx-3 flex-fill">
+                <div class="fs-5 text-ellipsis">
+                  <div class="text-ellipsis-max-lines">
+                    {{ currency.rate.currency }}
+                  </div>
+                </div>
+                <div class="fs-6 fw-bold">{{ currency.rate.code }}</div>
+              </div>
+              <div class="fs-6 fw-medium">{{ currency.rate.mid }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

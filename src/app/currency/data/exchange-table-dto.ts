@@ -1,5 +1,3 @@
-import { CurrencyRateDto } from "./currency-exchange-table-dto"
-
 export interface ExchangeTableDto {
   table: string
   no: string
