@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CurrenciesGoldRoutingService {
-  isCurrenciesActiveSubject = new BehaviorSubject<boolean>(true);
+export class NavbarRoutingService {
+  private isCurrenciesActiveSubject = new BehaviorSubject<boolean>(true);
 
   constructor(private router: Router) {}
+
+  getCurrenciesActiveObservable(): Observable<boolean> {
+    return this.isCurrenciesActiveSubject.asObservable()
+  }
 
   onClickCurrencies() {
     this.isCurrenciesActiveSubject.next(true);

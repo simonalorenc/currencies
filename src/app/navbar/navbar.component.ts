@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, HostListener, OnInit } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { CurrenciesGoldRoutingService } from '../currencies-gold-routing.service';
+import { NavbarRoutingService } from '../routing/navbar-routing.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,10 +23,10 @@ export class NavbarComponent implements OnInit{
   isCollapsed = true;
   toggleIcon = faBars;
 
-  constructor(private currenciesGoldRoutingService: CurrenciesGoldRoutingService) {}
+  constructor(private navbarRoutingService: NavbarRoutingService) {}
 
   ngOnInit(): void {
-    this.currenciesGoldRoutingService.isCurrenciesActiveSubject.asObservable().subscribe(
+    this.navbarRoutingService.getCurrenciesActiveObservable().subscribe(
       (isActive) => {
         this.isCurrenciesActive = isActive
       }
@@ -54,10 +54,10 @@ export class NavbarComponent implements OnInit{
   }
 
   onClickCurrencies() {
-    this.currenciesGoldRoutingService.onClickCurrencies()
+    this.navbarRoutingService.onClickCurrencies()
   }
 
   onClickGold() {
-    this.currenciesGoldRoutingService.onClickGold()
+    this.navbarRoutingService.onClickGold()
   }
 }

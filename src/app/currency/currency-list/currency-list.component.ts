@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { RateWithFlag } from '../data/rate-with-flag';
 import { Router } from '@angular/router';
-import { faArrowUpAZ, faS } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -16,8 +16,8 @@ export class CurrencyListComponent implements OnInit {
   filteredRatesWithFlag: RateWithFlag[] = [];
   filterForm: FormGroup;
   isSortAlphabeticallyActive: boolean = false
-  sortAlphabeticallyIcon = faArrowUpAZ
-  sortPopulrityIcon = faSort
+  sortAlphabeticallyIcon: IconDefinition = faArrowUpAZ
+  sortPopulrityIcon: IconDefinition = faSort
   buttonContent!: string
 
   constructor(

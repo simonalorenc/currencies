@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CurrenciesGoldRoutingService } from '../currencies-gold-routing.service';
+import { NavbarRoutingService } from '../routing/navbar-routing.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class FooterComponent {
 
-  constructor(private currenciesGoldRoutingService: CurrenciesGoldRoutingService, private router: Router) {}
+  constructor(private navbarRoutingService: NavbarRoutingService, private router: Router) {}
 
   onClickCurrencies() {
     
-    this.currenciesGoldRoutingService.onClickCurrencies()
+    this.navbarRoutingService.onClickCurrencies()
   }
 }

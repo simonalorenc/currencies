@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CurrenciesGoldRoutingService } from '../currencies-gold-routing.service';
+import { NavbarRoutingService } from '../routing/navbar-routing.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,10 +10,10 @@ import { CurrenciesGoldRoutingService } from '../currencies-gold-routing.service
 export class DashboardComponent implements OnInit {
   isCurrenciesActive!: boolean
 
-  constructor(private currenciesGoldRoutingService: CurrenciesGoldRoutingService) {}
+  constructor(private navbarRoutingService: NavbarRoutingService) {}
 
   ngOnInit(): void {
-    this.currenciesGoldRoutingService.isCurrenciesActiveSubject.asObservable().subscribe(
+    this.navbarRoutingService.getCurrenciesActiveObservable().subscribe(
       (isActive) => {
         this.isCurrenciesActive = isActive
       }
@@ -21,12 +21,10 @@ export class DashboardComponent implements OnInit {
   }
 
   onClickCurrencies() {
-    this.currenciesGoldRoutingService.onClickCurrencies()
-    console.log('dashboard: ' + this.isCurrenciesActive)
+    this.navbarRoutingService.onClickCurrencies()
   }
 
   onClickGold() {
-    this.currenciesGoldRoutingService.onClickGold()
-    console.log('dashboard: ' + this.isCurrenciesActive)
+    this.navbarRoutingService.onClickGold()
   }
 }
