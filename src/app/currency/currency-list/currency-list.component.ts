@@ -18,14 +18,12 @@ export class CurrencyListComponent implements OnInit {
   isSortAlphabeticallyActive: boolean = false
   sortAlphabeticallyIcon: IconDefinition = faArrowUpAZ
   sortPopulrityIcon: IconDefinition = faSort
-  buttonContent!: string
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-    this.buttonContent = `<fa-icon class="fa-icon" [icon]="sortAlphabeticallyIcon"></fa-icon>`
     this.filterForm = this.formBuilder.group({
       filterInputValue: [''],
     });

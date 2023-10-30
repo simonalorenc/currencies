@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
-Chart.register(...registerables);
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,9 @@ export class ChartService {
   private BORDER_COLOR = '#FFC400';
   private POINT_COLOR = '#FFC400';
 
-  constructor() {}
+  constructor() {
+    Chart.register(...registerables);
+  }
 
   createChart(labels: string[], data: number[], id: string) {
     new Chart(id, {

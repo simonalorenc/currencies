@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBars } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NavbarRoutingService } from '../routing/navbar-routing.service';
 
@@ -19,9 +19,9 @@ import { NavbarRoutingService } from '../routing/navbar-routing.service';
 export class NavbarComponent implements OnInit{
   private TRANSPARENT_SCROLL_OFFSET: number = 40
   isTransparent: boolean = true
-  isCurrenciesActive!: boolean
+  isCurrenciesActive: boolean = false
   isCollapsed = true;
-  toggleIcon = faBars;
+  toggleIcon: IconDefinition = faBars;
 
   constructor(private navbarRoutingService: NavbarRoutingService) {}
 

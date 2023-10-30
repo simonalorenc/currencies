@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Chart, registerables } from 'node_modules/chart.js';
 import { CurrencyRate } from '../data/currency-exchange-table-dto';
 import { ExchangeRateService } from '../data/exchange-rate.service';
 import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { ActiveChart } from '../data/active-chart.enum';
-
-Chart.register(...registerables);
 
 @Component({
   selector: 'app-currency-detail',
@@ -21,9 +18,8 @@ export class CurrencyDetailComponent implements OnInit {
 
   name!: string
   code!: string;
-  detailCurrencyRates: CurrencyRate[] = [];
   flagUrl!: string;
-  isChartActive: boolean = true
+  detailCurrencyRates: CurrencyRate[] = [];
   activeChart: ActiveChart = ActiveChart.LastSevenDays
 
   constructor(
@@ -33,7 +29,7 @@ export class CurrencyDetailComponent implements OnInit {
     private currenciesRepository: CurrenciesRepository,
     private router: Router
   ) {
-    this.code = this.route.snapshot.paramMap.get('code')!.toLowerCase();
+    this.code = this.route.snapshot.paramMap.get('code')!;
   }
 
   ngOnInit(): void {

@@ -8,7 +8,7 @@ import { NavbarRoutingService } from '../routing/navbar-routing.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  isCurrenciesActive!: boolean
+  isCurrenciesActive: boolean = false
 
   constructor(private navbarRoutingService: NavbarRoutingService) {}
 
