@@ -1,8 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { CurrenciesGoldRoutingService } from '../currencies-gold-routing.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,19 +11,27 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
   animations: [
     trigger('transparentBackground', [
       state('true', style({backgroundColor: 'transparent'})),
-      state('false', style({backgroundColor: '#FFC400'})), //TODO: wykorzystac kolor bazowy
+      state('false', style({backgroundColor: '#FFC400'})),
       transition( '* <=> *', animate(300))
     ])
   ]
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
   private TRANSPARENT_SCROLL_OFFSET: number = 40
   isTransparent: boolean = true
-  isCurrenciesActive: boolean = true
+  isCurrenciesActive!: boolean
   isCollapsed = true;
   toggleIcon = faBars;
 
-  constructor(private router: Router) {}
+  constructor(private currenciesGoldRoutingService: CurrenciesGoldRoutingService) {}
+
+  ngOnInit(): void {
+    this.currenciesGoldRoutingService.isCurrenciesActiveSubject.asObservable().subscribe(
+      (isActive) => {
+        this.isCurrenciesActive = isActive
+      }
+    )
+  }
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed
@@ -46,12 +54,10 @@ export class NavbarComponent {
   }
 
   onClickCurrencies() {
-    this.isCurrenciesActive = true
-    this.router.navigate(['/dashboard/currency-list'])
+    this.currenciesGoldRoutingService.onClickCurrencies()
   }
 
   onClickGold() {
-    this.isCurrenciesActive = false
-    this.router.navigate(['/dashboard/gold-prices'])
+    this.currenciesGoldRoutingService.onClickGold()
   }
 }
