@@ -16,3 +16,15 @@
   border: solid 1px $primary-variant;
   box-shadow: none;
 }
+
+.text-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-ellipsis-max-lines {
+  max-height: 3em;
+}
+

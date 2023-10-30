@@ -1,4 +1,5 @@
 @import "../../variables.scss";
+@import 'bootstrap';
 
 .navbar-brand {
   margin-left: 20px;
@@ -22,6 +23,7 @@ fa-icon {
 }
 
 .nav-link {
+  min-width: 110px;
   transition: all 0.2s ease-in-out;
 }
 
