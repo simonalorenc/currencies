@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="6379638880965432975" datatype="html">
+        <source>Chart form the last 30 days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/charts/chart-from-last-30-days/chart-from-last-30-days.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="764284594185185965" datatype="html">
+        <source>Chart from the last months</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/charts/chart-from-last-months/chart-from-last-months.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8748922381492666970" datatype="html">
+        <source>Chart from the last 7 days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/charts/chart-from-last-seven-days/chart-from-last-seven-days.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4421099908662558170" datatype="html">
+        <source>Country flag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/currency/currency-detail/currency-detail.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/currency/currency-list/currency-list.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3094260115010561777" datatype="html">
+        <source>Exchange rates from the last 7 days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/currency/currency-detail/currency-detail.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="436804128395853287" datatype="html">
+        <source>Exchange Rates</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="612849331221402274" datatype="html">
+        <source> See fluctuations in your currency using the tabel and charts below. Use fiter input to find Your currency! </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="459019849231525496" datatype="html">
+        <source>Check your currency!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/footer/footer.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8298612418414367990" datatype="html">
+        <source>Currencies</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/navbar/navbar.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="620013521855260281" datatype="html">
+        <source>Gold</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/navbar/navbar.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
