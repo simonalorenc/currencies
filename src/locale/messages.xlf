@@ -41,6 +41,27 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1454034835068339415" datatype="html">
+        <source>last 7 days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/currency/currency-detail/currency-detail.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8977865724944780718" datatype="html">
+        <source>last 30 days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/currency/currency-detail/currency-detail.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6653376487307855912" datatype="html">
+        <source>last months</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/currency/currency-detail/currency-detail.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="436804128395853287" datatype="html">
         <source>Exchange Rates</source>
         <context-group purpose="location">

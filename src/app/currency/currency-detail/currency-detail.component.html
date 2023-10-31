@@ -35,18 +35,21 @@
       <app-button
         [isActive]="activeChart == ActiveChart.LastSevenDays"
         text="last 7 days"
+        i18n-text
         (click)="isChartFromLastSevenDaysActive()"
       ></app-button>
       <div class="me-5"></div>
       <app-button
         [isActive]="activeChart == ActiveChart.Last30Days"
         text="last 30 days"
+        i18n-text
         (click)="isChartFromLast30DaysActive()"
       ></app-button>
       <div class="me-5"></div>
       <app-button
         [isActive]="activeChart == ActiveChart.LastMonths"
         text="last months"
+        i18n-text
         (click)="isChartFromLastMonthsActive()"
       ></app-button>
     </div>
