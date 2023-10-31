@@ -20,11 +20,11 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  onClickCurrencies() {
+  onClickCurrencies(): void {
     this.navbarRoutingService.onClickCurrencies()
   }
 
-  onClickGold() {
+  onClickGold(): void {
     this.navbarRoutingService.onClickGold()
   }
 }

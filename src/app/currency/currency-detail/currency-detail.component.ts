@@ -52,17 +52,17 @@ export class CurrencyDetailComponent implements OnInit {
       });
   }
 
-  isChartFromLastSevenDaysActive() {
+  isChartFromLastSevenDaysActive(): void {
     this.activeChart = ActiveChart.LastSevenDays
     this.router.navigate([`detail/${this.code}/chart-from-last-seven-days`])
   }
 
-  isChartFromLast30DaysActive() {
+  isChartFromLast30DaysActive(): void {
     this.activeChart = ActiveChart.Last30Days
     this.router.navigate([`detail/${this.code}/chart-from-last-30-days`])
   }
 
-  isChartFromLastMonthsActive() {
+  isChartFromLastMonthsActive(): void {
     this.activeChart = ActiveChart.LastMonths
     this.router.navigate([`detail/${this.code}/chart-from-last-months`])
   }

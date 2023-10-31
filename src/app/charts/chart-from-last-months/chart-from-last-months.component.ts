@@ -25,7 +25,7 @@ export class ChartFromLastMonthsComponent {
     })
   }
 
-  createChartFromLastMonths2(code: string) {
+  createChartFromLastMonths2(code: string): void {
     const dates = this.getStartAndEndDate()
 
     this.exchangeRateService.getCurrencyExchangeTableDtoForDateRange(code, dates[0], dates[1]).pipe(

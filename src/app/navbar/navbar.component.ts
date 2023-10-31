@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit{
     )
   }
 
-  toggleCollapse() {
+  toggleCollapse(): void {
     this.isCollapsed = !this.isCollapsed
     if(this.isCollapsed) {
       this.toggleIcon = faBars
@@ -49,15 +49,15 @@ export class NavbarComponent implements OnInit{
     this.isTransparent = this.isTransparentScrollOffset()
   }
 
-  private isTransparentScrollOffset() {
+  private isTransparentScrollOffset(): boolean {
     return window.scrollY < this.TRANSPARENT_SCROLL_OFFSET
   }
 
-  onClickCurrencies() {
+  onClickCurrencies(): void {
     this.navbarRoutingService.onClickCurrencies()
   }
 
-  onClickGold() {
+  onClickGold(): void {
     this.navbarRoutingService.onClickGold()
   }
 }

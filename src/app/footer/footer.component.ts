@@ -10,8 +10,7 @@ export class FooterComponent {
 
   constructor(private navbarRoutingService: NavbarRoutingService) {}
 
-  onClickCurrencies() {
-    
+  onClickCurrencies(): void {
     this.navbarRoutingService.onClickCurrencies()
   }
 }

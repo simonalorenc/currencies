@@ -17,7 +17,7 @@ export class GoldPricesComponent implements OnInit {
     this.getGoldPricesFromLastDays()
   }
 
-  private getGoldPricesFromLastDays() {
+  private getGoldPricesFromLastDays(): void {
     this.goldPriceService.getGoldPricesDtoFromLastDays().subscribe(
       result => {
         const goldPricesFromNewest = result.reverse()
@@ -25,5 +25,4 @@ export class GoldPricesComponent implements OnInit {
       }
     );
   }
-
 }

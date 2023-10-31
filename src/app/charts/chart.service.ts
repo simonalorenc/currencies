@@ -13,7 +13,7 @@ export class ChartService {
     Chart.register(...registerables);
   }
 
-  createChart(labels: string[], data: number[], id: string) {
+  createChart(labels: string[], data: number[], id: string): void {
     new Chart(id, {
       type: 'line',
       data: {

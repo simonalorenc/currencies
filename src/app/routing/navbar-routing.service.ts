@@ -14,12 +14,12 @@ export class NavbarRoutingService {
     return this.isCurrenciesActiveSubject.asObservable()
   }
 
-  onClickCurrencies() {
+  onClickCurrencies(): void {
     this.isCurrenciesActiveSubject.next(true);
     this.router.navigate(['/dashboard/currency-list']);
   }
 
-  onClickGold() {
+  onClickGold(): void {
     this.isCurrenciesActiveSubject.next(false);
     this.router.navigate(['/dashboard/gold-prices']);
   }

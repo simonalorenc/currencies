@@ -37,7 +37,7 @@ export class CurrencyListComponent implements OnInit {
     });
   }
 
-  getRatesWithFlags() {
+  getRatesWithFlags(): void {
     this.currenciesRepository
       .getRatesWithFlags()
       .subscribe((rates) => {
@@ -55,19 +55,19 @@ export class CurrencyListComponent implements OnInit {
     });
   }
 
-  sortAlphabetically() {
+  sortAlphabetically(): void {
     this.isSortAlphabeticallyActive = true
     this.filteredRatesWithFlag = this.ratesWithFlag.concat().sort((a, b) => {
       return a.rate.currency.localeCompare(b.rate.currency)
     })
   }
 
-  sortPopularity() {
+  sortPopularity(): void {
     this.isSortAlphabeticallyActive = false
     this.filteredRatesWithFlag = this.ratesWithFlag
   }
 
-  navigateToDetail(code: string) {
+  navigateToDetail(code: string): void {
     this.router.navigate([`/detail/${code}`])
   }
 }
