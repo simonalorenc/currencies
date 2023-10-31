@@ -10,12 +10,14 @@
         <div class="d-flex mt-2">
           <app-button
             text="Currencies"
+            i18n-text
             [isActive]="isCurrenciesActive"
             (click)="onClickCurrencies()"
           />
           <div class="me-4"></div>
           <app-button
             text="Gold"
+            i18n-text
             [isActive]="!isCurrenciesActive"
             (click)="onClickGold()"
           />
