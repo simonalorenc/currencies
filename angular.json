@@ -24,7 +24,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "localize": [
-              "pl"
+              "en-US"
             ],
             "outputPath": "dist/currencies",
             "index": "src/index.html",
