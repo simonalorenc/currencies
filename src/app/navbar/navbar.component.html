@@ -28,6 +28,10 @@
           i18n
           >Gold</a
         >
+        <select class="form-select" (change)="changeLang($event)" name="" id="">
+          <option [selected]="lang==='en'" value="en">English</option>
+          <option [selected]="lang==='pl'"  value="pl">Polish</option>
+        </select>
       </div>
     </div>
   </div>

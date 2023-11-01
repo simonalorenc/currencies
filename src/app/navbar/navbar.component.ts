@@ -3,6 +3,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { IconDefinition, faBars } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NavbarRoutingService } from '../routing/navbar-routing.service';
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-navbar',
@@ -22,10 +23,13 @@ export class NavbarComponent implements OnInit{
   isCurrenciesActive: boolean = false
   isCollapsed = true;
   toggleIcon: IconDefinition = faBars;
+  lang: string = ''
 
-  constructor(private navbarRoutingService: NavbarRoutingService) {}
+  constructor(private navbarRoutingService: NavbarRoutingService, private translateService: TranslateService) {}
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'en'
+
     this.navbarRoutingService.getCurrenciesActiveObservable().subscribe(
       (isActive) => {
         this.isCurrenciesActive = isActive
@@ -59,5 +63,11 @@ export class NavbarComponent implements OnInit{
 
   onClickGold(): void {
     this.navbarRoutingService.onClickGold()
+  }
+
+  changeLang(lang: any) {
+    const selectedLanguage = lang.target.value
+    localStorage.setItem('lang', selectedLanguage)
+    this.translateService.use(selectedLanguage)
   }
 }
