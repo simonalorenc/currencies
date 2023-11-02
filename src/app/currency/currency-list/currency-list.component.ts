@@ -101,18 +101,19 @@ export class CurrencyListComponent implements OnInit {
 
   removeFromFavorite(code: string, event: any): void {
     event?.stopPropagation()
+    const rateToRemove = code
+    let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
+    storedRates = storedRates!.filter((el) => el !== rateToRemove)
     this.ratesWithFlag.some((el) => {
       if(el.rate.code === code) {
         el.isAddedToFavorite = !el.isAddedToFavorite
       }
     })
-    let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
-    storedRates = storedRates!.filter((el) => el !== code)
     localStorage.setItem('codes', JSON.stringify(storedRates));
   }
 
   checkFavorites() {
-    const favoriteRates = localStorage.getItem('codes')
+    const favoriteRates = localStorage.getItem('codes')?.replace(/[^A-Za-z,]/g, '').split(',');
     if (favoriteRates) {
       this.ratesWithFlag.some((el) => {
         for (let i = 0; i < favoriteRates.length; i++) {
