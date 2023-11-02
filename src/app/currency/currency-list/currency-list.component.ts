@@ -5,7 +5,7 @@ import { RateWithFlag } from '../data/rate-with-flag';
 import { Router } from '@angular/router';
 import { IconDefinition, faArrowUpAZ, faSort, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-import { EnglishCurrencyListService } from 'src/app/english-currency-list.service';
+import { CurrencyTranslationService } from '../data/currency.translation.service';
 
 @Component({
   selector: 'app-currency-list',
@@ -47,6 +47,7 @@ export class CurrencyListComponent implements OnInit {
     this.currenciesRepository.getRatesWithFlags().subscribe((rates) => {
       this.ratesWithFlag = this.currencyTranslationService.getRateWithFlagForLocale(this.locale, rates)
       this.filteredRatesWithFlag = this.ratesWithFlag;
+      this.checkFavourites();
     });
   }
 
