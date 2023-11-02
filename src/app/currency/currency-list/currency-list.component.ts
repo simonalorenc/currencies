@@ -21,7 +21,6 @@ export class CurrencyListComponent implements OnInit {
   sortPopulrityIcon: IconDefinition = faSort;
   emptyHeartIcon: IconDefinition = farHeart;
   fullHeartIcon: IconDefinition = fasHeart;
-  favoriteRates: RateWithFlag[] = [];
   codes: string[] = [];
 
   constructor(
@@ -49,7 +48,7 @@ export class CurrencyListComponent implements OnInit {
       this.ratesWithFlag =
         this.englishCurrencyListService.updateCurrencyIfNeeded(this.locale,rates);
 
-      this.checkFavorites();
+      this.checkFavourites();
 
       this.filteredRatesWithFlag = this.ratesWithFlag;
     });
@@ -89,36 +88,32 @@ export class CurrencyListComponent implements OnInit {
     );
     if (foundRate) {
       this.codes.push(code);
-      foundRate.isAddedToFavorite = true;
-      let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
-      if (storedRates === null) {
-        storedRates = [];
-      }
+      foundRate.isAddedToFavourite = true;
+      let storedRates: string[] = JSON.parse(localStorage['codes']);
       storedRates.push(code);
       localStorage.setItem('codes', JSON.stringify(storedRates));
     }
   }
 
-  removeFromFavorite(code: string, event: any): void {
+  removeFromFavourite(code: string, event: any): void {
     event?.stopPropagation()
-    const rateToRemove = code
-    let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
-    storedRates = storedRates!.filter((el) => el !== rateToRemove)
+    let storedRates: string[]= JSON.parse(localStorage['codes']);
+    storedRates = storedRates!.filter((el) => el !== code)
     this.ratesWithFlag.some((el) => {
       if(el.rate.code === code) {
-        el.isAddedToFavorite = !el.isAddedToFavorite
+        el.isAddedToFavourite = !el.isAddedToFavourite
       }
     })
     localStorage.setItem('codes', JSON.stringify(storedRates));
   }
 
-  checkFavorites() {
-    const favoriteRates = localStorage.getItem('codes')?.replace(/[^A-Za-z,]/g, '').split(',');
-    if (favoriteRates) {
+  checkFavourites() {
+    const favouriteRates: string[] = JSON.parse(localStorage['codes'])
+    if (favouriteRates) {
       this.ratesWithFlag.some((el) => {
-        for (let i = 0; i < favoriteRates.length; i++) {
-          if (el.rate.code === favoriteRates[i]) {
-            el.isAddedToFavorite = !el.isAddedToFavorite;
+        for (let i = 0; i < favouriteRates.length; i++) {
+          if (el.rate.code === favouriteRates[i]) {
+            el.isAddedToFavourite = !el.isAddedToFavourite;
           }
         }
       });

@@ -53,14 +53,14 @@
                 <div class="fs-6 fw-medium">{{ currency.rate.mid }}</div>
                 <fa-icon  
                   class="far-regular" 
-                  *ngIf="currency.isAddedToFavorite === false"
+                  *ngIf="currency.isAddedToFavourite === false"
                   [icon]="emptyHeartIcon" 
                   (click)="addToFavourite(currency.rate.code, $event)"></fa-icon>
                 <fa-icon  
                   class="far-regular" 
-                  *ngIf="currency.isAddedToFavorite === true"
+                  *ngIf="currency.isAddedToFavourite === true"
                   [icon]="fullHeartIcon"
-                  (click)="removeFromFavorite(currency.rate.code, $event)"
+                  (click)="removeFromFavourite(currency.rate.code, $event)"
                   ></fa-icon>
               </div>
             </div>
