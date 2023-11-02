@@ -5,7 +5,7 @@ import { RateWithFlag } from '../data/rate-with-flag';
 import { Router } from '@angular/router';
 import { IconDefinition, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
-import { HttpClient } from '@angular/common/http';
+import { EnglishCurrencyListService } from 'src/app/english-currency-list.service';
 
 @Component({
   selector: 'app-currency-list',
@@ -24,7 +24,7 @@ export class CurrencyListComponent implements OnInit {
     private currenciesRepository: CurrenciesRepository,
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient,
+    private englishCurrencyListService: EnglishCurrencyListService,
     @Inject(LOCALE_ID) public locale: string
   ) {
     this.filterForm = this.formBuilder.group({
@@ -44,9 +44,8 @@ export class CurrencyListComponent implements OnInit {
 
   getRatesWithFlags(): void {
     this.currenciesRepository.getRatesWithFlags().subscribe((rates) => {
-      this.ratesWithFlag = rates;
+      this.ratesWithFlag = this.englishCurrencyListService.updateCurrencyIfNeeded(this.locale, rates)
       this.filteredRatesWithFlag = this.ratesWithFlag;
-      this.checkLocale();
     });
   }
 
@@ -55,8 +54,8 @@ export class CurrencyListComponent implements OnInit {
       return (
         rateWithFlag.rate.code.toLowerCase().includes(filterText) ||
         rateWithFlag.rate.currency
-          .toLocaleLowerCase()
-          .includes(filterText.toLocaleLowerCase())
+          .toLowerCase()
+          .includes(filterText.toLowerCase())
       );
     });
   }
@@ -75,22 +74,5 @@ export class CurrencyListComponent implements OnInit {
 
   navigateToDetail(code: string): void {
     this.router.navigate([`/detail/${code}`]);
-  }
-
-  checkLocale() {
-    if (this.locale === 'en-US') {
-      console.log(this.locale)
-      let jsonData: any;
-      this.http.get('assets/en.json').subscribe((data: any) => {
-        jsonData = data;
-        this.ratesWithFlag.forEach((rate) => {
-          for (const key in jsonData) {
-            if (rate.rate.code === key) {
-              rate.rate.currency = jsonData[rate.rate.code];
-            }
-          }
-        });
-      });
-    }
   }
 }

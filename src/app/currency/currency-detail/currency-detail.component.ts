@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyRate } from '../data/currency-exchange-table-dto';
 import { ExchangeRateService } from '../data/exchange-rate.service';
 import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { ActiveChart } from '../data/active-chart.enum';
+import { EnglishCurrencyListService } from 'src/app/english-currency-list.service';
 
 @Component({
   selector: 'app-currency-detail',
@@ -27,13 +28,16 @@ export class CurrencyDetailComponent implements OnInit {
     private exchangeRateService: ExchangeRateService,
     private flagsService: FlagsService,
     private currenciesRepository: CurrenciesRepository,
-    private router: Router
+    private router: Router,
+    @Inject(LOCALE_ID) public locale: string,
+    private englishCurrencyListService: EnglishCurrencyListService
   ) {
     this.code = this.route.snapshot.paramMap.get('code')!;
   }
 
   ngOnInit(): void {
     this.getCurrencyDetailsAndFlagUrl();
+    console.log(this.locale)
   }
 
   private getCurrencyDetailsAndFlagUrl(): void {
@@ -46,6 +50,7 @@ export class CurrencyDetailComponent implements OnInit {
     this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((currency) => {
+        this.englishCurrencyListService.updateDetailCurrency(this.locale, currency)
         this.name = currency.currency
         const currencyRatesDto = currency.rates.reverse();
         this.detailCurrencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
