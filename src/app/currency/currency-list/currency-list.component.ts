@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { RateWithFlag } from '../data/rate-with-flag';
 import { Router } from '@angular/router';
-import { IconDefinition, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArrowUpAZ, faSort, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { EnglishCurrencyListService } from 'src/app/english-currency-list.service';
 
 @Component({
@@ -19,6 +19,10 @@ export class CurrencyListComponent implements OnInit {
   isSortAlphabeticallyActive: boolean = false;
   sortAlphabeticallyIcon: IconDefinition = faArrowUpAZ;
   sortPopulrityIcon: IconDefinition = faSort;
+  emptyHeartIcon: IconDefinition = farHeart;
+  fullHeartIcon: IconDefinition = fasHeart;
+  favoriteRates: RateWithFlag[] = [];
+  codes: string[] = [];
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
@@ -33,8 +37,6 @@ export class CurrencyListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Current locale: ' + this.locale);
-
     this.getRatesWithFlags();
 
     this.filterForm.get('filterInputValue')?.valueChanges.subscribe((value) => {
@@ -44,7 +46,11 @@ export class CurrencyListComponent implements OnInit {
 
   getRatesWithFlags(): void {
     this.currenciesRepository.getRatesWithFlags().subscribe((rates) => {
-      this.ratesWithFlag = this.englishCurrencyListService.updateCurrencyIfNeeded(this.locale, rates)
+      this.ratesWithFlag =
+        this.englishCurrencyListService.updateCurrencyIfNeeded(this.locale,rates);
+
+      this.checkFavorites();
+
       this.filteredRatesWithFlag = this.ratesWithFlag;
     });
   }
@@ -74,5 +80,47 @@ export class CurrencyListComponent implements OnInit {
 
   navigateToDetail(code: string): void {
     this.router.navigate([`/detail/${code}`]);
+  }
+
+  addToFavourite(code: string, event: any): void {
+    event?.stopPropagation()
+    const foundRate = this.ratesWithFlag.find(
+      (element) => element.rate.code === code
+    );
+    if (foundRate) {
+      this.codes.push(code);
+      foundRate.isAddedToFavorite = true;
+      let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
+      if (storedRates === null) {
+        storedRates = [];
+      }
+      storedRates.push(code);
+      localStorage.setItem('codes', JSON.stringify(storedRates));
+    }
+  }
+
+  removeFromFavorite(code: string, event: any): void {
+    event?.stopPropagation()
+    this.ratesWithFlag.some((el) => {
+      if(el.rate.code === code) {
+        el.isAddedToFavorite = !el.isAddedToFavorite
+      }
+    })
+    let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
+    storedRates = storedRates!.filter((el) => el !== code)
+    localStorage.setItem('codes', JSON.stringify(storedRates));
+  }
+
+  checkFavorites() {
+    const favoriteRates = localStorage.getItem('codes')
+    if (favoriteRates) {
+      this.ratesWithFlag.some((el) => {
+        for (let i = 0; i < favoriteRates.length; i++) {
+          if (el.rate.code === favoriteRates[i]) {
+            el.isAddedToFavorite = !el.isAddedToFavorite;
+          }
+        }
+      });
+    }
   }
 }

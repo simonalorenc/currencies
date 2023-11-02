@@ -37,7 +37,6 @@ export class CurrencyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrencyDetailsAndFlagUrl();
-    console.log(this.locale)
   }
 
   private getCurrencyDetailsAndFlagUrl(): void {
