@@ -27,7 +27,7 @@ export class CurrencyListComponent implements OnInit {
     private currenciesRepository: CurrenciesRepository,
     private formBuilder: FormBuilder,
     private router: Router,
-    private englishCurrencyListService: EnglishCurrencyListService,
+    private currencyTranslationService: CurrencyTranslationService,
     @Inject(LOCALE_ID) public locale: string
   ) {
     this.filterForm = this.formBuilder.group({
@@ -45,11 +45,7 @@ export class CurrencyListComponent implements OnInit {
 
   getRatesWithFlags(): void {
     this.currenciesRepository.getRatesWithFlags().subscribe((rates) => {
-      this.ratesWithFlag =
-        this.englishCurrencyListService.updateCurrencyIfNeeded(this.locale,rates);
-
-      this.checkFavourites();
-
+      this.ratesWithFlag = this.currencyTranslationService.getRateWithFlagForLocale(this.locale, rates)
       this.filteredRatesWithFlag = this.ratesWithFlag;
     });
   }

@@ -5,7 +5,7 @@ import { ExchangeRateService } from '../data/exchange-rate.service';
 import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { ActiveChart } from '../data/active-chart.enum';
-import { EnglishCurrencyListService } from 'src/app/english-currency-list.service';
+import { CurrencyTranslationService } from '../data/currency.translation.service';
 
 @Component({
   selector: 'app-currency-detail',
@@ -30,7 +30,7 @@ export class CurrencyDetailComponent implements OnInit {
     private currenciesRepository: CurrenciesRepository,
     private router: Router,
     @Inject(LOCALE_ID) public locale: string,
-    private englishCurrencyListService: EnglishCurrencyListService
+    private currencyTranslationService: CurrencyTranslationService
   ) {
     this.code = this.route.snapshot.paramMap.get('code')!;
   }
@@ -49,7 +49,7 @@ export class CurrencyDetailComponent implements OnInit {
     this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((currency) => {
-        this.englishCurrencyListService.updateDetailCurrency(this.locale, currency)
+        this.currencyTranslationService.updateDetailCurrency(this.locale, currency)
         this.name = currency.currency
         const currencyRatesDto = currency.rates.reverse();
         this.detailCurrencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
