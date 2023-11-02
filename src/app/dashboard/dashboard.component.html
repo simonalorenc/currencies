@@ -2,20 +2,22 @@
   <section class="pb-4" >
     <div class="container pt-5">
       <div class="col-7">
-        <h1>Exchange Rates</h1>
-        <p class="mt-2">
+        <h1 i18n>Exchange Rates</h1>
+        <p class="mt-2" i18n>
           See fluctuations in your currency using the tabel and charts below. Use
           fiter input to find Your currency!
         </p>
         <div class="d-flex mt-2">
           <app-button
             text="Currencies"
+            i18n-text
             [isActive]="isCurrenciesActive"
             (click)="onClickCurrencies()"
           />
           <div class="me-4"></div>
           <app-button
             text="Gold"
+            i18n-text
             [isActive]="!isCurrenciesActive"
             (click)="onClickGold()"
           />

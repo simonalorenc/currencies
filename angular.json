@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "currencies": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "pl": "src/locale/messages.pl.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,6 +23,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": [
+              "en-US"
+            ],
             "outputPath": "dist/currencies",
             "index": "src/index.html",
             "main": "src/main.ts",
