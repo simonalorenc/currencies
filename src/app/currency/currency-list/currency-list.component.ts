@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { IconDefinition, faArrowUpAZ, faSort, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { CurrencyTranslationService } from '../data/currency.translation.service';
+import { FavouritesRatesService } from 'src/app/favourites-rates.service';
 
 @Component({
   selector: 'app-currency-list',
@@ -28,6 +29,7 @@ export class CurrencyListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private currencyTranslationService: CurrencyTranslationService,
+    private favouritesRatesService: FavouritesRatesService,
     @Inject(LOCALE_ID) public locale: string
   ) {
     this.filterForm = this.formBuilder.group({
@@ -80,40 +82,30 @@ export class CurrencyListComponent implements OnInit {
 
   addToFavourite(code: string, event: any): void {
     event?.stopPropagation()
-    const foundRate = this.ratesWithFlag.find(
-      (element) => element.rate.code === code
-    );
-    if (foundRate) {
-      this.codes.push(code);
-      foundRate.isAddedToFavourite = true;
-      let storedRates: string[] = JSON.parse(localStorage['codes']);
-      storedRates.push(code);
-      localStorage.setItem('codes', JSON.stringify(storedRates));
-    }
+    this.favouritesRatesService.addToFavourite(code, this.ratesWithFlag, event)
+    this.sortFavouritesFirst()
   }
 
   removeFromFavourite(code: string, event: any): void {
     event?.stopPropagation()
-    let storedRates: string[]= JSON.parse(localStorage['codes']);
-    storedRates = storedRates!.filter((el) => el !== code)
-    this.ratesWithFlag.some((el) => {
-      if(el.rate.code === code) {
-        el.isAddedToFavourite = !el.isAddedToFavourite
-      }
-    })
-    localStorage.setItem('codes', JSON.stringify(storedRates));
+    this.favouritesRatesService.removeFromFavourite(code, this.ratesWithFlag, event)
+    this.sortFavouritesFirst()
   }
 
   checkFavourites() {
-    const favouriteRates: string[] = JSON.parse(localStorage['codes'])
-    if (favouriteRates) {
-      this.ratesWithFlag.some((el) => {
-        for (let i = 0; i < favouriteRates.length; i++) {
-          if (el.rate.code === favouriteRates[i]) {
-            el.isAddedToFavourite = !el.isAddedToFavourite;
-          }
-        }
-      });
-    }
+    this.favouritesRatesService.checkFavourites(this.ratesWithFlag)
+    this.sortFavouritesFirst()
+  }
+
+  sortFavouritesFirst() {
+    this.ratesWithFlag.sort((a, b) => {
+      if(a.isAddedToFavourite && !b.isAddedToFavourite) {
+        return -1
+      } else if (!a.isAddedToFavourite && b.isAddedToFavourite) {
+        return 1
+      } else {
+        return 0
+      } 
+    })
   }
 }

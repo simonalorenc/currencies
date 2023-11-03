@@ -2,8 +2,26 @@
   <div class="container pt-3">
     <div class="row pb-3">
       <div class="col p-0">
-        <h1>{{ name }}</h1>
-        <h1>{{ code }}</h1>
+        <div class="row d-flex">
+          <div class="col-9">
+            <h1>{{ name }}</h1>
+          </div>
+          <div class="col d-flex align-items-center">
+            <fa-icon 
+              class="fa-2xl far-regular" 
+              [icon]="emptyHeartIcon"
+              *ngIf="isRateInFavourites === false"
+              (click)="addToFavouriteInDetail(code)"></fa-icon>
+            <fa-icon 
+              class="fa-2xl far-regular" 
+              [icon]="fullHeartIcon"
+              *ngIf="isRateInFavourites === true"
+              (click)="removeToFavouritesInDetail(code)"></fa-icon>
+          </div>
+        </div>
+        <div class="row">
+          <h1>{{ code }}</h1>
+        </div>
       </div>
       <div class="col d-flex justify-content-end p-3">
         <img
