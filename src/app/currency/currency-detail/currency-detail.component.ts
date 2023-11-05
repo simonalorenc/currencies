@@ -6,6 +6,9 @@ import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { ActiveChart } from '../data/active-chart.enum';
 import { CurrencyTranslationService } from '../data/currency.translation.service';
+import { IconDefinition, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+import { FavouritesRatesService } from 'src/app/favourites-rates.service';
 
 @Component({
   selector: 'app-currency-detail',
@@ -21,7 +24,10 @@ export class CurrencyDetailComponent implements OnInit {
   code!: string;
   flagUrl!: string;
   detailCurrencyRates: CurrencyRate[] = [];
-  activeChart: ActiveChart = ActiveChart.LastSevenDays
+  activeChart: ActiveChart = ActiveChart.LastSevenDays;
+  emptyHeartIcon: IconDefinition = farHeart;
+  fullHeartIcon: IconDefinition = fasHeart;
+  isRateInFavourites: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -30,13 +36,15 @@ export class CurrencyDetailComponent implements OnInit {
     private currenciesRepository: CurrenciesRepository,
     private router: Router,
     @Inject(LOCALE_ID) public locale: string,
-    private currencyTranslationService: CurrencyTranslationService
+    private currencyTranslationService: CurrencyTranslationService,
+    private favouritesRatesService: FavouritesRatesService
   ) {
     this.code = this.route.snapshot.paramMap.get('code')!;
   }
 
   ngOnInit(): void {
     this.getCurrencyDetailsAndFlagUrl();
+    this.isRateInFavourites = this.favouritesRatesService.checkIfRateIsInFavourites(this.code)
   }
 
   private getCurrencyDetailsAndFlagUrl(): void {
@@ -69,6 +77,16 @@ export class CurrencyDetailComponent implements OnInit {
   isChartFromLastMonthsActive(): void {
     this.activeChart = ActiveChart.LastMonths
     this.router.navigate([`detail/${this.code}/chart-from-last-months`])
+  }
+
+  addToFavourites(code: string): void {
+    this.favouritesRatesService.addToFavourites(code)
+    this.isRateInFavourites = !this.isRateInFavourites
+  }
+
+  removeFromFavourites(code: string): void {
+    this.favouritesRatesService.removeFromFavourites(code)
+    this.isRateInFavourites = !this.isRateInFavourites
   }
 }
 

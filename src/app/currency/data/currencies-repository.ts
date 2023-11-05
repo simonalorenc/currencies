@@ -20,7 +20,7 @@ export class CurrenciesRepository {
         return rates.map((rate: RateDto) => {
           const countryCode = this.getCountryCode(rate.code);
           const flagUrl = this.flagsService.getFlagUrl(countryCode);
-          return new RateWithFlag(rate, flagUrl);
+          return new RateWithFlag(rate, flagUrl, false);
         });
       })
     );

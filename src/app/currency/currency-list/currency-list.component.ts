@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { RateWithFlag } from '../data/rate-with-flag';
 import { Router } from '@angular/router';
-import { IconDefinition, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArrowUpAZ, faSort, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { CurrencyTranslationService } from '../data/currency.translation.service';
+import { FavouritesRatesService } from 'src/app/favourites-rates.service';
 
 @Component({
   selector: 'app-currency-list',
@@ -19,12 +20,15 @@ export class CurrencyListComponent implements OnInit {
   isSortAlphabeticallyActive: boolean = false;
   sortAlphabeticallyIcon: IconDefinition = faArrowUpAZ;
   sortPopulrityIcon: IconDefinition = faSort;
+  emptyHeartIcon: IconDefinition = farHeart;
+  fullHeartIcon: IconDefinition = fasHeart;
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
     private formBuilder: FormBuilder,
     private router: Router,
     private currencyTranslationService: CurrencyTranslationService,
+    private favouritesRatesService: FavouritesRatesService,
     @Inject(LOCALE_ID) public locale: string
   ) {
     this.filterForm = this.formBuilder.group({
@@ -33,8 +37,6 @@ export class CurrencyListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Current locale: ' + this.locale);
-
     this.getRatesWithFlags();
 
     this.filterForm.get('filterInputValue')?.valueChanges.subscribe((value) => {
@@ -46,6 +48,7 @@ export class CurrencyListComponent implements OnInit {
     this.currenciesRepository.getRatesWithFlags().subscribe((rates) => {
       this.ratesWithFlag = this.currencyTranslationService.getRateWithFlagForLocale(this.locale, rates)
       this.filteredRatesWithFlag = this.ratesWithFlag;
+      this.checkFavouritesAndSort();
     });
   }
 
@@ -74,5 +77,42 @@ export class CurrencyListComponent implements OnInit {
 
   navigateToDetail(code: string): void {
     this.router.navigate([`/detail/${code}`]);
+  }
+
+  addToFavourite(code: string, event: Event): void {
+    event.stopPropagation()
+    const foundRate = this.filteredRatesWithFlag.find(rateWithFlag => rateWithFlag.rate.code == code)
+    if(foundRate) {
+      foundRate.isAddedToFavourite = true
+    }
+    this.favouritesRatesService.addToFavourites(code)
+    this.sortFavouritesFirst()
+  }
+
+  removeFromFavourite(code: string, event: Event): void {
+    event.stopPropagation()
+    const foundRate = this.filteredRatesWithFlag.find(rateWithFlag => rateWithFlag.rate.code == code)
+    if(foundRate) {
+      foundRate.isAddedToFavourite = false
+    }
+    this.favouritesRatesService.removeFromFavourites(code)
+    this.sortFavouritesFirst()
+  }
+
+  private checkFavouritesAndSort() {
+    this.favouritesRatesService.checkFavourites(this.ratesWithFlag)
+    this.sortFavouritesFirst()
+  }
+
+  private sortFavouritesFirst() {
+    this.ratesWithFlag.sort((a, b) => {
+      if(a.isAddedToFavourite && !b.isAddedToFavourite) {
+        return -1
+      } else if (!a.isAddedToFavourite && b.isAddedToFavourite) {
+        return 1
+      } else {
+        return 0
+      } 
+    })
   }
 }
