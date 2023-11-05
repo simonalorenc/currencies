@@ -5,9 +5,10 @@ import { RateWithFlag } from './currency/data/rate-with-flag';
   providedIn: 'root',
 })
 export class FavouritesRatesService {
+  FAVOURITES_KEY: string = 'codes'
 
-  takeArrayFromLocaleStorage(): string[] {
-    let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
+  private getStoredRates(): string[] {
+    let storedRates: string[] | null = JSON.parse(localStorage.getItem(this.FAVOURITES_KEY) || 'null');
       if (storedRates === null) {
         storedRates = [];
       }
@@ -15,19 +16,19 @@ export class FavouritesRatesService {
   }
 
   addToFavourites(code: string): void {
-    const storedRates = this.takeArrayFromLocaleStorage()
+    const storedRates = this.getStoredRates()
     storedRates.push(code);
-    localStorage.setItem('codes', JSON.stringify(storedRates))
+    localStorage.setItem(this.FAVOURITES_KEY, JSON.stringify(storedRates))
   }
 
   removeFromFavourites(code: string): void {
-    let storedRates = this.takeArrayFromLocaleStorage()
+    let storedRates = this.getStoredRates()
     storedRates = storedRates!.filter((el) => el !== code);
-    localStorage.setItem('codes', JSON.stringify(storedRates));
+    localStorage.setItem(this.FAVOURITES_KEY, JSON.stringify(storedRates));
   }
 
   checkFavourites(ratesWithFlag: RateWithFlag[]) {
-    const favouriteRatesJson = localStorage['codes'];
+    const favouriteRatesJson = localStorage[this.FAVOURITES_KEY];
     if (favouriteRatesJson) {
       const favouriteRates: string[] = JSON.parse(favouriteRatesJson)
       ratesWithFlag.forEach(rateWithFlag => {
@@ -37,7 +38,7 @@ export class FavouritesRatesService {
   }
 
   checkIfRateIsInFavourites(code: string): boolean {
-    const favouriteRates = this.takeArrayFromLocaleStorage()
+    const favouriteRates = this.getStoredRates()
     return favouriteRates.includes(code)
   }
 }

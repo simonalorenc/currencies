@@ -79,8 +79,8 @@ export class CurrencyListComponent implements OnInit {
     this.router.navigate([`/detail/${code}`]);
   }
 
-  addToFavourite(code: string, event: any): void {
-    event?.stopPropagation()
+  addToFavourite(code: string, event: Event): void {
+    event.stopPropagation()
     const foundRate = this.filteredRatesWithFlag.find(rateWithFlag => rateWithFlag.rate.code == code)
     if(foundRate) {
       foundRate.isAddedToFavourite = true
@@ -89,23 +89,22 @@ export class CurrencyListComponent implements OnInit {
     this.sortFavouritesFirst()
   }
 
-  removeFromFavourite(code: string, event: any): void {
-    event?.stopPropagation()
-    const foundRate = this.filteredRatesWithFlag.some((el) => {
-      if(el.rate.code === code) {
-        el.isAddedToFavourite = !el.isAddedToFavourite
-      }
-    })
+  removeFromFavourite(code: string, event: Event): void {
+    event.stopPropagation()
+    const foundRate = this.filteredRatesWithFlag.find(rateWithFlag => rateWithFlag.rate.code == code)
+    if(foundRate) {
+      foundRate.isAddedToFavourite = false
+    }
     this.favouritesRatesService.removeFromFavourites(code)
     this.sortFavouritesFirst()
   }
 
-  checkFavouritesAndSort() {
+  private checkFavouritesAndSort() {
     this.favouritesRatesService.checkFavourites(this.ratesWithFlag)
     this.sortFavouritesFirst()
   }
 
-  sortFavouritesFirst() {
+  private sortFavouritesFirst() {
     this.ratesWithFlag.sort((a, b) => {
       if(a.isAddedToFavourite && !b.isAddedToFavourite) {
         return -1
