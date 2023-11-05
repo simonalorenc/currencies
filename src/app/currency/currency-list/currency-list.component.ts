@@ -22,7 +22,6 @@ export class CurrencyListComponent implements OnInit {
   sortPopulrityIcon: IconDefinition = faSort;
   emptyHeartIcon: IconDefinition = farHeart;
   fullHeartIcon: IconDefinition = fasHeart;
-  codes: string[] = [];
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
@@ -49,7 +48,7 @@ export class CurrencyListComponent implements OnInit {
     this.currenciesRepository.getRatesWithFlags().subscribe((rates) => {
       this.ratesWithFlag = this.currencyTranslationService.getRateWithFlagForLocale(this.locale, rates)
       this.filteredRatesWithFlag = this.ratesWithFlag;
-      this.checkFavourites();
+      this.checkFavouritesAndSort();
     });
   }
 
@@ -82,17 +81,26 @@ export class CurrencyListComponent implements OnInit {
 
   addToFavourite(code: string, event: any): void {
     event?.stopPropagation()
-    this.favouritesRatesService.addToFavourite(code, this.ratesWithFlag, event)
+    const foundRate = this.filteredRatesWithFlag.find(rateWithFlag => rateWithFlag.rate.code == code)
+    if(foundRate) {
+      foundRate.isAddedToFavourite = true
+    }
+    this.favouritesRatesService.addToFavourites(code)
     this.sortFavouritesFirst()
   }
 
   removeFromFavourite(code: string, event: any): void {
     event?.stopPropagation()
-    this.favouritesRatesService.removeFromFavourite(code, this.ratesWithFlag, event)
+    const foundRate = this.filteredRatesWithFlag.some((el) => {
+      if(el.rate.code === code) {
+        el.isAddedToFavourite = !el.isAddedToFavourite
+      }
+    })
+    this.favouritesRatesService.removeFromFavourites(code)
     this.sortFavouritesFirst()
   }
 
-  checkFavourites() {
+  checkFavouritesAndSort() {
     this.favouritesRatesService.checkFavourites(this.ratesWithFlag)
     this.sortFavouritesFirst()
   }

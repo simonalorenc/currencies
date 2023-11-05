@@ -6,31 +6,23 @@ import { RateWithFlag } from './currency/data/rate-with-flag';
 })
 export class FavouritesRatesService {
 
-  addToFavourite(code: string, ratesWithFlag: RateWithFlag[],event: any): void {
-    event?.stopPropagation();
-    const foundRate = ratesWithFlag.find(
-      (element) => element.rate.code === code
-    );
-    if (foundRate) {
-      foundRate.isAddedToFavourite = true;
-      let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
+  takeArrayFromLocaleStorage(): string[] {
+    let storedRates: string[] | null = JSON.parse(localStorage.getItem('codes') || 'null');
       if (storedRates === null) {
         storedRates = [];
       }
-      storedRates.push(code);
-      localStorage.setItem('codes', JSON.stringify(storedRates))
-    }
+    return storedRates
   }
 
-  removeFromFavourite(code: string, ratesWithFlag: RateWithFlag[], event: any): void {
-    event?.stopPropagation();
-    let storedRates: string[] = JSON.parse(localStorage['codes']);
+  addToFavourites(code: string): void {
+    const storedRates = this.takeArrayFromLocaleStorage()
+    storedRates.push(code);
+    localStorage.setItem('codes', JSON.stringify(storedRates))
+  }
+
+  removeFromFavourites(code: string): void {
+    let storedRates = this.takeArrayFromLocaleStorage()
     storedRates = storedRates!.filter((el) => el !== code);
-    ratesWithFlag.some((el) => {
-      if (el.rate.code === code) {
-        el.isAddedToFavourite = !el.isAddedToFavourite;
-      }
-    });
     localStorage.setItem('codes', JSON.stringify(storedRates));
   }
 
@@ -38,30 +30,14 @@ export class FavouritesRatesService {
     const favouriteRatesJson = localStorage['codes'];
     if (favouriteRatesJson) {
       const favouriteRates: string[] = JSON.parse(favouriteRatesJson)
-      ratesWithFlag.some((el) => {
-        for (let i = 0; i < favouriteRates.length; i++) {
-          if (el.rate.code === favouriteRates[i]) {
-            el.isAddedToFavourite = !el.isAddedToFavourite;
-          }
-        }
-      });
+      ratesWithFlag.forEach(rateWithFlag => {
+        rateWithFlag.isAddedToFavourite = favouriteRates.includes(rateWithFlag.rate.code)
+      })
     }
   }
 
-  addToFavouriteInDetail(code: string) {
-    let storedRates: string[] = JSON.parse(localStorage['codes']);
-    storedRates.push(code);
-    localStorage.setItem('codes', JSON.stringify(storedRates));
-  }
-
-  removeToFavouritesInDetail(code: string) {
-    let storedRates: string[] = JSON.parse(localStorage['codes']);
-    storedRates = storedRates!.filter((el) => el !== code);
-    localStorage.setItem('codes', JSON.stringify(storedRates));
-  }
-
-  checkIfDetailIsInFavourites(code: string): boolean {
-    const favouriteRates: string[] = JSON.parse(localStorage['codes']);
+  checkIfRateIsInFavourites(code: string): boolean {
+    const favouriteRates = this.takeArrayFromLocaleStorage()
     return favouriteRates.includes(code)
   }
 }

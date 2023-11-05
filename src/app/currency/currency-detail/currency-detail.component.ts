@@ -44,7 +44,7 @@ export class CurrencyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrencyDetailsAndFlagUrl();
-    this.isRateInFavourites = this.favouritesRatesService.checkIfDetailIsInFavourites(this.code)
+    this.isRateInFavourites = this.favouritesRatesService.checkIfRateIsInFavourites(this.code)
   }
 
   private getCurrencyDetailsAndFlagUrl(): void {
@@ -79,13 +79,13 @@ export class CurrencyDetailComponent implements OnInit {
     this.router.navigate([`detail/${this.code}/chart-from-last-months`])
   }
 
-  addToFavouriteInDetail(code: string): void {
-    this.favouritesRatesService.addToFavouriteInDetail(code)
+  addToFavourites(code: string): void {
+    this.favouritesRatesService.addToFavourites(code)
     this.isRateInFavourites = !this.isRateInFavourites
   }
 
-  removeToFavouritesInDetail(code: string): void {
-    this.favouritesRatesService.removeToFavouritesInDetail(code)
+  removeFromFavourites(code: string): void {
+    this.favouritesRatesService.removeFromFavourites(code)
     this.isRateInFavourites = !this.isRateInFavourites
   }
 }

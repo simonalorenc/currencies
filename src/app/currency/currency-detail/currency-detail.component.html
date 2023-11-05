@@ -11,12 +11,12 @@
               class="fa-2xl far-regular" 
               [icon]="emptyHeartIcon"
               *ngIf="isRateInFavourites === false"
-              (click)="addToFavouriteInDetail(code)"></fa-icon>
+              (click)="addToFavourites(code)"></fa-icon>
             <fa-icon 
               class="fa-2xl far-regular" 
               [icon]="fullHeartIcon"
               *ngIf="isRateInFavourites === true"
-              (click)="removeToFavouritesInDetail(code)"></fa-icon>
+              (click)="removeFromFavourites(code)"></fa-icon>
           </div>
         </div>
         <div class="row">
