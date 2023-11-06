@@ -9,17 +9,16 @@
         aria-label="Search currency"
       />
       <div class="d-flex">
-        <app-button
-          [icon]="sortPopulrityIcon"
-          [isActive]="!isSortAlphabeticallyActive"
-          (click)="sortPopularity()"
-        ></app-button>
-        <div class="me-3"></div>
-        <app-button
-          [icon]="sortAlphabeticallyIcon"
-          [isActive]="isSortAlphabeticallyActive"
-          (click)="sortAlphabetically()"
-        ></app-button>
+        <div class="dropdown">
+          <app-button 
+            [icon]="sortAlphabeticallyIcon"
+            (click)="toggleCollapse()">
+          </app-button>
+          <ul class="dropdown-menu cursor" [collapse]="isCollapsed">
+            <li><div class="dropdown-item" (click)="sortAlphabetically()">Sort alphabetically</div></li>
+            <li><div class="dropdown-item" (click)="sortByFavourites()">Favourites first</div></li>
+          </ul>
+        </div>
       </div>
     </form>
     <div class="container">

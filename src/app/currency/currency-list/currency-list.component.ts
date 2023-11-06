@@ -22,6 +22,7 @@ export class CurrencyListComponent implements OnInit {
   sortPopulrityIcon: IconDefinition = faSort;
   emptyHeartIcon: IconDefinition = farHeart;
   fullHeartIcon: IconDefinition = fasHeart;
+  isCollapsed: boolean = true
 
   constructor(
     private currenciesRepository: CurrenciesRepository,
@@ -63,16 +64,22 @@ export class CurrencyListComponent implements OnInit {
     });
   }
 
+  toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed
+  }
+
   sortAlphabetically(): void {
     this.isSortAlphabeticallyActive = true;
     this.filteredRatesWithFlag = this.ratesWithFlag.concat().sort((a, b) => {
       return a.rate.currency.localeCompare(b.rate.currency);
     });
+    this.toggleCollapse()
   }
 
-  sortPopularity(): void {
+  sortByFavourites(): void {
     this.isSortAlphabeticallyActive = false;
     this.filteredRatesWithFlag = this.ratesWithFlag;
+    this.toggleCollapse()
   }
 
   navigateToDetail(code: string): void {
@@ -96,7 +103,7 @@ export class CurrencyListComponent implements OnInit {
       foundRate.isAddedToFavourite = false
     }
     this.favouritesRatesService.removeFromFavourites(code)
-    this.sortFavouritesFirst()
+    this.getRatesWithFlags()
   }
 
   private checkFavouritesAndSort() {
