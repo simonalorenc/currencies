@@ -17,7 +17,7 @@ import { ViewportScroller } from '@angular/common';
   styleUrls: ['./currency-detail.component.scss'],
 })
 export class CurrencyDetailComponent implements OnInit {
-  private NUMBER_OF_LAST_DAYS: number = 7
+  private NUMBER_OF_LAST_DAYS: number = 21
 
   ActiveChart = ActiveChart
 
@@ -29,6 +29,9 @@ export class CurrencyDetailComponent implements OnInit {
   emptyHeartIcon: IconDefinition = farHeart;
   fullHeartIcon: IconDefinition = fasHeart;
   isRateInFavourites: boolean = false
+
+  currentPage: number = 1;
+  itemsPerPage: number = 7;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,6 +95,11 @@ export class CurrencyDetailComponent implements OnInit {
   removeFromFavourites(code: string): void {
     this.favouritesRatesService.removeFromFavourites(code)
     this.isRateInFavourites = !this.isRateInFavourites
+  }
+
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber
+    console.log(this.currentPage)
   }
 }
 

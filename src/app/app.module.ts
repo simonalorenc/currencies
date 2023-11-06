@@ -19,6 +19,7 @@ import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/c
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BrowserAnimationsModule,
     NgChartsModule,
     CollapseModule.forRoot(),
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent],
