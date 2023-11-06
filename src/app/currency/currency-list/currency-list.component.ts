@@ -7,6 +7,7 @@ import { IconDefinition, faArrowUpAZ, faSort, faHeart as fasHeart } from '@forta
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { CurrencyTranslationService } from '../data/currency.translation.service';
 import { FavouritesRatesService } from 'src/app/favourites-rates.service';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-currency-list',
@@ -29,6 +30,7 @@ export class CurrencyListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private currencyTranslationService: CurrencyTranslationService,
+    private viewPortScroller: ViewportScroller,
     private favouritesRatesService: FavouritesRatesService,
     @Inject(LOCALE_ID) public locale: string
   ) {
@@ -84,6 +86,7 @@ export class CurrencyListComponent implements OnInit {
 
   navigateToDetail(code: string): void {
     this.router.navigate([`/detail/${code}`]);
+    this.viewPortScroller.scrollToPosition([0, 0])
   }
 
   addToFavourite(code: string, event: Event): void {

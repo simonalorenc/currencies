@@ -2,22 +2,18 @@
   <div class="container pt-3">
     <div class="row pb-3">
       <div class="col p-0">
-        <div class="row d-flex">
-          <div class="col-9">
-            <h1>{{ name }}</h1>
-          </div>
-          <div class="col d-flex align-items-center">
+        <div class="d-flex flex-row align-items-center">
+            <div class="fs-1 d-flex name">{{ name }}</div>
             <fa-icon 
-              class="fa-2xl far-regular" 
+              class="fa-2xl far-regular custom-color" 
               [icon]="emptyHeartIcon"
               *ngIf="isRateInFavourites === false"
               (click)="addToFavourites(code)"></fa-icon>
             <fa-icon 
-              class="fa-2xl far-regular" 
+              class="fa-2xl far-regular custom-color" 
               [icon]="fullHeartIcon"
               *ngIf="isRateInFavourites === true"
               (click)="removeFromFavourites(code)"></fa-icon>
-          </div>
         </div>
         <div class="row">
           <h1>{{ code }}</h1>
@@ -48,7 +44,7 @@
       </div>
     </div>
   </section>
-  <div class="container pb-4">
+  <div class="container pb-4" id="chartView">
     <div class="d-flex justify-content-center pt-4">
       <app-button
         [isActive]="activeChart == ActiveChart.LastSevenDays"

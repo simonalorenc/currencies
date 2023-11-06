@@ -9,6 +9,7 @@ import { CurrencyTranslationService } from '../data/currency.translation.service
 import { IconDefinition, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { FavouritesRatesService } from 'src/app/favourites-rates.service';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-currency-detail',
@@ -37,7 +38,8 @@ export class CurrencyDetailComponent implements OnInit {
     private router: Router,
     @Inject(LOCALE_ID) public locale: string,
     private currencyTranslationService: CurrencyTranslationService,
-    private favouritesRatesService: FavouritesRatesService
+    private favouritesRatesService: FavouritesRatesService,
+    private viewportScroller: ViewportScroller
   ) {
     this.code = this.route.snapshot.paramMap.get('code')!;
   }
@@ -67,16 +69,19 @@ export class CurrencyDetailComponent implements OnInit {
   isChartFromLastSevenDaysActive(): void {
     this.activeChart = ActiveChart.LastSevenDays
     this.router.navigate([`detail/${this.code}/chart-from-last-seven-days`])
+    this.viewportScroller.scrollToAnchor('chartView')
   }
 
   isChartFromLast30DaysActive(): void {
     this.activeChart = ActiveChart.Last30Days
     this.router.navigate([`detail/${this.code}/chart-from-last-30-days`])
+    this.viewportScroller.scrollToAnchor('chartView')
   }
 
   isChartFromLastMonthsActive(): void {
     this.activeChart = ActiveChart.LastMonths
     this.router.navigate([`detail/${this.code}/chart-from-last-months`])
+    this.viewportScroller.scrollToAnchor('chartView')
   }
 
   addToFavourites(code: string): void {
