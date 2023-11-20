@@ -18,6 +18,7 @@ import { ViewportScroller } from '@angular/common';
 })
 export class CurrencyDetailComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 21
+  ITEMS_PER_PAGE: number = 7;
 
   ActiveChart = ActiveChart
 
@@ -31,7 +32,6 @@ export class CurrencyDetailComponent implements OnInit {
   isRateInFavourites: boolean = false
 
   currentPage: number = 1;
-  itemsPerPage: number = 7;
 
   constructor(
     private route: ActivatedRoute,

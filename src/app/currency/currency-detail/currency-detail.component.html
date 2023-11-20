@@ -1,7 +1,7 @@
 <div class="pt-5">
   <div class="container pt-3">
     <div class="row pb-3">
-      <div class="col p-0">
+      <div class="col">
         <div class="d-flex flex-row align-items-center">
           <div class="fs-1 d-flex name">{{ name }}</div>
           <fa-icon
@@ -38,7 +38,7 @@
         *ngFor="
           let detailCurrency of detailCurrencyRates
             | paginate
-              : { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+              : { itemsPerPage: ITEMS_PER_PAGE, currentPage: currentPage }">
         <div class="card-body d-flex align-items-center py-0">
           <div class="fw-bold">•</div>
           <div class="mx-5 flex-fill">{{ detailCurrency.date }}</div>
@@ -92,8 +92,8 @@
       </div>
     </div>
   </section>
-  <div class="container pb-4" id="chartView">
-    <div class="d-flex justify-content-center pt-4">
+  <div class="container pb-4 pt-5" id="chartView">
+    <div class="d-flex justify-content-center pt-4 buttons">
       <app-button
         [isActive]="activeChart == ActiveChart.LastSevenDays"
         text="last 7 days"

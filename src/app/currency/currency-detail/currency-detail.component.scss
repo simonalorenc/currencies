@@ -1,4 +1,5 @@
 @import '../../../variables.scss';
+@import "bootstrap/scss/bootstrap";
 
 .card-body {
   height: 50px;
@@ -19,4 +20,17 @@ img {
 
 .current {
   box-shadow: inset 0 0 0 3px $primary-variant;
+}
+
+h1 {
+  font-weight: 600;
+}
+
+@include media-breakpoint-down(sm) {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
 }
