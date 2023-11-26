@@ -75,9 +75,9 @@ export class CurrencyDetailComponent implements OnInit {
     this.viewportScroller.scrollToAnchor('chartView')
   }
 
-  isChartFromLast30DaysActive(): void {
+  isChartFromLastDaysActive(): void {
     this.activeChart = ActiveChart.Last30Days
-    this.router.navigate([`detail/${this.code}/chart-from-last-30-days`])
+    this.router.navigate([`detail/${this.code}/chart-from-last-days`])
     this.viewportScroller.scrollToAnchor('chartView')
   }
 
@@ -99,7 +99,6 @@ export class CurrencyDetailComponent implements OnInit {
 
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber
-    console.log(this.currentPage)
   }
 }
 

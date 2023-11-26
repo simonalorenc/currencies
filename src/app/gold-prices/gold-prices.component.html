@@ -8,6 +8,36 @@
         <div>{{ gold.price }}</div>
       </div>
     </div>
+    <div class="d-flex justify-content-center py-2">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination cursor">
+          <li class="page-item">
+            <a
+              class="page-link"
+              (click)="onPageChangePrevious()"
+              [class.disabled]="currentPage === 1"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              >{{ currentPage }}</a
+            >
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              (click)="onPageChangeNext()"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </section>
-

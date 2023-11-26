@@ -21,11 +21,11 @@ export class ChartFromLastMonthsComponent {
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(params => {
       const code = params.get('code') || ''
-      this.createChartFromLastMonths2(code)
+      this.createChartFromLastMonths(code)
     })
   }
 
-  createChartFromLastMonths2(code: string): void {
+  createChartFromLastMonths(code: string): void {
     const dates = this.getStartAndEndDate()
 
     this.exchangeRateService.getCurrencyExchangeTableDtoForDateRange(code, dates[0], dates[1]).pipe(
@@ -39,6 +39,7 @@ export class ChartFromLastMonthsComponent {
     ).subscribe(grouped => {
       const labels: string[] = []
       const values: number[] = []
+      console.log(grouped)
       grouped.forEach(group => {
         const groupMonth = group[0] + 1
         labels.push(groupMonth.toString())

@@ -10,7 +10,7 @@ import { ExchangeRateService } from 'src/app/currency/data/exchange-rate.service
 })
 export class ChartFromLastDaysComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 30;
-  private CHART_ID = 'chartFromLast30Days';
+  private CHART_ID = 'chartFromLastDays';
 
   constructor(
     private chartService: ChartService,
@@ -21,11 +21,11 @@ export class ChartFromLastDaysComponent implements OnInit {
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe((params) => {
       const code = params.get('code') || '';
-      this.createChartFromLast30Days(code);
+      this.createChartFromLastDays(code);
     });
   }
 
-  createChartFromLast30Days(code: string): void {
+  createChartFromLastDays(code: string): void {
     this.exchangeRateService
       .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
       .subscribe((result) => {
