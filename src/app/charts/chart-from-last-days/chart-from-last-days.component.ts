@@ -4,11 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ExchangeRateService } from 'src/app/currency/data/exchange-rate.service';
 
 @Component({
-  selector: 'app-chart-from-last-30-days',
-  templateUrl: './chart-from-last-30-days.component.html',
-  styleUrls: ['./chart-from-last-30-days.component.scss'],
+  selector: 'app-chart-from-last-days',
+  templateUrl: './chart-from-last-days.component.html',
+  styleUrls: ['./chart-from-last-days.component.scss'],
 })
-export class ChartFromLast30DaysComponent implements OnInit {
+export class ChartFromLastDaysComponent implements OnInit {
   private NUMBER_OF_LAST_DAYS: number = 30;
   private CHART_ID = 'chartFromLast30Days';
 
