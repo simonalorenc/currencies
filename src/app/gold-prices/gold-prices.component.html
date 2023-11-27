@@ -14,11 +14,21 @@
           <li class="page-item">
             <a
               class="page-link"
-              (click)="onPageChangePrevious()"
+              (click)="onPageChangeToFirst()"
               [class.disabled]="currentPage === 1"
               aria-label="Previous"
             >
               <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              (click)="onPageChangePrevious()"
+              [class.disabled]="currentPage === 1"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&lsaquo;</span>
             </a>
           </li>
           <li class="page-item">
@@ -33,7 +43,7 @@
               (click)="onPageChangeNext()"
               aria-label="Next"
             >
-              <span aria-hidden="true">&raquo;</span>
+              <span aria-hidden="true">&rsaquo;</span>
             </a>
           </li>
         </ul>

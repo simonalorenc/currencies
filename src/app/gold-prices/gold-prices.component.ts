@@ -59,6 +59,11 @@ export class GoldPricesComponent implements OnInit {
     this.displayNextGoldPrices()
   }
 
+  onPageChangeToFirst() {
+    this.currentPage = 1
+    this.getGoldPricesFromLastDays()
+  }
+
   displayNextGoldPrices() {
     this.goldPriceService.getGoldPricesDtoFromRangeTime(this.newDates[0], this.newDates[1]).subscribe(
       result => {
