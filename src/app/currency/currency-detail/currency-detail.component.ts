@@ -6,7 +6,10 @@ import { FlagsService } from '../data/flags.service';
 import { CurrenciesRepository } from '../data/currencies-repository';
 import { ActiveChart } from '../data/active-chart.enum';
 import { CurrencyTranslationService } from '../data/currency.translation.service';
-import { IconDefinition, faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import {
+  IconDefinition,
+  faHeart as farHeart,
+} from '@fortawesome/free-regular-svg-icons';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { FavouritesRatesService } from 'src/app/favourites-rates.service';
 import { ViewportScroller } from '@angular/common';
@@ -17,19 +20,19 @@ import { ViewportScroller } from '@angular/common';
   styleUrls: ['./currency-detail.component.scss'],
 })
 export class CurrencyDetailComponent implements OnInit {
-  private NUMBER_OF_LAST_DAYS: number = 21
-  ITEMS_PER_PAGE: number = 7;
+  private NUMBER_OF_LAST_DAYS: number = 7;
 
-  ActiveChart = ActiveChart
+  ActiveChart = ActiveChart;
 
-  name!: string
+  name!: string;
   code!: string;
   flagUrl!: string;
   detailCurrencyRates: CurrencyRate[] = [];
   activeChart: ActiveChart = ActiveChart.LastSevenDays;
   emptyHeartIcon: IconDefinition = farHeart;
   fullHeartIcon: IconDefinition = fasHeart;
-  isRateInFavourites: boolean = false
+  isRateInFavourites: boolean = false;
+  dates: string[] = [];
 
   currentPage: number = 1;
 
@@ -49,7 +52,8 @@ export class CurrencyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrencyDetailsAndFlagUrl();
-    this.isRateInFavourites = this.favouritesRatesService.checkIfRateIsInFavourites(this.code)
+    this.isRateInFavourites =
+      this.favouritesRatesService.checkIfRateIsInFavourites(this.code);
   }
 
   private getCurrencyDetailsAndFlagUrl(): void {
@@ -59,46 +63,112 @@ export class CurrencyDetailComponent implements OnInit {
   }
 
   private getCurrencyDetails(code: string): void {
-    this.exchangeRateService
-      .getCurrencyExchangeTableDtoFromLastDays(code, this.NUMBER_OF_LAST_DAYS)
-      .subscribe((currency) => {
-        this.currencyTranslationService.updateDetailCurrency(this.locale, currency)
-        this.name = currency.currency
-        const currencyRatesDto = currency.rates.reverse();
-        this.detailCurrencyRates = currencyRatesDto.map(rate => new CurrencyRate(rate))
-      });
+    this.dates = this.getStartAndEndDate()
+    this.exchangeRateService.getCurrencyExchangeTableDtoForDateRange(code, this.dates[0], this.dates[1])
+      .subscribe((result) => {
+        this.name = result.currency
+        this.displayExchangeRates()
+      })
+  }
+
+  onPageChangePrevious() {
+    this.currentPage = this.currentPage - 1;
+    this.getDates(this.currentPage)
+  }
+
+  onPageChangeNext() {
+    this.currentPage = this.currentPage + 1;
+    this.getDates(this.currentPage)
+  }
+
+  getDates(pageNumber: number) {
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() - (pageNumber - 1) * 7);
+    const endDateString = this.getFormattedDate(endDate);
+
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - pageNumber * 7 + 1);
+    const startDateString = this.getFormattedDate(startDate);
+
+    this.dates = [startDateString, endDateString];
+    console.log(this.dates)
+    this.displayExchangeRates();
+  }
+
+  changePageToFirst() {
+    this.currentPage = 1
+    this.getCurrencyDetails(this.code)
+  }
+
+  displayExchangeRates() {
+    this.exchangeRateService.getCurrencyExchangeTableDtoForDateRange(this.code, this.dates[0], this.dates[1]).subscribe((currencyResult) => {
+      const currencyRatesDto = currencyResult.rates.reverse();
+      
+      const allDates = this.getAllDatesInRange()
+      const exchangeRatesMap = new Map<string, number>()
+      currencyResult.rates.forEach(dto => {
+        const currency = new CurrencyRate(dto)
+        exchangeRatesMap.set(currency.date, currency.mid)
+      })
+      this.detailCurrencyRates = allDates.reverse().map(date => ({
+        date: date,
+        mid: exchangeRatesMap.get(date) !== undefined ? exchangeRatesMap.get(date)! : -1
+      }))
+    })
+  }
+
+  getAllDatesInRange() {
+    const allDates: string[] = []
+    let currentDate = new Date(this.dates[0])
+    const endDateObj = new Date(this.dates[1])
+    while (currentDate <= endDateObj) {
+      allDates.push(this.getFormattedDate(currentDate))
+      currentDate.setDate(currentDate.getDate() + 1)
+    }
+    return allDates
   }
 
   isChartFromLastSevenDaysActive(): void {
-    this.activeChart = ActiveChart.LastSevenDays
-    this.router.navigate([`detail/${this.code}/chart-from-last-seven-days`])
-    this.viewportScroller.scrollToAnchor('chartView')
+    this.activeChart = ActiveChart.LastSevenDays;
+    this.router.navigate([`detail/${this.code}/chart-from-last-seven-days`]);
+    this.viewportScroller.scrollToAnchor('chartView');
   }
 
   isChartFromLastDaysActive(): void {
-    this.activeChart = ActiveChart.Last30Days
-    this.router.navigate([`detail/${this.code}/chart-from-last-days`])
-    this.viewportScroller.scrollToAnchor('chartView')
+    this.activeChart = ActiveChart.Last30Days;
+    this.router.navigate([`detail/${this.code}/chart-from-last-days`]);
+    this.viewportScroller.scrollToAnchor('chartView');
   }
 
   isChartFromLastMonthsActive(): void {
-    this.activeChart = ActiveChart.LastMonths
-    this.router.navigate([`detail/${this.code}/chart-from-last-months`])
-    this.viewportScroller.scrollToAnchor('chartView')
+    this.activeChart = ActiveChart.LastMonths;
+    this.router.navigate([`detail/${this.code}/chart-from-last-months`]);
+    this.viewportScroller.scrollToAnchor('chartView');
   }
 
   addToFavourites(code: string): void {
-    this.favouritesRatesService.addToFavourites(code)
-    this.isRateInFavourites = !this.isRateInFavourites
+    this.favouritesRatesService.addToFavourites(code);
+    this.isRateInFavourites = !this.isRateInFavourites;
   }
 
   removeFromFavourites(code: string): void {
-    this.favouritesRatesService.removeFromFavourites(code)
-    this.isRateInFavourites = !this.isRateInFavourites
+    this.favouritesRatesService.removeFromFavourites(code);
+    this.isRateInFavourites = !this.isRateInFavourites;
   }
 
-  onPageChange(pageNumber: number) {
-    this.currentPage = pageNumber
+  private getStartAndEndDate(): string[] {
+    const todayDate = new Date()
+    const endDateString = this.getFormattedDate(todayDate)
+    const startDate = todayDate
+    startDate.setDate(todayDate.getDate() - 6)
+    const startDateString = this.getFormattedDate(startDate)
+    return [startDateString, endDateString]
+  }
+
+  private getFormattedDate(date: Date): string {
+    const yearString = date.getFullYear().toString();
+    const monthString = (date.getMonth() + 1).toString().padStart(2, '0');
+    const dayString = date.getDate().toString().padStart(2, '0');
+    return yearString + '-' + monthString + '-' + dayString;
   }
 }
-

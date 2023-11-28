@@ -21,62 +21,86 @@ export class GoldPricesComponent implements OnInit {
 
   getGoldPricesFromLastDays(): void {
     this.newDates = this.getStartAndEndDate()
-    this.goldPriceService.getGoldPricesDtoFromRangeTime(this.newDates[0], this.newDates[1]).subscribe(
-      result => {
-        this.goldPrices = result.reverse().map(dto => new GoldPrice(dto))
-      }
-    )
+    this.displayGoldPrices()
   }
 
-  onPageChangeNext() {
-    let x = 14
+  onPageChangeNext(): void {
     this.currentPage = this.currentPage + 1
-    const endDate = new Date()
-    endDate.setDate(endDate.getDate() - ((this.currentPage - 1) * x))
-    const endDateString = this.getFormattedDate(endDate)
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - (this.currentPage * x))
-    const startDateString = this.getFormattedDate(startDate)
-    this.newDates = [startDateString, endDateString]
-
-    this.displayNextGoldPrices()
+    this.getDates(this.currentPage)
   }
 
-  onPageChangePrevious() {
-    let x = 14
-    this.currentPage = this.currentPage - 1
-    if(this.currentPage < 1) {
+  onPageChangePrevious(): void {
+    if(this.currentPage > 1) {
+      this.currentPage = this.currentPage - 1
+      this.getDates(this.currentPage)
+    } 
+    this.checkIfCurrentPageIsEqualToOne()
+  }
+
+  checkIfCurrentPageIsEqualToOne() {
+    if (this.currentPage === 1){
       this.currentPage = 1
+      this.newDates = this.getStartAndEndDate()
+      this.displayGoldPrices()
     }
-    const endDate = new Date()
-    endDate.setDate(endDate.getDate() - ((this.currentPage - 1) * x))
-    const endDateString = this.getFormattedDate(endDate)
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - (this.currentPage * x))
-    const startDateString = this.getFormattedDate(startDate)
-    this.newDates = [startDateString, endDateString]
-
-    this.displayNextGoldPrices()
   }
 
-  onPageChangeToFirst() {
+  getDates(pageNumber: number): void {
+    let x = 14
+    const endDate = new Date()
+    endDate.setDate(endDate.getDate() - ((pageNumber - 1) * x + 1))
+    const endDateString = this.getFormattedDate(endDate)
+
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - (pageNumber * x))
+    const startDateString = this.getFormattedDate(startDate)
+
+    this.newDates = [startDateString, endDateString]
+    this.displayGoldPrices()
+  }
+
+  onPageChangeToFirst(): void {
     this.currentPage = 1
+    this.newDates = this.getStartAndEndDate()
     this.getGoldPricesFromLastDays()
   }
 
-  displayNextGoldPrices() {
+  displayGoldPrices(): void {
     this.goldPriceService.getGoldPricesDtoFromRangeTime(this.newDates[0], this.newDates[1]).subscribe(
       result => {
-        this.goldPrices = result.reverse().map(dto => new GoldPrice(dto))
+        const allDates = this.getAllDatesInRange();
+        const pricesMap = new Map<string, number>();
+        result.reverse().forEach(dto => {
+          const goldPrice = new GoldPrice(dto);
+          pricesMap.set(goldPrice.date, goldPrice.price);
+        });
+
+        this.goldPrices = allDates.reverse().map(date => ({
+          date: date,
+          price: pricesMap.get(date) !== undefined ? pricesMap.get(date)! : -1
+        }));
       }
-    )
+    );
+  }
+  
+  getAllDatesInRange(): string[] {
+    const allDates: string[] = []
+    let currentDate = new Date(this.newDates[0]);
+    const endDateObj = new Date(this.newDates[1]);
+    while (currentDate <= endDateObj) {
+      allDates.push(this.getFormattedDate(currentDate))
+      currentDate.setDate(currentDate.getDate() + 1)
+    }
+    // console.log(this.newDates)
+    // console.log(allDates)
+    return allDates
   }
 
   private getStartAndEndDate(): string[] {
     const todayDate = new Date()
     const endDateString = this.getFormattedDate(todayDate)
     const startDate = todayDate
-    startDate.setDate(todayDate.getDate() - 14)
+    startDate.setDate(todayDate.getDate() - 13)
     const startDateString = this.getFormattedDate(startDate)
     return [startDateString, endDateString]
   }
