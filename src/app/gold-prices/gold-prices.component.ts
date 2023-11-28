@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GoldPriceService } from './data/gold-price.service';
 import { GoldPrice } from './data/gold-price';
+import { DatesService } from '../dates.service';
 
 @Component({
   selector: 'app-gold-prices',
@@ -12,7 +13,7 @@ export class GoldPricesComponent implements OnInit {
   currentPage: number = 1
   newDates: string[] = []
 
-  constructor(private goldPriceService: GoldPriceService) {
+  constructor(private goldPriceService: GoldPriceService, private datesService: DatesService) {
   }
 
   ngOnInit(): void {
@@ -20,7 +21,7 @@ export class GoldPricesComponent implements OnInit {
   }
 
   getGoldPricesFromLastDays(): void {
-    this.newDates = this.getStartAndEndDate()
+    this.newDates = this.datesService.getStartAndEndDate(13)
     this.displayGoldPrices()
   }
 
@@ -40,7 +41,7 @@ export class GoldPricesComponent implements OnInit {
   checkIfCurrentPageIsEqualToOne() {
     if (this.currentPage === 1){
       this.currentPage = 1
-      this.newDates = this.getStartAndEndDate()
+      this.newDates = this.datesService.getStartAndEndDate(13)
       this.displayGoldPrices()
     }
   }
@@ -49,11 +50,11 @@ export class GoldPricesComponent implements OnInit {
     let x = 14
     const endDate = new Date()
     endDate.setDate(endDate.getDate() - ((pageNumber - 1) * x + 1))
-    const endDateString = this.getFormattedDate(endDate)
+    const endDateString = this.datesService.getFormattedDate(endDate)
 
     const startDate = new Date()
     startDate.setDate(startDate.getDate() - (pageNumber * x))
-    const startDateString = this.getFormattedDate(startDate)
+    const startDateString = this.datesService.getFormattedDate(startDate)
 
     this.newDates = [startDateString, endDateString]
     this.displayGoldPrices()
@@ -61,7 +62,7 @@ export class GoldPricesComponent implements OnInit {
 
   onPageChangeToFirst(): void {
     this.currentPage = 1
-    this.newDates = this.getStartAndEndDate()
+    this.newDates = this.datesService.getStartAndEndDate(13)
     this.getGoldPricesFromLastDays()
   }
 
@@ -88,27 +89,11 @@ export class GoldPricesComponent implements OnInit {
     let currentDate = new Date(this.newDates[0]);
     const endDateObj = new Date(this.newDates[1]);
     while (currentDate <= endDateObj) {
-      allDates.push(this.getFormattedDate(currentDate))
+      allDates.push(this.datesService.getFormattedDate(currentDate))
       currentDate.setDate(currentDate.getDate() + 1)
     }
     // console.log(this.newDates)
     // console.log(allDates)
     return allDates
-  }
-
-  private getStartAndEndDate(): string[] {
-    const todayDate = new Date()
-    const endDateString = this.getFormattedDate(todayDate)
-    const startDate = todayDate
-    startDate.setDate(todayDate.getDate() - 13)
-    const startDateString = this.getFormattedDate(startDate)
-    return [startDateString, endDateString]
-  }
-
-  private getFormattedDate(date: Date): string {
-    const yearString = date.getFullYear().toString()
-    const monthString = (date.getMonth() + 1).toString().padStart(2, '0')
-    const dayString = date.getDate().toString().padStart(2, '0')
-    return yearString + "-" + monthString + "-" + dayString
   }
 }

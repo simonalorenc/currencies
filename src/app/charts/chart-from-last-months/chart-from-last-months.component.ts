@@ -3,6 +3,7 @@ import { ChartService } from '../chart.service';
 import { ActivatedRoute } from '@angular/router';
 import { ExchangeRateService } from 'src/app/currency/data/exchange-rate.service';
 import { groupBy, mergeMap, of, toArray, zip } from 'rxjs';
+import { DatesService } from 'src/app/dates.service';
 
 @Component({
   selector: 'app-chart-from-last-months',
@@ -15,7 +16,8 @@ export class ChartFromLastMonthsComponent {
   constructor(
     private route: ActivatedRoute,
     private chartService: ChartService, 
-    private exchangeRateService: ExchangeRateService, 
+    private exchangeRateService: ExchangeRateService,
+    private datesService: DatesService 
   ) {}
 
   ngOnInit(): void {
@@ -52,18 +54,11 @@ export class ChartFromLastMonthsComponent {
 
   private getStartAndEndDate(): string[] {
     const todayDate = new Date()
-    const endDateString = this.getFormattedDate(todayDate)
+    const endDateString = this.datesService.getFormattedDate(todayDate)
     const startDate = todayDate
     startDate.setMonth(todayDate.getMonth() - 2)
     startDate.setDate(1)
-    const startDateString = this.getFormattedDate(startDate)
+    const startDateString = this.datesService.getFormattedDate(startDate)
     return [startDateString, endDateString]
-  }
-
-  private getFormattedDate(date: Date): string {
-    const yearString = date.getFullYear().toString()
-    const monthString = (date.getMonth() + 1).toString().padStart(2, '0')
-    const dayString = date.getDate().toString().padStart(2, '0')
-    return yearString + "-" + monthString + "-" + dayString
   }
 }

@@ -13,6 +13,7 @@ import {
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { FavouritesRatesService } from 'src/app/favourites-rates.service';
 import { ViewportScroller } from '@angular/common';
+import { DatesService } from 'src/app/dates.service';
 
 @Component({
   selector: 'app-currency-detail',
@@ -20,8 +21,6 @@ import { ViewportScroller } from '@angular/common';
   styleUrls: ['./currency-detail.component.scss'],
 })
 export class CurrencyDetailComponent implements OnInit {
-  private NUMBER_OF_LAST_DAYS: number = 7;
-
   ActiveChart = ActiveChart;
 
   name!: string;
@@ -45,7 +44,8 @@ export class CurrencyDetailComponent implements OnInit {
     @Inject(LOCALE_ID) public locale: string,
     private currencyTranslationService: CurrencyTranslationService,
     private favouritesRatesService: FavouritesRatesService,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    private datesService: DatesService
   ) {
     this.code = this.route.snapshot.paramMap.get('code')!;
   }
@@ -63,7 +63,7 @@ export class CurrencyDetailComponent implements OnInit {
   }
 
   private getCurrencyDetails(code: string): void {
-    this.dates = this.getStartAndEndDate()
+    this.dates = this.datesService.getStartAndEndDate(6)
     this.exchangeRateService.getCurrencyExchangeTableDtoForDateRange(code, this.dates[0], this.dates[1])
       .subscribe((result) => {
         this.name = result.currency
@@ -84,11 +84,11 @@ export class CurrencyDetailComponent implements OnInit {
   getDates(pageNumber: number) {
     const endDate = new Date();
     endDate.setDate(endDate.getDate() - (pageNumber - 1) * 7);
-    const endDateString = this.getFormattedDate(endDate);
+    const endDateString = this.datesService.getFormattedDate(endDate);
 
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - pageNumber * 7 + 1);
-    const startDateString = this.getFormattedDate(startDate);
+    const startDateString = this.datesService.getFormattedDate(startDate);
 
     this.dates = [startDateString, endDateString];
     console.log(this.dates)
@@ -122,7 +122,7 @@ export class CurrencyDetailComponent implements OnInit {
     let currentDate = new Date(this.dates[0])
     const endDateObj = new Date(this.dates[1])
     while (currentDate <= endDateObj) {
-      allDates.push(this.getFormattedDate(currentDate))
+      allDates.push(this.datesService.getFormattedDate(currentDate))
       currentDate.setDate(currentDate.getDate() + 1)
     }
     return allDates
@@ -154,21 +154,5 @@ export class CurrencyDetailComponent implements OnInit {
   removeFromFavourites(code: string): void {
     this.favouritesRatesService.removeFromFavourites(code);
     this.isRateInFavourites = !this.isRateInFavourites;
-  }
-
-  private getStartAndEndDate(): string[] {
-    const todayDate = new Date()
-    const endDateString = this.getFormattedDate(todayDate)
-    const startDate = todayDate
-    startDate.setDate(todayDate.getDate() - 6)
-    const startDateString = this.getFormattedDate(startDate)
-    return [startDateString, endDateString]
-  }
-
-  private getFormattedDate(date: Date): string {
-    const yearString = date.getFullYear().toString();
-    const monthString = (date.getMonth() + 1).toString().padStart(2, '0');
-    const dayString = date.getDate().toString().padStart(2, '0');
-    return yearString + '-' + monthString + '-' + dayString;
   }
 }
