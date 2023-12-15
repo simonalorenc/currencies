@@ -15,10 +15,11 @@ import { FooterComponent } from './footer/footer.component';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartFromLastSevenDaysComponent } from './charts/chart-from-last-seven-days/chart-from-last-seven-days.component';
 import { ChartFromLastMonthsComponent } from './charts/chart-from-last-months/chart-from-last-months.component';
-import { ChartFromLast30DaysComponent } from './charts/chart-from-last-30-days/chart-from-last-30-days.component';
+import { ChartFromLastDaysComponent } from './charts/chart-from-last-days/chart-from-last-days.component';
 import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FooterComponent,
     ChartFromLastSevenDaysComponent,
     ChartFromLastMonthsComponent,
-    ChartFromLast30DaysComponent
+    ChartFromLastDaysComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +44,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BrowserAnimationsModule,
     NgChartsModule,
     CollapseModule.forRoot(),
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent],
